@@ -1,0 +1,52 @@
+body {
+    background-color:#b9c6c7; 
+    font-family: sans-serif; 
+    color: black;
+}
+
+p, li {
+    font-size: 125%; 
+    margin-top:0px; 
+    margin-right:100px; 
+    margin-bottom:20px; 
+    margin-left: 100px;
+}
+
+/* Appears during consent */
+ul {
+    font-size: 125%; 
+    margin-top:50px; 
+    margin-right:100px; 
+    margin-bottom:20px; 
+    margin-left: 100px; 
+    cursor:default;
+}
+
+/* li {
+    font-size: 125%;
+} */
+
+/* Those paragraphs with instrcut class. Used in the instructions, post-practice instructions, and transition. */
+.instruct {
+    width:100%; 
+    color: black; 
+    text-align:center; 
+    cursor:default;
+}
+.header {
+    width:100%; 
+    color: black; 
+    text-align: center;
+    cursor:default;
+}
+
+/* For the text inside the score box, font size must be smaller, to fit within the scorebox. */
+.score_box p {
+    font-size: 14px; 
+}
+
+
+
+.cells:hover {
+    background-color: red !important;
+}

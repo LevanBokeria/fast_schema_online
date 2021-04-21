@@ -83,47 +83,27 @@ jsPsych.plugins["playground"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-    var startTime = -1;
-    var response = {
-      rt: null,
-      row: null,
-      column: null
-    }
-
-    // Create the grid box element
-    let grid_box = document.createElement('div')
-    grid_box.id = 'grid_box'
-    grid_box.style = 
-        'display: grid;' +
-        'grid-template-columns: repeat(12, 30px);' +
-        'grid-template-rows: repeat(12, 30px);' +
-        'background-color: red;' +
-        'border: 2px solid #444;' +
-        'grid-gap: 2px 2px;'
-
-    display_element.appendChild(grid_box)
+    // Define all the conditions here ///////////////////////////////////////////////////////////
 
     // Add the cells
     let n_rows = 12
     let n_cols = 12
 
-    for (ir = 0; ir < n_rows; ir++){
-
-      for (ic = 0; ic < n_cols; ic++){
-
-        iCell = document.createElement('div')
-
-        iCell.className = 'cells'
-        iCell.id = 'cell_r_' + (ir+1) + '_c_' + (ic+1)
-
-        iCell.style = 
-          'background-color: white;'
-
-        grid_box.appendChild(iCell)
-
-      }
-
+    // Define all the possible colors. Later, map these by randomization or latin square
+    let condition_colors = {
+      consistent_schema: 'red',
+      inconsistent_schema: 'blue',
+      stable_landmark: 'green',
+      no_schema: 'gray',
+      raw_learning: 'yellow',
     }
+
+    let current_condition = 'consistent_schema'
+
+    let current_condition_color = condition_colors[current_condition]
+
+    // Whats the current prompt PA shown?
+    let curr_prompt = 2
 
     // Add the image items at specific locations
     let img_array = ['./img/targets/BOSS/downsized/8ball.jpg',
@@ -132,34 +112,26 @@ jsPsych.plugins["playground"] = (function() {
 
     let img_board_coords = [[1,1],
                             [5,5],
-                            [7,7]]
+                            [7,7]]                     
 
-    for (iImg = 0; iImg < img_array.length; iImg++){
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
-      // Which row and col?
-      let i_row = img_board_coords[iImg][0]
-      let i_col = img_board_coords[iImg][1]
-
-      iEl = document.createElement('img')
-
-      iEl.className = 'PA'
-      iEl.id = 'PA_' + (iImg+1)
-      iEl.src = img_array[iImg]
-      iEl.style = 
-        'max-width: 100%;' +
-        'height: auto;' + 
-        'visibility: hidden;'
-
-      let iCell = document.querySelector('#cell_r_' + i_row + '_c_' + i_col)
-      iCell.appendChild(iEl)
-
-      iCell.onclick = function make_visible(){
-        this.children[0].style.visibility = 'visible'
-      }
-
-      debugger
+    var startTime = -1;
+    var response = {
+      rt: null,
+      row: null,
+      column: null
     }
+    
+    // Create the board
+    grid_box = board_creator(500,12,12,current_condition_color,false,img_array,img_board_coords)
 
+    //Add mouseclick listener MUST EDIT
+    grid_box.addEventListener('click', function(){
+      document.querySelector('#PA_'+curr_prompt).style.visibility = 'visible'
+    })
+
+    display_element.appendChild(grid_box)
 
     // display stimulus
     // var stimulus = this.stimulus(trial.grid, trial.grid_square_size);

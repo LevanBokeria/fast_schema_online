@@ -41,12 +41,8 @@ ul {
 }
 
 /* For the text inside the score box, font size must be smaller, to fit within the scorebox. */
-.score_box p {
-    font-size: 14px; 
-}
-
-
-
-.cells:hover {
-    background-color: red !important;
+#grid-box {
+    display: grid;
+    border: 2px solid #444;
+    grid-gap: 2px 2px;
 }

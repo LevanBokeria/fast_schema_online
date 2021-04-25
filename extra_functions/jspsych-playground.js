@@ -107,7 +107,13 @@ jsPsych.plugins["playground"] = (function() {
         pretty_name: 'Maintain aspect ratio',
         default: true,
         description: 'Maintain the aspect ratio after setting width or height'
-      },      
+      },
+      condition: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Experimental Condition',
+        default: null,
+        description: 'Name of the schema condition for this trial'
+      },            
     }
   }
 
@@ -128,9 +134,9 @@ jsPsych.plugins["playground"] = (function() {
       raw_learning: 'yellow',
     }
 
-    let current_condition = 'consistent_schema'
+    let current_condition_color = 'consistent_schema'
 
-    let current_condition_color = condition_colors[current_condition]
+    let current_condition_color = condition_colors[trial.condition]
 
     // Add the image items at specific locations
     let img_array = ['./img/targets/BOSS/downsized/8ball.jpg',

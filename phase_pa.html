@@ -17,18 +17,33 @@
     <script>
 
         // jatos.onLoad(function() {
-            
-            var timeline = []
+            debugger
+            var session_trials = [
+                { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1},
+                { img_path: 'img/targets/BOSS/downsized/aceofdiamond.jpg', stimulus_idx: 1},
+                { img_path: 'img/targets/BOSS/downsized/acorn.jpg', stimulus_idx: 1},
+                { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1},
+                { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1},
+                { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1},
+                { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1}
+            ]
 
             var trial = {
                 type: 'playground',
-                prompt: 'Where is this item located?'
+                prompt_question: 'Where is this item located?',
+                stimulus: jsPsych.timelineVariable('img_path'),
+                stimulus_idx: jsPsych.timelineVariable('stimulus_idx'),
+                stimulus_width: '50px',
             }
            
-            timeline.push(trial)
+            var session_procedure = {
+                timeline: [trial],
+                timeline_varialbes: session_trials,
+                // randomize_order: true
+            }
             
             jsPsych.init({
-                timeline: timeline,                    
+                timeline: [session_procedure],                    
               
                 on_finish: function(data) {
                     console.log('Over');

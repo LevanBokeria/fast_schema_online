@@ -72,12 +72,42 @@ jsPsych.plugins["playground"] = (function() {
     //     default: false,
     //     description: 'If true, then user can make nontarget response.'
     //   },
-      prompt: {
+      prompt_question: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Prompt',
         default: null,
         description: 'Any content here will be displayed below the stimulus'
       },
+      stimulus: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Stimulus',
+        default: undefined,
+        description: 'The image to be displayed'
+      },
+      stimulus_idx: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Stimulus index',
+        default: null,
+        description: 'Index of the paired-associate'
+      },      
+      stimulus_height: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Image height',
+        default: null,
+        description: 'Set the image height in pixels'
+      },
+      stimulus_width: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Image width',
+        default: null,
+        description: 'Set the image width in pixels'
+      },
+      maintain_aspect_ratio: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Maintain aspect ratio',
+        default: true,
+        description: 'Maintain the aspect ratio after setting width or height'
+      },      
     }
   }
 
@@ -102,9 +132,6 @@ jsPsych.plugins["playground"] = (function() {
 
     let current_condition_color = condition_colors[current_condition]
 
-    // Whats the current prompt PA shown?
-    let curr_prompt = 2
-
     // Add the image items at specific locations
     let img_array = ['./img/targets/BOSS/downsized/8ball.jpg',
                      './img/targets/BOSS/downsized/accordion01.jpg',
@@ -122,13 +149,13 @@ jsPsych.plugins["playground"] = (function() {
       row: null,
       column: null
     }
-    
+    debugger
     // Create the board
-    grid_box = board_creator(500,12,12,current_condition_color,false,img_array,img_board_coords)
+    grid_box = board_creator(300,n_rows,n_cols,current_condition_color,false,img_array,img_board_coords)
 
     //Add mouseclick listener MUST EDIT
     grid_box.addEventListener('click', function(){
-      document.querySelector('#PA_'+curr_prompt).style.visibility = 'visible'
+      document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
     })
 
     display_element.appendChild(grid_box)
@@ -146,10 +173,18 @@ jsPsych.plugins["playground"] = (function() {
 	// 		}, trial.pre_target_duration);
 	// 	}
 
-		//show prompt if there is one
-    if (trial.prompt !== null) {
-      display_element.insertAdjacentHTML('beforeend', trial.prompt);
-    }
+		//show prompt_question
+    display_element.insertAdjacentHTML('beforeend', trial.prompt_question);
+
+		//show stimulus
+    let stimulus_element = document.createElement('img')
+    stimulus_element.className = 'prompt_stimulus'
+    stimulus_element.style.width = trial.stimulus_width
+    stimulus_element.src = trial.stimulus
+    stimulus_element.style.display = 'block'
+    stimulus_element.style.margin = 'auto'
+
+    display_element.appendChild(stimulus_element);    
 
 	// 	function showTarget(){
     //   var resp_targets;

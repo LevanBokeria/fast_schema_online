@@ -6,8 +6,10 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
     let grid_box = document.createElement('div')
     grid_box.id = 'grid-box'
     grid_box.style = 
-        'grid-template-columns: repeat('+n_cols+', 30px);' +
-        'grid-template-rows: repeat('+n_rows+', 30px);' +
+        'height:' + board_size_px + 'px;' + 
+        'width:' + board_size_px + 'px;' + 
+        'grid-template-columns: repeat('+n_cols+', 1fr);' +
+        'grid-template-rows: repeat('+n_rows+', 1fr);' +
         'background-color: ' + current_condition_color + ';'
 
     for (ir = 0; ir < n_rows; ir++){
@@ -27,6 +29,12 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
       }
     }
 
+    if (show_pas) {
+      var visibility_status = 'visible'
+    } else {
+      var visibility_status = 'hidden'
+    }
+      
     for (iImg = 0; iImg < img_array.length; iImg++){
 
         // Which row and col?
@@ -40,8 +48,9 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
         iEl.src = img_array[iImg]
         iEl.style = 
         'max-width: 100%;' +
-        'height: auto;' + 
-        'visibility: hidden;'
+        'max-height: 100%;' + 
+        'display: block;' +
+        'visibility: ' + visibility_status + ';'
 
         let nth_child_idx = (i_row-1)*n_cols + i_col
         

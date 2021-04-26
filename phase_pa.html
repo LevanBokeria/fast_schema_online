@@ -18,7 +18,7 @@
     <script>
 
         jatos.onLoad(function() {
-            debugger
+            // debugger
 
             let curr_session = 0
 
@@ -43,7 +43,9 @@
             
             jsPsych.init({
                 timeline: [session_procedure],                    
-              
+                default_iti: 500, 
+                randomize_order: true,
+
                 on_finish: function(data) {
                     console.log('Over');
                     jsPsych.data.displayData('json');

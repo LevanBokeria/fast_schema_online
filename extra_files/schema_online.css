@@ -44,5 +44,14 @@ ul {
 #grid-box {
     display: grid;
     border: 2px solid #444;
-    grid-gap: 2px 2px;
+    /* grid-gap: 2px 2px; */
+}
+
+.cells {
+    border-right: 2px solid red;
+    border-bottom: 2px solid red;
+}
+
+#feedback_text {
+    font-size: 80%;
 }

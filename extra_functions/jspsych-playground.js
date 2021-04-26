@@ -121,17 +121,18 @@ jsPsych.plugins["playground"] = (function() {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-
+    var timeout = true
     var startTime = -1;
     var response = {
       rt: null,
       row: null,
-      column: null
+      column: null,
+      correct: null, //null if missed, else true/false
     }
-    debugger
+    // debugger
 
     // Create the board
-    grid_box = board_creator(300,
+    grid_box = board_creator(400,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
       jatos.studySessionData.inputData.condition_colors[trial.condition],
@@ -140,24 +141,21 @@ jsPsych.plugins["playground"] = (function() {
       jatos.studySessionData.inputData.condition_coords[trial.condition]['ses'+(jatos.studySessionData.curr_session+1)])
 
     //Add mouseclick listener MUST EDIT
-    grid_box.addEventListener('click', function(){
-      document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
-    })
+
+    var stim_coords = jatos.studySessionData.inputData.condition_coords[trial.condition]['ses'+(jatos.studySessionData.curr_session+1)][trial.stimulus_idx-1]
+
+    var all_cells = grid_box.querySelectorAll('.cells')
+
+    for (iC=0; iC<all_cells.length; iC++){
+      // console.log(iC)
+      all_cells[iC].addEventListener('click',getResponse)
+    }
+
+    // grid_box.addEventListener('click', function(){
+    //   document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
+    // })
 
     display_element.appendChild(grid_box)
-
-    // display stimulus
-    // var stimulus = this.stimulus(trial.grid, trial.grid_square_size);
-    // display_element.innerHTML = stimulus;
-
-
-	// 	if(trial.pre_target_duration <= 0){
-	// 		showTarget();
-	// 	} else {
-	// 		jsPsych.pluginAPI.setTimeout(function(){
-	// 			showTarget();
-	// 		}, trial.pre_target_duration);
-	// 	}
 
 		//show prompt_question
     display_element.insertAdjacentHTML('beforeend', trial.prompt_question);
@@ -172,55 +170,86 @@ jsPsych.plugins["playground"] = (function() {
 
     display_element.appendChild(stimulus_element);    
 
-	// 	function showTarget(){
-    //   var resp_targets;
-    //   if(!trial.allow_nontarget_responses){
-    //     resp_targets = [display_element.querySelector('#jspsych-serial-reaction-time-stimulus-cell-'+trial.target[0]+'-'+trial.target[1])]
-    //   } else {
-    //     resp_targets = display_element.querySelectorAll('.jspsych-serial-reaction-time-stimulus-cell');
-    //   }
-    //   for(var i=0; i<resp_targets.length; i++){
-    //     resp_targets[i].addEventListener('mousedown', function(e){
-    //       if(startTime == -1){
-    //         return;
-    //       } else {
-    //         var info = {}
-    //         info.row = e.currentTarget.getAttribute('data-row');
-    //         info.column = e.currentTarget.getAttribute('data-column');
-    //         info.rt = performance.now() - startTime;
-    //         after_response(info);
-    //       }
-    //     });
-    //   }
+    // Add an empty feedback element
+    let feedback_el = document.createElement('P')
+    feedback_el.innerText = 'null'
+    feedback_el.id = 'feedback_text'
+    feedback_el.style.visibility = 'hidden'
 
-    //   startTime = performance.now();
+    display_element.appendChild(feedback_el)
 
-    //   if(trial.fade_duration == null){
-    //     display_element.querySelector('#jspsych-serial-reaction-time-stimulus-cell-'+trial.target[0]+'-'+trial.target[1]).style.backgroundColor = trial.target_color;
-    //   } else {
-    //     display_element.querySelector('#jspsych-serial-reaction-time-stimulus-cell-'+trial.target[0]+'-'+trial.target[1]).style.transition = "background-color "+trial.fade_duration;
-    //     display_element.querySelector('#jspsych-serial-reaction-time-stimulus-cell-'+trial.target[0]+'-'+trial.target[1]).style.backgroundColor = trial.target_color;
-    //   }
+    startTime = performance.now();
 
-	// 		if(trial.trial_duration !== null){
-	// 			jsPsych.pluginAPI.setTimeout(endTrial, trial.trial_duration);
-	// 		}
+    // if(trial.trial_duration !== null){
+      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, jatos.studySessionData.inputData.trial_dur);
+    // }
 
-	// 	}
+    function getResponse(e){
+      info = {}
 
-    function endTrial() {
+      info.rt = performance.now() - startTime
+
+      let curr_row_col = e.currentTarget.id.split('_')
+      info.row = parseInt(curr_row_col[2],10)
+      info.col = parseInt(curr_row_col[4],10)
+
+      if (info.row == stim_coords[0] & info.col == stim_coords[1]){
+        info.correct = true
+      } else {
+        info.correct = false
+      }
+
+      // only record first response
+      response = response.rt == null ? info : response;
+      
+      timeout = false
+
+      doFeedback(info.correct,timeout);
+
+    }
+
+    function doFeedback(correct, timeout) {
+      console.log('doFB called!')
+      debugger
+
+      // Remove all the event listeners from all the cells.
+      document.querySelectorAll('.cells').forEach(function(el){
+        el.removeEventListener('click',getResponse,false)
+      })
+
+      if (timeout) {
+        feedback_text = 'You missed...'
+        document.querySelector('#feedback_text').innerText = feedback_text
+        document.querySelector('#feedback_text').style.visibility = 'visible'
+      } else {
+
+        correct == true ? feedback_text = 'Correct!' : feedback_text = 'Incorrect...'
+
+        // show the feedback
+        document.querySelector('#feedback_text').innerText = feedback_text
+        document.querySelector('#feedback_text').style.visibility = 'visible'
+      }
+
+      // Show the true feedback!
+      document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
+      jsPsych.pluginAPI.setTimeout(function() {
+        endTrial();
+      }, jatos.studySessionData.inputData.feedback_dur);
+    
+    }
+
+
+    function endTrial() {
+      console.log('Another trial');
+      // kill any remaining setTimeout handlers
+      jsPsych.pluginAPI.clearAllTimeouts();
+
       // gather the data to store for the trial
-      var trial_data = {
-        rt: response.rt,
-				grid: trial.grid,
-				target: trial.target,
-        response: [parseInt(response.row,10), parseInt(response.column,10)],
-        correct: response.row == trial.target[0] && response.column == trial.target[1]
-      };
+      var trial_data = response;
 
       // clear the display
       display_element.innerHTML = '';
@@ -230,47 +259,7 @@ jsPsych.plugins["playground"] = (function() {
 
     };
 
-    // function to handle responses by the subject
-    function after_response(info) {
-
-			// only record first response
-      response = response.rt == null ? info : response;
-
-      if (trial.response_ends_trial) {
-        endTrial();
-      }
-    };
-
   };
-
-//   plugin.stimulus = function(grid, square_size, target, target_color, labels) {
-//     var stimulus = "<div id='jspsych-serial-reaction-time-stimulus' style='margin:auto; display: table; table-layout: fixed; border-spacing:"+square_size/4+"px'>";
-//     for(var i=0; i<grid.length; i++){
-//       stimulus += "<div class='jspsych-serial-reaction-time-stimulus-row' style='display:table-row;'>";
-//       for(var j=0; j<grid[i].length; j++){
-//         var classname = 'jspsych-serial-reaction-time-stimulus-cell';
-
-//         stimulus += "<div class='"+classname+"' id='jspsych-serial-reaction-time-stimulus-cell-"+i+"-"+j+"' "+
-//           "data-row="+i+" data-column="+j+" "+
-//           "style='width:"+square_size+"px; height:"+square_size+"px; display:table-cell; vertical-align:middle; text-align: center; cursor: pointer; font-size:"+square_size/2+"px;";
-//         if(grid[i][j] == 1){
-//           stimulus += "border: 2px solid black;"
-//         }
-//         if(typeof target !== 'undefined' && target[0] == i && target[1] == j){
-//           stimulus += "background-color: "+target_color+";"
-//         }
-//         stimulus += "'>";
-//         if(typeof labels !=='undefined' && labels[i][j] !== false){
-//           stimulus += labels[i][j]
-//         }
-//         stimulus += "</div>";
-//       }
-//       stimulus += "</div>";
-//     }
-//     stimulus += "</div>";
-
-//     return stimulus
-//   }
 
   return plugin;
 })();

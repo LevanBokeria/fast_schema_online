@@ -6,6 +6,7 @@
         <script src='./jspsych-6.3.1/jspsych.js'></script>        
         <script src='./extra_functions/lodash.js'></script>
         <script src='./extra_functions/jspsych-playground.js'></script>
+        <script src='./extra_functions/trial_creator.js'></script>
         <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-vsl-grid-scene.js"></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
@@ -17,68 +18,13 @@
     <script>
 
         jatos.onLoad(function() {
+            debugger
 
-            // Define all the conditions here ///////////////////////////////////////////////////////////
+            let curr_session = 0
 
-            // Add the cells
-            jatos.studySessionData.inputData.n_rows = 12
-            jatos.studySessionData.inputData.n_cols = 12
-
-            // Define all the possible colors. Later, map these by randomization or latin square
-            jatos.studySessionData.inputData.condition_colors = {
-                consistent_schema: 'red',
-                inconsistent_schema: 'blue',
-                stable_landmark: 'green',
-                no_schema: 'gray',
-                raw_learning: 'yellow',
-            }
-
-            jatos.studySessionData.inputData.condition_coords = {
-                consistent_schema: [[1,1],
-                                    [5,5],
-                                    [7,7]],
-                inconsistent_schema: [[1,1],
-                                      [5,5],
-                                      [7,7]],
-                stable_landmark: [[1,1],
-                                  [5,5],
-                                  [7,7]],
-                no_schema: [[1,1],
-                            [5,5],
-                            [7,7]],
-                raw_learning: [[1,1],
-                               [5,5],
-                               [7,7]],
-            }
-
-            var images = [
-                'img/targets/BOSS/downsized/8ball.jpg',
-                'img/targets/BOSS/downsized/accordion01.jpg',
-                'img/targets/BOSS/downsized/aceofdiamond.jpg',
-                'img/targets/BOSS/downsized/acorn.jpg',
-                'img/targets/BOSS/downsized/acousticguitar02.jpg',
-                'img/targets/BOSS/downsized/addressplate.jpg',
-                'img/targets/BOSS/downsized/africanelephant.jpg',
-                'img/targets/BOSS/downsized/aloe01.jpg',
-                'img/targets/BOSS/downsized/americangoldfinch.jpg',
-                'img/targets/BOSS/downsized/anchor.jpg',
-                'img/targets/BOSS/downsized/ant.jpg',
-                'img/targets/BOSS/downsized/armchair02.jpg',
-                'img/targets/BOSS/downsized/artichoke01b.jpg',
-                'img/targets/BOSS/downsized/badmintonracket.jpg',
-                'img/targets/BOSS/downsized/ballofstring.jpg',
-                'img/targets/BOSS/downsized/barrel01.jpg',
-                'img/targets/BOSS/downsized/bassethound.jpg',
-                'img/targets/BOSS/downsized/battleaxe.jpg',
-                'img/targets/BOSS/downsized/beachumbrella01.jpg',
-                'img/targets/BOSS/downsized/bed.jpg',
-                'img/targets/BOSS/downsized/bicycle.jpg',
-                'img/targets/BOSS/downsized/birdnest.jpg',
-                'img/targets/BOSS/downsized/bolt01a.jpg',
-                'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
-                'img/targets/BOSS/downsized/bowlingpin.jpg',
-                'img/targets/BOSS/downsized/bowtie.jpg',
-            ]
+            // Set the global jatos variables
+            jatos.studySessionData.curr_condition = 'consistent_schema'
+            jatos.studySessionData.curr_session = curr_session
 
 
             var session_procedure = {
@@ -92,15 +38,7 @@
                         condition: jsPsych.timelineVariable('condition'),
                     }
                 ],
-                timeline_variables: [
-                    { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                    { img_path: 'img/targets/BOSS/downsized/aceofdiamond.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                    { img_path: 'img/targets/BOSS/downsized/acorn.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                    { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                    { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                    { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                    { img_path: 'img/targets/BOSS/downsized/8ball.jpg', stimulus_idx: 1, condition: 'consistent_schema'},
-                ]
+                timeline_variables: jatos.studySessionData.inputData.all_session_trials[0]
             }
             
             jsPsych.init({

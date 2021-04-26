@@ -119,33 +119,6 @@ jsPsych.plugins["playground"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-    // Define all the conditions here ///////////////////////////////////////////////////////////
-
-    // Add the cells
-    let n_rows = 12
-    let n_cols = 12
-
-    // Define all the possible colors. Later, map these by randomization or latin square
-    let condition_colors = {
-      consistent_schema: 'red',
-      inconsistent_schema: 'blue',
-      stable_landmark: 'green',
-      no_schema: 'gray',
-      raw_learning: 'yellow',
-    }
-
-    let current_condition_color = 'consistent_schema'
-
-    let current_condition_color = condition_colors[trial.condition]
-
-    // Add the image items at specific locations
-    let img_array = ['./img/targets/BOSS/downsized/8ball.jpg',
-                     './img/targets/BOSS/downsized/accordion01.jpg',
-                     './img/targets/BOSS/downsized/acorn.jpg']
-
-    let img_board_coords = [[1,1],
-                            [5,5],
-                            [7,7]]                     
 
     /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -156,8 +129,15 @@ jsPsych.plugins["playground"] = (function() {
       column: null
     }
     debugger
+
     // Create the board
-    grid_box = board_creator(300,n_rows,n_cols,current_condition_color,false,img_array,img_board_coords)
+    grid_box = board_creator(300,
+      jatos.studySessionData.inputData.n_rows,
+      jatos.studySessionData.inputData.n_cols,
+      jatos.studySessionData.inputData.condition_colors[trial.condition],
+      false,
+      jatos.studySessionData.inputData.condition_stimuli[trial.condition],
+      jatos.studySessionData.inputData.condition_coords[trial.condition]['ses'+(jatos.studySessionData.curr_session+1)])
 
     //Add mouseclick listener MUST EDIT
     grid_box.addEventListener('click', function(){

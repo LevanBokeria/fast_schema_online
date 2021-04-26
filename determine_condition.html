@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Determine condition</title>
+        <script src='jatos.js'></script>
+        <script src='./jspsych-6.3.1/jspsych.js'></script>        
+        <script src='./extra_functions/lodash.js'></script>
+        <script src='./extra_functions/jspsych-playground.js'></script>
+        <script src='./extra_functions/trial_creator.js'></script>
+        <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
+        <script src="./jspsych-6.3.1/plugins/jspsych-vsl-grid-scene.js"></script>
+        <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
+        <script src="./extra_functions/board_creator.js"></script>
+        <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'></link>
+        <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'></link>
+    </head>
+    <body></body>
+    <script>
+
+        jatos.onLoad(function() {
+
+            jatos.studySessionData.curr_condition = 'starting'
+            jatos.studySessionData.curr_session   = 0
+
+            // Define all the conditions here ///////////////////////////////////////////////////////////
+            jatos.studySessionData.inputData = {}
+
+            // Add the cells
+            jatos.studySessionData.inputData.n_rows = 12
+            jatos.studySessionData.inputData.n_cols = 12
+
+            jatos.studySessionData.inputData.n_ses_per_cond = 3
+            jatos.studySessionData.inputData.n_trials_per_pa = 10
+            jatos.studySessionData.inputData.n_stimuli = 3
+            jatos.studySessionData.inputData.n_trials_per_ses = jatos.studySessionData.inputData.n_stimuli * jatos.studySessionData.inputData.n_trials_per_pa
+
+            // Define all the possible colors. Later, map these by randomization or latin square
+            jatos.studySessionData.inputData.condition_colors = {
+                consistent_schema: 'red',
+                inconsistent_schema: 'blue',
+                stable_landmark: 'green',
+                no_schema: 'gray',
+                raw_learning: 'yellow',
+            }
+
+            jatos.studySessionData.inputData.condition_coords = {
+                consistent_schema: {
+                    ses1: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses2: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses3: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    new_pa: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],                                  
+                },
+                inconsistent_schema: {
+                    ses1: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses2: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses3: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    new_pa: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],                                  
+                },
+                stable_landmark: {
+                    ses1: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses2: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses3: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    new_pa: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],                                  
+                },
+                no_schema: {
+                    ses1: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses2: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    ses3: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],
+                    new_pa: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],                                  
+                },
+                raw_learning: {
+                    new_pa: [
+                        [1,1],
+                        [5,5],
+                        [7,7]
+                    ],                                  
+                },
+            }
+
+
+            jatos.studySessionData.inputData.condition_stimuli = {
+                consistent_schema: [
+                    'img/targets/BOSS/downsized/8ball.jpg',
+                    'img/targets/BOSS/downsized/accordion01.jpg',
+                    'img/targets/BOSS/downsized/aceofdiamond.jpg',
+                ],
+                inconsistent_schema: [
+                    'img/targets/BOSS/downsized/acorn.jpg',
+                    'img/targets/BOSS/downsized/acousticguitar02.jpg',
+                    'img/targets/BOSS/downsized/addressplate.jpg'
+                ],
+                stable_landmark: [
+                    'img/targets/BOSS/downsized/africanelephant.jpg',
+                    'img/targets/BOSS/downsized/aloe01.jpg',
+                    'img/targets/BOSS/downsized/americangoldfinch.jpg',
+                ],
+                no_schema: [
+                    'img/targets/BOSS/downsized/anchor.jpg',
+                    'img/targets/BOSS/downsized/ant.jpg',
+                    'img/targets/BOSS/downsized/armchair02.jpg',
+                ],
+                // raw_learning: [
+                //     'img/targets/BOSS/downsized/artichoke01b.jpg',
+                //     'img/targets/BOSS/downsized/badmintonracket.jpg',
+                //     'img/targets/BOSS/downsized/ballofstring.jpg', 
+                // ],
+            }            
+
+            jatos.studySessionData.inputData.condition_new_pa_stimuli = {
+                consistent_schema: [
+                    'img/targets/BOSS/downsized/barrel01.jpg',
+                    'img/targets/BOSS/downsized/bassethound.jpg',
+                ],
+                inconsistent_schema: [
+                    'img/targets/BOSS/downsized/battleaxe.jpg',
+                    'img/targets/BOSS/downsized/beachumbrella01.jpg',
+                ],
+                stable_landmark: [
+                    'img/targets/BOSS/downsized/bed.jpg',
+                    'img/targets/BOSS/downsized/bicycle.jpg',
+                ],
+                no_schema: [
+                    'img/targets/BOSS/downsized/birdnest.jpg',
+                    'img/targets/BOSS/downsized/bolt01a.jpg',
+                ],
+                raw_learning: [
+                    'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
+                    'img/targets/BOSS/downsized/bowlingpin.jpg',
+                ],
+            }  
+
+
+            jatos.studySessionData.inputData.all_images = [
+                'img/targets/BOSS/downsized/8ball.jpg',
+                'img/targets/BOSS/downsized/accordion01.jpg',
+                'img/targets/BOSS/downsized/aceofdiamond.jpg',
+                'img/targets/BOSS/downsized/acorn.jpg',
+                'img/targets/BOSS/downsized/acousticguitar02.jpg',
+                'img/targets/BOSS/downsized/addressplate.jpg',
+                'img/targets/BOSS/downsized/africanelephant.jpg',
+                'img/targets/BOSS/downsized/aloe01.jpg',
+                'img/targets/BOSS/downsized/americangoldfinch.jpg',
+                'img/targets/BOSS/downsized/anchor.jpg',
+                'img/targets/BOSS/downsized/ant.jpg',
+                'img/targets/BOSS/downsized/armchair02.jpg',
+                'img/targets/BOSS/downsized/artichoke01b.jpg',
+                'img/targets/BOSS/downsized/badmintonracket.jpg',
+                'img/targets/BOSS/downsized/ballofstring.jpg',
+                'img/targets/BOSS/downsized/barrel01.jpg',
+                'img/targets/BOSS/downsized/bassethound.jpg',
+                'img/targets/BOSS/downsized/battleaxe.jpg',
+                'img/targets/BOSS/downsized/beachumbrella01.jpg',
+                'img/targets/BOSS/downsized/bed.jpg',
+                'img/targets/BOSS/downsized/bicycle.jpg',
+                'img/targets/BOSS/downsized/birdnest.jpg',
+                'img/targets/BOSS/downsized/bolt01a.jpg',
+                'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
+                'img/targets/BOSS/downsized/bowlingpin.jpg',
+                'img/targets/BOSS/downsized/bowtie.jpg',
+            ]
+
+            // debugger
+            // Create the trials
+            jatos.studySessionData.inputData.all_session_trials = trial_creator()
+
+   
+            // ////////////////////////////////////////////////////////////////////////////////////////////
+            // ////////////////////////////////////////////////////////////////////////////////////////////
+            // Create save the sessions in jatos studySessionData.
+
+            // Make JATOS remember that this session was run
+            jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+            jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+            jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+            // Input data gets lost for some reason???
+            // jatos.studySessionData.inputData = JSON.parse(JSON.stringify(jatos.studySessionData.inputData))
+
+            jatos.submitResultData("[conditions_start---" + 
+            JSON.stringify(jatos.studySessionData) + "---conditions_end]", jatos.startNextComponent);
+
+            // ///////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+        });
+    
+    </script>
+</html>

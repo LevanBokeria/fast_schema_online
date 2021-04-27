@@ -4,7 +4,7 @@ function trial_creator(){
     let n_trials_per_ses = jatos.studySessionData.inputData.n_trials_per_ses
     let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa
 
-    for (iSes=0; iSes<=jatos.studySessionData.inputData.n_ses_per_cond; iSes++){
+    for (iSes=0; iSes<jatos.studySessionData.inputData.n_ses_per_cond; iSes++){
 
         Object.keys(jatos.studySessionData.inputData.condition_stimuli).forEach(function(curr_condition,index){
             
@@ -24,7 +24,7 @@ function trial_creator(){
           
             let session_trials = []
 
-            for (i=0; i<=jatos.studySessionData.inputData.n_trials_per_ses; i++){
+            for (i=0; i < jatos.studySessionData.inputData.n_trials_per_ses; i++){
 
                 session_trials[i] = {
                     color: jatos.studySessionData.inputData.condition_colors[curr_condition],

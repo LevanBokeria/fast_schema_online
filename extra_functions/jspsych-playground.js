@@ -210,7 +210,7 @@ jsPsych.plugins["playground"] = (function() {
 
     function doFeedback(correct, timeout) {
       console.log('doFB called!')
-      debugger
+      // debugger
 
       // Remove all the event listeners from all the cells.
       document.querySelectorAll('.cells').forEach(function(el){

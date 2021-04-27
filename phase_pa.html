@@ -26,6 +26,9 @@
             jatos.studySessionData.curr_condition = 'consistent_schema'
             jatos.studySessionData.curr_session = curr_session
 
+            // randomize the order of the trials 
+            jatos.studySessionData.inputData.all_session_trials[0] = jsPsych.randomization.shuffle(jatos.studySessionData.inputData.all_session_trials[0],1)
+
 
             var session_procedure = {
                 timeline: [

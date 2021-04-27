@@ -179,7 +179,7 @@ jsPsych.plugins["playground"] = (function() {
     startTime = performance.now();
 
     // if(trial.trial_duration !== null){
-      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, jatos.studySessionData.inputData.trial_dur);
+      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, jatos.studySessionData.inputData.trial_duration);
     // }
 
     function getResponse(e){
@@ -236,7 +236,7 @@ jsPsych.plugins["playground"] = (function() {
 
       jsPsych.pluginAPI.setTimeout(function() {
         endTrial();
-      }, jatos.studySessionData.inputData.feedback_dur);
+      }, jatos.studySessionData.inputData.feedback_duration);
     
     }
 

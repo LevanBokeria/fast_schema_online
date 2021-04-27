@@ -9,7 +9,7 @@
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
 	<script src="jatos.js"></script>
 	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
-	<link rel="stylesheet" href="./extra_files/custom.css" type="text/css"></link>	
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
   </head>
 
   <body>
@@ -29,7 +29,7 @@
 				'</div>'+	
 				'<div class="instruct">'+
 					'<p>Welcome to the session!</p>' + 
-					'<p>One each trial, you will see a picture of a bird displayed. Sometimes, the same bird will be shown, one after another. Your job on each trial is to press the button P if the bird shown is the same as the one before, or the button Q if it is different. </p>' + 
+					'<p>On each trial, click the cell where you think the item is located. </p>' + 
 				'</div>',																										
 			];
 
@@ -45,16 +45,16 @@
 				prompt: "<p>Choose the duration of each trial</p>"
 			};
 
-			var mask_duration_page = {
+			var feedback_duration_page = {
 				type: 'html-slider-response',
-				stimulus: '<p>Mask duration</p>',
+				stimulus: '<p>Feedback duration</p>',
 				labels: ['0','100','200','300','400','500','600','700','800','900','1000'],
 				// labels: ['250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
 				min: 0,
 				max: 1000,
 				step: 50,
 				slider_start: 500,
-				prompt: "<p>Choose the duration for the mask</p>"
+				prompt: "<p>Choose the duration for the feedback</p>"
 			};		
 			
 			var iti_duration_page = {
@@ -77,7 +77,7 @@
 			};
 
 			timeline.push(trial_duration_page);
-			timeline.push(mask_duration_page);
+			timeline.push(feedback_duration_page);
 			timeline.push(iti_duration_page);
 			timeline.push(instructions);
 
@@ -95,9 +95,9 @@
 					// Record results
 					var results = jsPsych.data.get().values();
 
-					jatos.studySessionData.trial_duration = results[0].response
-					jatos.studySessionData.mask_duration = results[1].response
-					jatos.studySessionData.iti_duration = results[2].response
+					jatos.studySessionData.inputData.trial_duration    = results[0].response
+					jatos.studySessionData.inputData.feedback_duration = results[1].response
+					jatos.studySessionData.inputData.iti_duration      = results[2].response
 
 					jatos.submitResultData('[instructions_start_' + '---' + 
 					JSON.stringify(jatos.studySessionData) +

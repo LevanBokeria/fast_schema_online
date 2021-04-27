@@ -46,7 +46,7 @@
             
             jsPsych.init({
                 timeline: [session_procedure],                    
-                default_iti: 500, 
+                default_iti: jatos.studySessionData.inputData.iti_duration, 
                 randomize_order: true,
 
                 on_finish: function(data) {

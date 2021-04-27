@@ -17,13 +17,13 @@
 
 		//start timeline
 		jatos.onLoad(function() {
-
+			debugger
 			let comp_to_start = []
 		
 			//make a timeline
 			let timeline =[]; 
 
-			if (jatos.studySessionData.inputData.curr_expt_stage == 'schema_learning'){
+			if (jatos.studySessionData.inputData.expt_stage == 'schema_learning'){
 				var instructions = {
 					type: 'instructions',
 					pages : [			
@@ -40,7 +40,8 @@
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
-			} else if (jatos.studySessionData.inputData.curr_expt_stage == 'new_pa_learning'){
+			} else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning'){
+
 				var instructions = {
 					type: 'instructions',
 					pages : [			
@@ -57,7 +58,7 @@
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
-			} else if (jatos.studySessionData.inputData.curr_expt_stage == 'finished_new_pa_learning'){
+			} else if (jatos.studySessionData.inputData.expt_stage == 'finished_new_pa_learning'){
 				var instructions = {
 					type: 'instructions',
 					pages : [			

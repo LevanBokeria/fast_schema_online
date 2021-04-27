@@ -23,8 +23,8 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
 
         iCell.style = 
           'background-color: white;' + 
-          'border-right: 2px solid ' + current_condition_color + ';' +
-          'border-bottom: 2px solid ' + current_condition_color + ';'
+          'border-right: 3px solid ' + current_condition_color + ';' +
+          'border-bottom: 3px solid ' + current_condition_color + ';'
 
         grid_box.appendChild(iCell)
 

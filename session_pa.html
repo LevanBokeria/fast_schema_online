@@ -25,15 +25,20 @@
 
             let trials_for_this_session = []
 
-            if (jatos.studySessionData.inputData.curr_expt_stage == 'schema_learning'){
+            if (jatos.studySessionData.inputData.expt_stage == 'schema_learning'){
 
                 trials_for_this_session = jatos.studySessionData.inputData.schema_learning_trials[jatos.studySessionData.inputData.curr_session-1]
 
-            } else if (jatos.studySessionData.inputData.curr_expt_stage == 'new_pa_learning'){
+            } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning'){
                 trials_for_this_session = jatos.studySessionData.inputData.new_pa_learning_trials[jatos.studySessionData.inputData.curr_session-1]
             } else {
 
             }
+
+            let curr_condition = trials_for_this_session[0].condition
+
+            // Update the session counter for this condition
+            jatos.studySessionData.inputData.condition_ses_counters[curr_condition] ++
 
             var session_procedure = {
                 timeline: [
@@ -63,10 +68,22 @@
                     // Which comp to start
                     let comp_to_start = jatos.studySessionData.inputData.component_positions.break
 
-                    if (jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total){
-                        jatos.studySessionData.inputData.curr_expt_stage = 'new_pa_learning'
-                    } else if (jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total + 5){
-                        jatos.studySessionData.inputData.curr_expt_stage = 'finished_new_pa_learning'
+                    if (jatos.studySessionData.inputData.expt_stage == 'schema_learning' & jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total){
+                        jatos.studySessionData.inputData.expt_stage = 'new_pa_learning'
+
+                        // Reset the session counters
+                        jatos.studySessionData.inputData.curr_session = 0
+                        
+                        jatos.studySessionData.inputData.condition_ses_counters = {
+                            consistent_schema: 0,
+                            inconsistent_schema: 0,
+                            stable_landmark: 0,
+                            no_schema: 0,
+                            raw_learning: 0,
+                        }
+
+                    } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning' & jatos.studySessionData.inputData.curr_session == 5){
+                        jatos.studySessionData.inputData.expt_stage = 'finished_new_pa_learning'
                     }
 
 					jatos.submitResultData('[session_pa_start_' + '---' + 

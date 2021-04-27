@@ -22,6 +22,8 @@
             // Define all the conditions here ///////////////////////////////////////////////////////////
             jatos.studySessionData.inputData = {}
 
+            jatos.studySessionData.inputData.curr_session = 0
+            
             // Component positions
             jatos.studySessionData.inputData.component_positions = {
                 session_pa: 4,
@@ -30,8 +32,8 @@
             }
 
             jatos.studySessionData.inputData.curr_condition = ''
-            jatos.studySessionData.inputData.curr_session   = 0
-            jatos.studySessionData.inputData.curr_expt_stage = 'schema_learning'
+            jatos.studySessionData.inputData.all_trials   = 0
+            jatos.studySessionData.inputData.expt_stage = 'schema_learning'
 
             // jatos.studySessionData.inputData.trial_dur = 3000
             // jatos.studySessionData.inputData.feedback_dur = 2000
@@ -50,102 +52,99 @@
             // Define all the possible colors. Later, map these by randomization or latin square
             jatos.studySessionData.inputData.condition_colors = {
                 consistent_schema: 'red',
-                inconsistent_schema: 'blue',
-                stable_landmark: 'green',
-                no_schema: 'gray',
-                raw_learning: 'yellow',
+                inconsistent_schema: 'yellow',
+                stable_landmark: 'blue',
+                no_schema: 'green',
+                raw_learning: 'gray',
             }
 
             jatos.studySessionData.inputData.condition_ses_counters = {
-                consistent_schema: 1,
-                inconsistent_schema: 1,
-                stable_landmark: 1,
-                no_schema: 1,
-                raw_learning: 1,
+                consistent_schema: 0,
+                inconsistent_schema: 0,
+                stable_landmark: 0,
+                no_schema: 0,
+                raw_learning: 0,
             }
 
             jatos.studySessionData.inputData.condition_coords = {
                 consistent_schema: {
                     ses1: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [2,5],
+                        [5,11],
+                        [11,8]
                     ],
                     ses2: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                    [2,5],
+                        [5,11],
+                        [11,8]
                     ],
                     ses3: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                    [2,5],
+                        [5,11],
+                        [11,8]
                     ],
                     new_pa: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [5,2],
+                        [11,5]
                     ],                                  
                 },
                 inconsistent_schema: {
                     ses1: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [8,2],
+                        [5,8],
+                        [11,11]
                     ],
                     ses2: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [11,11],
+                        [8,2],
+                        [5,8]
                     ],
                     ses3: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [5,8],
+                        [11,11],
+                        [8,2]
                     ],
                     new_pa: [
-                        [1,1],
                         [5,5],
-                        [7,7]
+                        [11,8],
                     ],                                  
                 },
                 stable_landmark: {
                     ses1: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [5,2],
+                        [2,8],
+                        [8,8]
                     ],
                     ses2: [
+                        [11,5],
                         [1,1],
-                        [5,5],
-                        [7,7]
+                        [8,8]
                     ],
                     ses3: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [2,8],
+                        [11,2],
+                        [8,8]
                     ],
                     new_pa: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [2,5],
+                        [8,11]
                     ],                                  
                 },
                 no_schema: {
                     ses1: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [2,2],
+                        [8,5],
+                        [2,11]
                     ],
                     ses2: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [11,2],
+                        [2,8],
+                        [8,11]
                     ],
                     ses3: [
-                        [1,1],
                         [5,5],
-                        [7,7]
+                        [5,2],
+                        [11,5]
                     ],
                     new_pa: [
                         [1,1],
@@ -155,15 +154,14 @@
                 },
                 raw_learning: {
                     new_pa: [
-                        [1,1],
-                        [5,5],
-                        [7,7]
+                        [2,5],
+                        [11,8],
                     ],                                  
                 },
             }
 
 
-            jatos.studySessionData.inputData.condition_stimuli = {
+            jatos.studySessionData.inputData.schema_learning_stimuli = {
                 consistent_schema: [
                     'img/targets/BOSS/downsized/8ball.jpg',
                     'img/targets/BOSS/downsized/accordion01.jpg',
@@ -191,7 +189,7 @@
                 // ],
             }            
 
-            jatos.studySessionData.inputData.condition_new_pa_stimuli = {
+            jatos.studySessionData.inputData.new_pa_stimuli = {
                 consistent_schema: [
                     'img/targets/BOSS/downsized/barrel01.jpg',
                     'img/targets/BOSS/downsized/bassethound.jpg',
@@ -246,8 +244,8 @@
 
             // debugger
             // Create the trials
-            jatos.studySessionData.inputData.schema_learning_trials = trial_creator(jatos.studySessionData.inputData.condition_stimuli)
-            jatos.studySessionData.inputData.new_pa_learning_trials = trial_creator(jatos.studySessionData.inputData.condition_new_pa_stimuli)
+            jatos.studySessionData.inputData.schema_learning_trials = trial_creator(jatos.studySessionData.inputData.schema_learning_stimuli)
+            jatos.studySessionData.inputData.new_pa_learning_trials = trial_creator(jatos.studySessionData.inputData.new_pa_stimuli)
    
             // ////////////////////////////////////////////////////////////////////////////////////////////
             // ////////////////////////////////////////////////////////////////////////////////////////////

@@ -151,14 +151,12 @@ jsPsych.plugins["playground"] = (function() {
       all_cells[iC].addEventListener('click',getResponse)
     }
 
-    // grid_box.addEventListener('click', function(){
-    //   document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
-    // })
-
     display_element.appendChild(grid_box)
-
-		//show prompt_question
-    display_element.insertAdjacentHTML('beforeend', trial.prompt_question);
+    // debugger
+		
+    //show prompt_question with the trial counter
+    let iTrial = jsPsych.data.get().values().length + 1
+    display_element.insertAdjacentHTML('beforeend', trial.prompt_question += ' Trial ' + iTrial + '/30');
 
 		//show stimulus
     let stimulus_element = document.createElement('img')

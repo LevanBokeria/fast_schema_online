@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+    <title>Data Submission</title>	
+    <script src='./jspsych-6.3.1/jspsych.js'></script>        
+	<script src="jatos.js"></script>
+    <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'></link>
+</head>
+
+  <body>
+  <script>
+    //'use strict';
+
+        //start timeline
+        jatos.onLoad(function() {
+
+            var redirect_fn = function () {return window.location.replace(jatos.studySessionData.outputData.redirect_url);};
+
+            // end study function
+            var end_study_fn = function() {
+
+                // So everything's good. Finished properly
+
+                // Redirection URL with correct completion code
+                jatos.studySessionData.outputData.redirect_url = jatos.componentJsonInput.url;
+
+                jatos.endStudyAjax(true, "REDIRECTED_"+ jatos.studySessionData.prolific_ID, redirect_fn);
+                
+            } // end_study_fn    
+
+            jatos.submitResultData("[data_submission_start---" + 
+            JSON.stringify(jatos.studySessionData) +
+            "---data_submission_end]", end_study_fn);
+            
+            // jsPsych.data.displayData();
+
+        }); // on_load_function
+
+	</script>
+</body>
+</html>

@@ -26,10 +26,12 @@
             jatos.studySessionData.inputData.component_positions = {
                 session_pa: 4,
                 break: 5,
+                data_submission: 6,
             }
 
-            jatos.studySessionData.inputData.curr_condition = 'starting'
+            jatos.studySessionData.inputData.curr_condition = ''
             jatos.studySessionData.inputData.curr_session   = 0
+            jatos.studySessionData.inputData.curr_expt_stage = 'schema_learning'
 
             // jatos.studySessionData.inputData.trial_dur = 3000
             // jatos.studySessionData.inputData.feedback_dur = 2000
@@ -40,8 +42,9 @@
 
             jatos.studySessionData.inputData.n_ses_per_cond = 1
             jatos.studySessionData.inputData.n_ses_total = jatos.studySessionData.inputData.n_ses_per_cond * 4
-            jatos.studySessionData.inputData.n_trials_per_pa = 2
-            jatos.studySessionData.inputData.n_stimuli = 3
+            jatos.studySessionData.inputData.n_trials_per_pa = 1
+            jatos.studySessionData.inputData.n_schema_learning_stimuli = 3
+            jatos.studySessionData.inputData.n_new_pa_learning_stimuli = 2
             jatos.studySessionData.inputData.n_trials_per_ses = jatos.studySessionData.inputData.n_stimuli * jatos.studySessionData.inputData.n_trials_per_pa
 
             // Define all the possible colors. Later, map these by randomization or latin square
@@ -51,6 +54,14 @@
                 stable_landmark: 'green',
                 no_schema: 'gray',
                 raw_learning: 'yellow',
+            }
+
+            jatos.studySessionData.inputData.condition_ses_counters = {
+                consistent_schema: 1,
+                inconsistent_schema: 1,
+                stable_landmark: 1,
+                no_schema: 1,
+                raw_learning: 1,
             }
 
             jatos.studySessionData.inputData.condition_coords = {
@@ -235,8 +246,8 @@
 
             // debugger
             // Create the trials
-            jatos.studySessionData.inputData.all_session_trials = trial_creator()
-
+            jatos.studySessionData.inputData.schema_learning_trials = trial_creator(jatos.studySessionData.inputData.condition_stimuli)
+            jatos.studySessionData.inputData.new_pa_learning_trials = trial_creator(jatos.studySessionData.inputData.condition_new_pa_stimuli)
    
             // ////////////////////////////////////////////////////////////////////////////////////////////
             // ////////////////////////////////////////////////////////////////////////////////////////////

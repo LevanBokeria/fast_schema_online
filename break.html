@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-    <title>Instructions</title>	
+    <title>Break</title>	
 	<script src="jspsych-6.3.1/jspsych.js" ></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
@@ -18,26 +18,62 @@
 		//start timeline
 		jatos.onLoad(function() {
 
+			let comp_to_start = []
 		
 			//make a timeline
 			let timeline =[]; 
 
-			// Define pages for phase 1
-			let instruction_pages = [			
-				'<div class= "header">'+
-					'<h1> Break </h1>'+
-				'</div>'+	
-				'<div class="instruct">'+
-					'<p>Please take a break and once ready, move to the next session. </p>' + 
-				'</div>',																										
-			];		
+			if (jatos.studySessionData.inputData.curr_expt_stage == 'schema_learning'){
+				var instructions = {
+					type: 'instructions',
+					pages : [			
+						'<div class= "header">'+
+							'<h1> Break </h1>'+
+						'</div>'+	
+						'<div class="instruct">'+
+							'<p>Please take a break and once ready, move to the next session. </p>' + 
+						'</div>',																										
+					],						
+					show_clickable_nav: true,
+					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+				};
 
-			let instructions = {
-				type: 'instructions',
-				pages : instruction_pages,						
-				show_clickable_nav: true,
-				button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
-			};
+				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
+
+			} else if (jatos.studySessionData.inputData.curr_expt_stage == 'new_pa_learning'){
+				var instructions = {
+					type: 'instructions',
+					pages : [			
+						'<div class= "header">'+
+							'<h1> New PA learning </h1>'+
+						'</div>'+	
+						'<div class="instruct">'+
+							'<p>Please take a break. Next is the new PA learning. You will learn 2 new item locations for each of the boards you are familiar with as well as for one additional board that you have not seen before. </p>' + 
+						'</div>',																										
+					],						
+					show_clickable_nav: true,
+					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+				};
+
+				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
+
+			} else if (jatos.studySessionData.inputData.curr_expt_stage == 'finished_new_pa_learning'){
+				var instructions = {
+					type: 'instructions',
+					pages : [			
+						'<div class= "header">'+
+							'<h1> Finished </h1>'+
+						'</div>'+	
+						'<div class="instruct">'+
+							'<p>You have finished the experiment. Please click "Finish" </p>' + 
+						'</div>',																										
+					],						
+					show_clickable_nav: true,
+					button_label_next: '<span style="color: black"d;> <strong> Finish </stong></span>',
+				};
+
+				comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
+			}
 
 			timeline.push(instructions);
 
@@ -51,9 +87,6 @@
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
                     jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-
-                    // Component to start
-                    let comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
 					jatos.submitResultData('[break_start_' + '---' + 
 					JSON.stringify(jatos.studySessionData) +

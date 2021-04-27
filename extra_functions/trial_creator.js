@@ -1,30 +1,31 @@
-function trial_creator(){
+function trial_creator(stimuli){
 
-    let all_session_trials = []
-    let n_trials_per_ses = jatos.studySessionData.inputData.n_trials_per_ses
+    let all_trials = []
     let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa
+    let n_trials_per_ses = n_trials_per_pa * stimuli.consistent_schema.length
+
 
     for (iSes=0; iSes<jatos.studySessionData.inputData.n_ses_per_cond; iSes++){
 
-        Object.keys(jatos.studySessionData.inputData.condition_stimuli).forEach(function(curr_condition,index){
-            
-            let curr_stimuli = jatos.studySessionData.inputData.condition_stimuli[curr_condition]
-            
-            let pa1 = Array(n_trials_per_pa).fill(curr_stimuli[0])
-            let pa2 = Array(n_trials_per_pa).fill(curr_stimuli[1])
-            let pa3 = Array(n_trials_per_pa).fill(curr_stimuli[2])
-        
-            let allpas = pa1.concat(pa2).concat(pa3)
-        
-            let pa_idx1 = Array(n_trials_per_pa).fill(1)
-            let pa_idx2 = Array(n_trials_per_pa).fill(2)
-            let pa_idx3 = Array(n_trials_per_pa).fill(3)
-        
-            let allpaidxs = pa_idx1.concat(pa_idx2).concat(pa_idx3)
+        Object.keys(stimuli).forEach(function(curr_condition,index){
+            // debugger
+            let curr_stimuli = stimuli[curr_condition]
+            let allpas    = []
+            let allpaidxs = []
+
+            for (iSt=0; iSt<curr_stimuli.length; iSt++){
+
+                let pa_stimuli = Array(n_trials_per_pa).fill(curr_stimuli[iSt])
+                let pa_idxs    = Array(n_trials_per_pa).fill((iSt+1))
+
+                allpas.push(...pa_stimuli)
+                allpaidxs.push(...pa_idxs)
+
+            }
           
             let session_trials = []
 
-            for (i=0; i < jatos.studySessionData.inputData.n_trials_per_ses; i++){
+            for (i=0; i < n_trials_per_ses; i++){
 
                 session_trials[i] = {
                     color: jatos.studySessionData.inputData.condition_colors[curr_condition],
@@ -39,10 +40,10 @@ function trial_creator(){
             session_trials = 
             jsPsych.randomization.shuffleNoRepeats(session_trials)
 
-            all_session_trials.push(session_trials)
+            all_trials.push(session_trials)
 
         });
     }
 
-    return all_session_trials
+    return all_trials
 }

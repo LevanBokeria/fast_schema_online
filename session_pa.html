@@ -23,6 +23,18 @@
             // iterate the session
             jatos.studySessionData.inputData.curr_session ++
 
+            let trials_for_this_session = []
+
+            if (jatos.studySessionData.inputData.curr_expt_stage == 'schema_learning'){
+
+                trials_for_this_session = jatos.studySessionData.inputData.schema_learning_trials[jatos.studySessionData.inputData.curr_session-1]
+
+            } else if (jatos.studySessionData.inputData.curr_expt_stage == 'new_pa_learning'){
+                trials_for_this_session = jatos.studySessionData.inputData.new_pa_learning_trials[jatos.studySessionData.inputData.curr_session-1]
+            } else {
+
+            }
+
             var session_procedure = {
                 timeline: [
                     {   
@@ -34,13 +46,12 @@
                         condition: jsPsych.timelineVariable('condition'),
                     }
                 ],
-                timeline_variables: jatos.studySessionData.inputData.all_session_trials[jatos.studySessionData.inputData.curr_session-1]
+                timeline_variables: trials_for_this_session,
             }
             
             jsPsych.init({
                 timeline: [session_procedure],                    
                 default_iti: jatos.studySessionData.inputData.iti_duration, 
-                randomize_order: true,
 
                 on_finish: function(data) {
 
@@ -50,12 +61,12 @@
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
                     // Which comp to start
-                    let comp_to_start = []
+                    let comp_to_start = jatos.studySessionData.inputData.component_positions.break
 
                     if (jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total){
-                        comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
-                    } else {
-                        comp_to_start = jatos.studySessionData.inputData.component_positions.break
+                        jatos.studySessionData.inputData.curr_expt_stage = 'new_pa_learning'
+                    } else if (jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total + 5){
+                        jatos.studySessionData.inputData.curr_expt_stage = 'finished_new_pa_learning'
                     }
 
 					jatos.submitResultData('[session_pa_start_' + '---' + 

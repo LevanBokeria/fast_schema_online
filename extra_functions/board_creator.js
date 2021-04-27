@@ -9,8 +9,8 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
         'height:' + board_size_px + 'px;' + 
         'width:' + board_size_px + 'px;' + 
         'grid-template-columns: repeat('+n_cols+', 1fr);' +
-        'grid-template-rows: repeat('+n_rows+', 1fr);' +
-        'background-color: ' + current_condition_color + ';'
+        'grid-template-rows: repeat('+n_rows+', 1fr);'
+        // 'background-color: ' + current_condition_color + ';'
 
     for (ir = 0; ir < n_rows; ir++){
 
@@ -22,7 +22,9 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
         iCell.id = 'cell_r_' + (ir+1) + '_c_' + (ic+1)
 
         iCell.style = 
-          'background-color: white;'
+          'background-color: white;' + 
+          'border-right: 2px solid ' + current_condition_color + ';' +
+          'border-bottom: 2px solid ' + current_condition_color + ';'
 
         grid_box.appendChild(iCell)
 

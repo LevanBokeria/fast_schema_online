@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Playground</title>
+        <title>Session PA</title>
         <script src='jatos.js'></script>
         <script src='./jspsych-6.3.1/jspsych.js'></script>        
         <script src='./extra_functions/lodash.js'></script>
@@ -18,17 +18,10 @@
     <script>
 
         jatos.onLoad(function() {
-            // debugger
+            debugger
 
-            let curr_session = 0
-
-            // Set the global jatos variables
-            jatos.studySessionData.curr_condition = 'consistent_schema'
-            jatos.studySessionData.curr_session = curr_session
-
-            // randomize the order of the trials 
-            jatos.studySessionData.inputData.all_session_trials[0] = jsPsych.randomization.shuffle(jatos.studySessionData.inputData.all_session_trials[0],1)
-
+            // iterate the session
+            jatos.studySessionData.inputData.curr_session ++
 
             var session_procedure = {
                 timeline: [
@@ -41,7 +34,7 @@
                         condition: jsPsych.timelineVariable('condition'),
                     }
                 ],
-                timeline_variables: jatos.studySessionData.inputData.all_session_trials[0]
+                timeline_variables: jatos.studySessionData.inputData.all_session_trials[jatos.studySessionData.inputData.curr_session-1]
             }
             
             jsPsych.init({
@@ -50,8 +43,28 @@
                 randomize_order: true,
 
                 on_finish: function(data) {
-                    console.log('Over');
-                    jsPsych.data.displayData('json');
+
+					// Make JATOS remember that this session was run
+                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+                    // Which comp to start
+                    let comp_to_start = []
+
+                    if (jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total){
+                        comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
+                    } else {
+                        comp_to_start = jatos.studySessionData.inputData.component_positions.break
+                    }
+
+					jatos.submitResultData('[session_pa_start_' + '---' + 
+					JSON.stringify(jatos.studySessionData) +
+					'---' + '_session_pa_end]', 
+					function(){jatos.startComponentByPos(comp_to_start)});
+
+                    // console.log('Over');
+                    // jsPsych.data.displayData('json');
                 }       
             });
    

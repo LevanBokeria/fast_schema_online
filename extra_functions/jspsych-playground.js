@@ -138,11 +138,12 @@ jsPsych.plugins["playground"] = (function() {
       jatos.studySessionData.inputData.condition_colors[trial.condition],
       false,
       jatos.studySessionData.inputData.condition_stimuli[trial.condition],
-      jatos.studySessionData.inputData.condition_coords[trial.condition]['ses'+(jatos.studySessionData.curr_session+1)])
+      jatos.studySessionData.inputData.condition_coords[trial.condition]['ses'+(jatos.studySessionData.inputData.curr_session)])
 
     //Add mouseclick listener MUST EDIT
 
-    var stim_coords = jatos.studySessionData.inputData.condition_coords[trial.condition]['ses'+(jatos.studySessionData.curr_session+1)][trial.stimulus_idx-1]
+    var stim_coords = jatos.studySessionData.inputData.condition_coords[trial.condition]
+    ['ses'+(jatos.studySessionData.inputData.curr_session)][trial.stimulus_idx-1]
 
     var all_cells = grid_box.querySelectorAll('.cells')
 

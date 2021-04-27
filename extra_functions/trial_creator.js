@@ -34,6 +34,11 @@ function trial_creator(){
                 }
             }
 
+            // randomize the order of the trials 
+            // debugger
+            session_trials = 
+            jsPsych.randomization.shuffleNoRepeats(session_trials)
+
             all_session_trials.push(session_trials)
 
         });

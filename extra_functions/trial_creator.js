@@ -5,7 +5,7 @@ function trial_creator(stimuli){
     let n_trials_per_ses = n_trials_per_pa * stimuli.consistent_schema.length
 
 
-    for (iSes=0; iSes<jatos.studySessionData.inputData.n_ses_per_cond; iSes++){
+    for (iSes=0; iSes<jatos.studySessionData.inputData.n_schema_ses_per_cond; iSes++){
 
         Object.keys(stimuli).forEach(function(curr_condition,index){
             // debugger

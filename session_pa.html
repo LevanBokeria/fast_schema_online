@@ -18,19 +18,19 @@
     <script>
 
         jatos.onLoad(function() {
-            debugger
+            // debugger
 
             // iterate the session
             jatos.studySessionData.inputData.curr_session ++
 
             let trials_for_this_session = []
 
-            if (jatos.studySessionData.inputData.expt_stage == 'schema_learning'){
+            if (jatos.studySessionData.inputData.expt_stage == 'schema'){
 
-                trials_for_this_session = jatos.studySessionData.inputData.schema_learning_trials[jatos.studySessionData.inputData.curr_session-1]
+                trials_for_this_session = jatos.studySessionData.inputData.schema_trials[jatos.studySessionData.inputData.curr_session-1]
 
-            } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning'){
-                trials_for_this_session = jatos.studySessionData.inputData.new_pa_learning_trials[jatos.studySessionData.inputData.curr_session-1]
+            } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa'){
+                trials_for_this_session = jatos.studySessionData.inputData.new_pa_trials[jatos.studySessionData.inputData.curr_session-1]
             } else {
 
             }
@@ -59,6 +59,12 @@
                 default_iti: jatos.studySessionData.inputData.iti_duration, 
 
                 on_finish: function(data) {
+                    // debugger
+
+                    // Save the data
+                    var session_results = jsPsych.data.get().values()
+
+                    jatos.studySessionData.outputData.session_results.push(...session_results)
 
 					// Make JATOS remember that this session was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
@@ -68,8 +74,8 @@
                     // Which comp to start
                     let comp_to_start = jatos.studySessionData.inputData.component_positions.break
 
-                    if (jatos.studySessionData.inputData.expt_stage == 'schema_learning' & jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_ses_total){
-                        jatos.studySessionData.inputData.expt_stage = 'new_pa_learning'
+                    if (jatos.studySessionData.inputData.expt_stage == 'schema' & jatos.studySessionData.inputData.curr_session == jatos.studySessionData.inputData.n_schema_ses_total){
+                        jatos.studySessionData.inputData.expt_stage = 'new_pa'
 
                         // Reset the session counters
                         jatos.studySessionData.inputData.curr_session = 0
@@ -82,8 +88,8 @@
                             raw_learning: 0,
                         }
 
-                    } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning' & jatos.studySessionData.inputData.curr_session == 5){
-                        jatos.studySessionData.inputData.expt_stage = 'finished_new_pa_learning'
+                    } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa' & jatos.studySessionData.inputData.curr_session == 5){
+                        jatos.studySessionData.inputData.expt_stage = 'finished_new_pa'
                     }
 
 					jatos.submitResultData('[session_pa_start_' + '---' + 

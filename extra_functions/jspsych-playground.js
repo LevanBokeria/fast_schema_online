@@ -126,7 +126,7 @@ jsPsych.plugins["playground"] = (function() {
     var response = {
       rt: null,
       row: null,
-      column: null,
+      col: null,
       correct: null, //null if missed, else true/false
     }
     // debugger
@@ -134,13 +134,13 @@ jsPsych.plugins["playground"] = (function() {
     // if its schema learning, then define a string like 'ses1' 'ses2' etc, to access img coords. Else if its new pa learning, then define a string 'new_pa'
     let str_to_use = []
     let img_array  = []
-    if (jatos.studySessionData.inputData.expt_stage == 'schema_learning'){
+    if (jatos.studySessionData.inputData.expt_stage == 'schema'){
 
       str_to_use = ['ses'+(jatos.studySessionData.inputData.condition_ses_counters[trial.condition])]
 
-      img_array = jatos.studySessionData.inputData.schema_learning_stimuli[trial.condition]
+      img_array = jatos.studySessionData.inputData.schema_stimuli[trial.condition]
 
-    } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning'){
+    } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa'){
 
       str_to_use = 'new_pa'
 
@@ -259,12 +259,24 @@ jsPsych.plugins["playground"] = (function() {
 
 
     function endTrial() {
-      console.log('Another trial');
+      // console.log('Another trial');
+      
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
+      // debugger
       // gather the data to store for the trial
       var trial_data = response;
+
+      // Add trial variables to the trial data
+      trial_data.condition = trial.condition
+      trial_data.expt_stage = jatos.studySessionData.inputData.expt_stage
+      trial_data.session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
+      trial_data.stimulus = trial.stimulus
+      trial_data.corr_row = stim_coords[0]
+      trial_data.corr_col = stim_coords[1]
+
+      
 
       // clear the display
       display_element.innerHTML = '';

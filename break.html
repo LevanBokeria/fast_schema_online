@@ -17,13 +17,13 @@
 
 		//start timeline
 		jatos.onLoad(function() {
-			debugger
+			// debugger
 			let comp_to_start = []
 		
 			//make a timeline
 			let timeline =[]; 
 
-			if (jatos.studySessionData.inputData.expt_stage == 'schema_learning'){
+			if (jatos.studySessionData.inputData.expt_stage == 'schema'){
 				var instructions = {
 					type: 'instructions',
 					pages : [			
@@ -40,25 +40,42 @@
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
-			} else if (jatos.studySessionData.inputData.expt_stage == 'new_pa_learning'){
+			} else if (jatos.studySessionData.inputData.expt_stage == 'new_pa'){
 
-				var instructions = {
-					type: 'instructions',
-					pages : [			
-						'<div class= "header">'+
-							'<h1> New PA learning </h1>'+
-						'</div>'+	
-						'<div class="instruct">'+
-							'<p>Please take a break. Next is the new PA learning. You will learn 2 new item locations for each of the boards you are familiar with as well as for one additional board that you have not seen before. </p>' + 
-						'</div>',																										
-					],						
-					show_clickable_nav: true,
-					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
-				};
+				// If its the very first session of new pa learning, tell them they're moving to the new pa learning
+				if (jatos.studySessionData.inputData.curr_session == 0){
+					var instructions = {
+						type: 'instructions',
+						pages : [			
+							'<div class= "header">'+
+								'<h1> New PA learning </h1>'+
+							'</div>'+	
+							'<div class="instruct">'+
+								'<p>Please take a break. Next is the new PA learning. You will learn 2 new item locations for each of the boards you are familiar with as well as for one additional board that you have not seen before. </p>' + 
+							'</div>',																										
+						],						
+						show_clickable_nav: true,
+						button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+					};
+				} else {
+					var instructions = {
+						type: 'instructions',
+						pages : [			
+							'<div class= "header">'+
+								'<h1> New PA learning </h1>'+
+							'</div>'+	
+							'<div class="instruct">'+
+								'<p>Please take a break and once ready, move to the next session. </p>' + 
+							'</div>',																										
+						],						
+						show_clickable_nav: true,
+						button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+					};
+				}
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
-			} else if (jatos.studySessionData.inputData.expt_stage == 'finished_new_pa_learning'){
+			} else if (jatos.studySessionData.inputData.expt_stage == 'finished_new_pa'){
 				var instructions = {
 					type: 'instructions',
 					pages : [			

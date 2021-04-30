@@ -54,8 +54,11 @@
                 timeline_variables: trials_for_this_session,
             }
             
+            var imgs_to_preload = jatos.studySessionData.inputData.all_images
+
             jsPsych.init({
                 timeline: [session_procedure],                    
+                preload_images: [imgs_to_preload],
                 default_iti: jatos.studySessionData.inputData.iti_duration, 
 
                 on_finish: function(data) {

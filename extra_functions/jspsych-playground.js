@@ -173,7 +173,7 @@ jsPsych.plugins["playground"] = (function() {
 		
     //show prompt_question with the trial counter
     let iTrial = jsPsych.data.get().values().length + 1
-    display_element.insertAdjacentHTML('beforeend', trial.prompt_question += ' Trial ' + iTrial + '/30');
+    display_element.insertAdjacentHTML('beforeend', trial.prompt_question += ' Trial ' + iTrial);
 
 		//show stimulus
     let stimulus_element = document.createElement('img')

@@ -36,9 +36,9 @@ function trial_creator(stimuli){
             }
 
             // randomize the order of the trials 
-            // debugger
+            debugger
             session_trials = 
-            jsPsych.randomization.shuffleNoRepeats(session_trials)
+            jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
 
             all_trials.push(session_trials)
 

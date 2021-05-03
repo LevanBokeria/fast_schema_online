@@ -69,86 +69,90 @@
             jatos.studySessionData.inputData.condition_coords = {
                 consistent_schema: {
                     ses1: [
-                        [2,5],
-                        [5,11],
-                        [11,8]
+                        [2,2],
+                        [8,8],
+                        [5,11]
                     ],
                     ses2: [
-                        [2,5],
-                        [5,11],
-                        [11,8]
+                        [2,2],
+                        [8,8],
+                        [5,11]
                     ],
                     ses3: [
-                        [2,5],
-                        [5,11],
-                        [11,8]
+                        [2,2],
+                        [8,8],
+                        [5,11]
                     ],
                     new_pa: [
-                        [5,2],
-                        [11,5]
+                        [8,2],
+                        [2,5],
+                        [11,8]
                     ],                                  
                 },
                 inconsistent_schema: {
                     ses1: [
-                        [8,2],
-                        [5,8],
-                        [11,11]
-                    ],
-                    ses2: [
-                        [11,11],
-                        [8,2],
+                        [11,2],
+                        [2,5],
                         [5,8]
                     ],
-                    ses3: [
-                        [5,8],
-                        [11,11],
-                        [8,2]
+                    ses2: [
+                        [5,8]
+                        [11,2],
+                        [2,5],
                     ],
+                    ses3: [ 
+                        [2,5],
+                        [5,8],
+                        [11,2],
+                      ],
                     new_pa: [
-                        [5,5],
-                        [11,8],
+                        [8,2],
+                        [2,5],
+                        [11,8]
                     ],                                  
                 },
                 stable_landmark: {
                     ses1: [
-                        [5,2],
+                        [5,5],
                         [2,8],
-                        [8,8]
+                        [11,11]
                     ],
                     ses2: [
-                        [11,5],
-                        [2,2],
-                        [8,8]
+                        [5,5],
+                        [8,11],
+                        [2,2]
                     ],
                     ses3: [
+                        [5,5],
+                        [8,2], 
+                        [2,11]
+                    ],
+                    new_pa: [
+                        [2,5],
+                        [11,8],
+                        [5,11]
+                    ],                                  
+                },
+                no_schema: {
+                    ses1: [
+                        [5,2],
+                        [8,5],
+                        [2,11]
+                    ],
+                    ses2: [
+                        [11,11],
                         [2,8],
+                        [5,5]
+                    ],
+                    ses3: [
+                        [5,11],
                         [11,2],
                         [8,8]
                     ],
                     new_pa: [
                         [2,5],
+                        [11,5],
                         [8,11]
-                    ],                                  
-                },
-                no_schema: {
-                    ses1: [
-                        [2,2],
-                        [8,5],
-                        [2,11]
-                    ],
-                    ses2: [
-                        [11,2],
-                        [2,8],
-                        [8,11]
-                    ],
-                    ses3: [
-                        [5,5],
-                        [5,2],
-                        [11,5]
-                    ],
-                    new_pa: [
-                        [5,8],
-                        [11,11],
                     ],                                  
                 },
                 raw_learning: {
@@ -160,56 +164,63 @@
             }
 
 
-            jatos.studySessionData.inputData.schema_stimuli = {
-                consistent_schema: [
-                    'img/targets/BOSS/downsized/8ball.jpg',
-                    'img/targets/BOSS/downsized/accordion01.jpg',
-                    'img/targets/BOSS/downsized/aceofdiamond.jpg',
-                ],
-                inconsistent_schema: [
-                    'img/targets/BOSS/downsized/acorn.jpg',
-                    'img/targets/BOSS/downsized/acousticguitar02.jpg',
-                    'img/targets/BOSS/downsized/addressplate.jpg'
-                ],
-                stable_landmark: [
-                    'img/targets/BOSS/downsized/africanelephant.jpg',
-                    'img/targets/BOSS/downsized/aloe01.jpg',
-                    'img/targets/BOSS/downsized/americangoldfinch.jpg',
-                ],
-                no_schema: [
-                    'img/targets/BOSS/downsized/anchor.jpg',
-                    'img/targets/BOSS/downsized/ant.jpg',
-                    'img/targets/BOSS/downsized/armchair02.jpg',
-                ],
+            jatos.studySessionData.inputData.stimuli = {
+                consistent_schema: {
+                    schema_stimuli: [
+                        'img/targets/BOSS/downsized/8ball.jpg',
+                        'img/targets/BOSS/downsized/accordion01.jpg',
+                        'img/targets/BOSS/downsized/aceofdiamond.jpg',
+                    ],
+                    new_pa_stimuli: [
+                        'img/targets/BOSS/downsized/artichoke01b.jpg',
+                        'img/targets/BOSS/downsized/badmintonracket.jpg',
+                        'img/targets/BOSS/downsized/ballofstring.jpg',
+                    ]
+                },
+                inconsistent_schema: {
+                    schema_stimuli: [
+                        'img/targets/BOSS/downsized/acorn.jpg',
+                        'img/targets/BOSS/downsized/acousticguitar02.jpg',
+                        'img/targets/BOSS/downsized/addressplate.jpg'
+                    ],
+                    new_pa_stimuli: [
+                        'img/targets/BOSS/downsized/barnowl.jpg',
+                        'img/targets/BOSS/downsized/barrel01.jpg',
+                        'img/targets/BOSS/downsized/basketball01.jpg',
+                    ],
+                },
+                stable_landmark: {
+                    schema_stimuli: [
+                        'img/targets/BOSS/downsized/africanelephant.jpg',
+                        'img/targets/BOSS/downsized/aloe01.jpg',
+                        'img/targets/BOSS/downsized/americangoldfinch.jpg',
+                    ],
+                    new_pa_stimuli: [
+                        'img/targets/BOSS/downsized/bassethound.jpg',
+                        'img/targets/BOSS/downsized/battleaxe.jpg',
+                        'img/targets/BOSS/downsized/beachpaddle01a.jpg',
+                    ]
+                },
+                no_schema: {
+                    schema_stimuli: [
+                        'img/targets/BOSS/downsized/anchor.jpg',
+                        'img/targets/BOSS/downsized/ant.jpg',
+                        'img/targets/BOSS/downsized/armchair02.jpg',
+                    ],
+                    new_pa_stimuli: [
+                        'img/targets/BOSS/downsized/beachumbrella01.jpg',
+                        'img/targets/BOSS/downsized/bed.jpg',
+                        'img/targets/BOSS/downsized/bench01.jpg',
+                    ]
+                },
+                raw_learning: {
+                    new_pa_stimuli: [
+                        'img/targets/BOSS/downsized/bicycle.jpg',
+                        'img/targets/BOSS/downsized/bikepump01.jpg',
+                        'img/targets/BOSS/downsized/birdnest.jpg',
+                    ]
+                }
             }            
-
-            jatos.studySessionData.inputData.new_pa_stimuli = {
-                consistent_schema: [
-                    'img/targets/BOSS/downsized/artichoke01b.jpg',
-                    'img/targets/BOSS/downsized/badmintonracket.jpg',
-                    'img/targets/BOSS/downsized/ballofstring.jpg',
-                ],
-                inconsistent_schema: [
-                    'img/targets/BOSS/downsized/barnowl.jpg',
-                    'img/targets/BOSS/downsized/barrel01.jpg',
-                    'img/targets/BOSS/downsized/basketball01.jpg',
-                ],
-                stable_landmark: [
-                    'img/targets/BOSS/downsized/bassethound.jpg',
-                    'img/targets/BOSS/downsized/battleaxe.jpg',
-                    'img/targets/BOSS/downsized/beachpaddle01a.jpg',
-                ],
-                no_schema: [
-                    'img/targets/BOSS/downsized/beachumbrella01.jpg',
-                    'img/targets/BOSS/downsized/bed.jpg',
-                    'img/targets/BOSS/downsized/bench01.jpg',
-                ],
-                raw_learning: [
-                    'img/targets/BOSS/downsized/bicycle.jpg',
-                    'img/targets/BOSS/downsized/bikepump01.jpg',
-                    'img/targets/BOSS/downsized/birdnest.jpg',
-                ],
-            }  
 
             jatos.studySessionData.inputData.all_images = [
                 'img/targets/BOSS/downsized/8ball.jpg',

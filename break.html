@@ -17,7 +17,7 @@
 
 		//start timeline
 		jatos.onLoad(function() {
-			// debugger
+			debugger
 			let comp_to_start = []
 		
 			//make a timeline
@@ -28,21 +28,32 @@
 
 			let curr_session = jatos.studySessionData.inputData.curr_session
 
-			let previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].condition
-			let next_condition     = jatos.studySessionData.inputData.all_sessions[curr_session][0].condition
+			if (curr_session == jatos.studySessionData.inputData.all_sessions.length){
 
-			let previous_stage = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].stage
-			let next_stage     = jatos.studySessionData.inputData.all_sessions[curr_session][0].stage
+				instructions_text = 'Thank you. You have finished the experiment. Click "Next".'
 
-			if (previous_condition != next_condition){
-				// So we're changing the board
-				instructions_text = 'Please take a break. <br> Next, you will learn a new board with new pictures.'
-			} else if (previous_stage != next_stage){
-				instructions_text = 'Please take a break. <br> For the next session, you will stay on this same board, but you will learng 3 new pictures.'
+				comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
+
 			} else {
-				instructions_text = 'Please take a break and once ready move to the next session.'
-			}
 
+				let previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].condition
+				let next_condition     = jatos.studySessionData.inputData.all_sessions[curr_session][0].condition
+
+				let previous_stage = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].stage
+				let next_stage     = jatos.studySessionData.inputData.all_sessions[curr_session][0].stage
+
+				if (previous_condition != next_condition){
+					// So we're changing the board
+					instructions_text = 'Please take a break. <br> Next, you will learn a new board with new pictures.'
+				} else if (previous_stage != next_stage){
+					instructions_text = 'Please take a break. <br> For the next session, you will stay on this same board, but you will learn 3 new pictures.'
+				} else {
+					instructions_text = 'Please take a break and once ready move to the next session.'
+				}
+
+				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
+
+			}
 			var instructions = {
 					type: 'instructions',
 					pages : [			
@@ -56,8 +67,6 @@
 					show_clickable_nav: true,
 					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
 				};
-
-			comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
 			timeline.push(instructions);
 

@@ -43,7 +43,7 @@
             jatos.studySessionData.inputData.n_cols = 12
 
             jatos.studySessionData.inputData.n_ses_per_condition = {
-                schema_learning: 3,
+                schema_learning: 1,
                 new_pa_learning: 1,
             }
             jatos.studySessionData.inputData.n_ses_total = {
@@ -52,8 +52,8 @@
             }
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
-                schema_learning: 10,
-                new_pa_learning: 10,
+                schema_learning: 1,
+                new_pa_learning: 1,
             }
 
             // Define all the possible colors. Later, map these by randomization or latin square
@@ -96,24 +96,24 @@
                         ses1: [
                             [2,2],
                             [8,8],
-                            [5,11]
+                            [5,11],
                         ],
                         ses2: [
                             [2,2],
                             [8,8],
-                            [5,11]
+                            [5,11],
                         ],
                         ses3: [
                             [2,2],
                             [8,8],
-                            [5,11]
+                            [5,11],
                         ],
                     },
                     new_pa_learning: {
                         ses1: [
                             [8,2],
                             [2,5],
-                            [11,8]
+                            [11,8],
                         ],        
                     },                          
                 },
@@ -122,10 +122,10 @@
                         ses1: [
                             [11,2],
                             [2,5],
-                            [5,8]
+                            [5,8],
                         ],
                         ses2: [
-                            [5,8]
+                            [5,8],
                             [11,2],
                             [2,5],
                         ],
@@ -137,9 +137,9 @@
                     },
                     new_pa_learning: {
                         ses1: [
-                            [8,2],
-                            [2,5],
-                            [11,8]
+                            [11,5],
+                            [5,11],
+                            [11,11],
                         ],        
                     },                          
                 },
@@ -148,17 +148,17 @@
                         ses1: [
                             [5,5],
                             [2,8],
-                            [11,11]
+                            [11,11],
                         ],
                         ses2: [
                             [5,5],
                             [8,11],
-                            [2,2]
+                            [2,2],
                         ],
                         ses3: [
                             [5,5],
                             [8,2], 
-                            [2,11]
+                            [2,11],
                         ],
                     },
 
@@ -166,7 +166,7 @@
                         ses1: [
                             [2,5],
                             [11,8],
-                            [5,11]
+                            [5,11],
                         ],     
                     },                          
                 },
@@ -175,32 +175,33 @@
                         ses1: [
                             [5,2],
                             [8,5],
-                            [2,11]
+                            [2,11],
                         ],
                         ses2: [
                             [11,11],
                             [2,8],
-                            [5,5]
+                            [5,5],
                         ],
                         ses3: [
                             [5,11],
                             [11,2],
-                            [8,8]
+                            [8,8],
                         ],
                     },
                     new_pa_learning: {
                             ses1: [
                                 [2,5],
                                 [11,5],
-                                [8,11]
+                                [8,11],
                             ],
                     },
                 },
                 raw_learning: {
                     new_pa_learning: {
                         ses1: [
+                            [5,2],
                             [8,5],
-                            [2,11],
+                            [2,8],
                         ],        
                     },    
                 },

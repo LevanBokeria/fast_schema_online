@@ -1,68 +1,58 @@
 function trial_creator(all_conditions){
 
     let all_trials = []
-    // let n_trials_per_ses = n_trials_per_pa * stimuli.consistent_schema.length
 
+    Object.keys(all_conditions).forEach(function(iCond,index){
+        debugger
+        let iCondStages = all_conditions[iCond]
 
-    // for (iSes=0; iSes<jatos.studySessionData.inputData.n_schema_ses_per_cond; iSes++){
+        Object.keys(iCondStages).forEach(function(stage,counter){
+            let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa[stage]
+            let iStageStimuli = iCondStages[stage]
 
-        Object.keys(all_conditions).forEach(function(iCond,index){
-            // debugger
-            let iCondStages = all_conditions[iCond]
+                let n_trials_per_ses = n_trials_per_pa * iStageStimuli.length
+                let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[stage]
 
-            Object.keys(iCondStages).forEach(function(stage,counter){
-                let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa[stage]
-                let iStageStimuli = iCondStages[stage]
+                for (iSes=0; iSes<istage_n_ses; iSes++){
 
-                    let n_trials_per_ses = n_trials_per_pa * iStageStimuli.length
-                    let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[stage]
+                    let allpas      = []
+                    let allpaidxs   = []
+                    let allpacoords = []
 
-                    for (iSes=0; iSes<istage_n_ses; iSes++){
+                    // Which coordinates to use
+                    let iCoordsForAllSessions = jatos.studySessionData.inputData.condition_coords[iCond][stage]['ses'+(iSes+1)]
 
-                        let allpas      = []
-                        let allpaidxs   = []
-                        let allpacoords = []
+                    for (iSt=0; iSt<iStageStimuli.length; iSt++){
+                        let pa_stimuli = Array(n_trials_per_pa).fill(iStageStimuli[iSt])
+                        let pa_idxs    = Array(n_trials_per_pa).fill((iSt+1))
+                        let pa_coords  = Array(n_trials_per_pa).fill(iCoordsForAllSessions[iSt])
 
-                        // Which coordinates to use
-                        let iCoordsForAllSessions = jatos.studySessionData.inputData.condition_coords[iCond][stage]['ses'+(iSes+1)]
-
-                        for (iSt=0; iSt<iStageStimuli.length; iSt++){
-                            let pa_stimuli = Array(n_trials_per_pa).fill(iStageStimuli[iSt])
-                            let pa_idxs    = Array(n_trials_per_pa).fill((iSt+1))
-                            let pa_coords  = Array(n_trials_per_pa).fill(iCoordsForAllSessions[iSt])
-
-                            allpas.push(...pa_stimuli)
-                            allpaidxs.push(...pa_idxs)
-                            allpacoords.push(...pa_coords)
-                        }
-                        let session_trials = []
-                        for (i=0; i < n_trials_per_ses; i++){
-
-                            session_trials[i] = {
-                                color: jatos.studySessionData.inputData.condition_colors[iCond],
-                                img_path: allpas[i],
-                                stimulus_idx: allpaidxs[i],
-                                condition: iCond,
-                                stage: stage,
-                                coords: allpacoords[i]
-                            }
-                        }
-                        // randomize the order of the trials 
-                        // debugger
-                        session_trials = 
-                        jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
-
-                        all_trials.push(session_trials)
+                        allpas.push(...pa_stimuli)
+                        allpaidxs.push(...pa_idxs)
+                        allpacoords.push(...pa_coords)
                     }
-            })
+                    let session_trials = []
+                    for (i=0; i < n_trials_per_ses; i++){
 
+                        session_trials[i] = {
+                            color: jatos.studySessionData.inputData.condition_colors[iCond],
+                            img_path: allpas[i],
+                            stimulus_idx: allpaidxs[i],
+                            condition: iCond,
+                            stage: stage,
+                            coords: allpacoords[i]
+                        }
+                    }
+                    // randomize the order of the trials 
+                    // debugger
+                    // session_trials = 
+                    // jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
 
-
-
-
-
-        });
-    // }
+                    all_trials.push(session_trials)
+                }
+        })
+    });
+    debugger
 
     return all_trials
 }

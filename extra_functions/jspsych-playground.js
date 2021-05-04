@@ -141,7 +141,7 @@ jsPsych.plugins["playground"] = (function() {
       col: null,
       correct: null, //null if missed, else true/false
     }
-    debugger
+    // debugger
 
     // if its schema learning, then define a string like 'ses1' 'ses2' etc, to access img coords. Else if its new pa learning, then define a string 'new_pa'
     let curr_session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition][trial.stage]
@@ -221,7 +221,7 @@ jsPsych.plugins["playground"] = (function() {
     }
 
     function doFeedback(correct, timeout) {
-      console.log('doFB called!')
+      // console.log('doFB called!')
       // debugger
 
       // Remove all the event listeners from all the cells.

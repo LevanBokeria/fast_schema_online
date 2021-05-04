@@ -140,17 +140,17 @@ jsPsych.plugins["playground"] = (function() {
     // if its schema learning, then define a string like 'ses1' 'ses2' etc, to access img coords. Else if its new pa learning, then define a string 'new_pa'
     let str_to_use = []
     let img_array  = []
-    if (jatos.studySessionData.inputData.expt_stage == 'schema'){
+    if (trial.stage == 'schema_learning'){
 
       str_to_use = ['ses'+(jatos.studySessionData.inputData.condition_ses_counters[trial.condition])]
 
-      img_array = jatos.studySessionData.inputData.schema_stimuli[trial.condition]
+      img_array = jatos.studySessionData.inputData.schema_learning[trial.condition]
 
     } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa'){
 
       str_to_use = 'new_pa'
 
-      img_array = jatos.studySessionData.inputData.new_pa_stimuli[trial.condition]
+      img_array = jatos.studySessionData.inputData.new_pa_learning[trial.condition]
 
     }
     // Create the board

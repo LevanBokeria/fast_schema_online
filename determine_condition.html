@@ -48,8 +48,8 @@
             jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 5
 
             jatos.studySessionData.inputData.n_trials_per_pa = 10
-            jatos.studySessionData.inputData.n_schema_stimuli = 3
-            jatos.studySessionData.inputData.n_new_pa_stimuli = 2
+            jatos.studySessionData.inputData.n_schema_learning = 3
+            jatos.studySessionData.inputData.n_new_pa_learning = 2
 
             // Define all the possible colors. Later, map these by randomization or latin square
             jatos.studySessionData.inputData.condition_colors = {
@@ -70,153 +70,172 @@
 
             jatos.studySessionData.inputData.condition_coords = {
                 consistent_schema: {
-                    ses1: [
-                        [2,2],
-                        [8,8],
-                        [5,11]
-                    ],
-                    ses2: [
-                        [2,2],
-                        [8,8],
-                        [5,11]
-                    ],
-                    ses3: [
-                        [2,2],
-                        [8,8],
-                        [5,11]
-                    ],
-                    new_pa: [
-                        [8,2],
-                        [2,5],
-                        [11,8]
-                    ],                                  
+
+                    schema_learning: {
+                        ses1: [
+                            [2,2],
+                            [8,8],
+                            [5,11]
+                        ],
+                        ses2: [
+                            [2,2],
+                            [8,8],
+                            [5,11]
+                        ],
+                        ses3: [
+                            [2,2],
+                            [8,8],
+                            [5,11]
+                        ],
+                    },
+                    new_pa_learning: {
+                        ses1: [
+                            [8,2],
+                            [2,5],
+                            [11,8]
+                        ],        
+                    },                          
                 },
                 inconsistent_schema: {
-                    ses1: [
-                        [11,2],
-                        [2,5],
-                        [5,8]
-                    ],
-                    ses2: [
-                        [5,8]
-                        [11,2],
-                        [2,5],
-                    ],
-                    ses3: [ 
-                        [2,5],
-                        [5,8],
-                        [11,2],
-                      ],
-                    new_pa: [
-                        [8,2],
-                        [2,5],
-                        [11,8]
-                    ],                                  
+                    schema_learning: {
+                        ses1: [
+                            [11,2],
+                            [2,5],
+                            [5,8]
+                        ],
+                        ses2: [
+                            [5,8]
+                            [11,2],
+                            [2,5],
+                        ],
+                        ses3: [ 
+                            [2,5],
+                            [5,8],
+                            [11,2],
+                        ],
+                    },
+                    new_pa_learning: {
+                        ses1: [
+                            [8,2],
+                            [2,5],
+                            [11,8]
+                        ],        
+                    },                          
                 },
                 stable_landmark: {
-                    ses1: [
-                        [5,5],
-                        [2,8],
-                        [11,11]
-                    ],
-                    ses2: [
-                        [5,5],
-                        [8,11],
-                        [2,2]
-                    ],
-                    ses3: [
-                        [5,5],
-                        [8,2], 
-                        [2,11]
-                    ],
-                    new_pa: [
-                        [2,5],
-                        [11,8],
-                        [5,11]
-                    ],                                  
+                    schema_learning: {
+                        ses1: [
+                            [5,5],
+                            [2,8],
+                            [11,11]
+                        ],
+                        ses2: [
+                            [5,5],
+                            [8,11],
+                            [2,2]
+                        ],
+                        ses3: [
+                            [5,5],
+                            [8,2], 
+                            [2,11]
+                        ],
+                    },
+
+                    new_pa_learning: {
+                        ses1: [
+                            [2,5],
+                            [11,8],
+                            [5,11]
+                        ],     
+                    },                          
                 },
                 no_schema: {
-                    ses1: [
-                        [5,2],
-                        [8,5],
-                        [2,11]
-                    ],
-                    ses2: [
-                        [11,11],
-                        [2,8],
-                        [5,5]
-                    ],
-                    ses3: [
-                        [5,11],
-                        [11,2],
-                        [8,8]
-                    ],
-                    new_pa: [
-                        [2,5],
-                        [11,5],
-                        [8,11]
-                    ],                                  
+                    schema_learning: {
+                        ses1: [
+                            [5,2],
+                            [8,5],
+                            [2,11]
+                        ],
+                        ses2: [
+                            [11,11],
+                            [2,8],
+                            [5,5]
+                        ],
+                        ses3: [
+                            [5,11],
+                            [11,2],
+                            [8,8]
+                        ],
+                    },
+                    new_pa_learning: {
+                            ses1: [
+                                [2,5],
+                                [11,5],
+                                [8,11]
+                            ],
+                    },
                 },
                 raw_learning: {
-                    new_pa: [
-                        [8,5],
-                        [2,11],
-                    ],                                  
+                    new_pa_learning: {
+                        ses1: [
+                            [8,5],
+                            [2,11],
+                        ],        
+                    },    
                 },
             }
 
-
             jatos.studySessionData.inputData.stimuli = {
                 consistent_schema: {
-                    schema_stimuli: [
+                    schema_learning: [
                         'img/targets/BOSS/downsized/8ball.jpg',
                         'img/targets/BOSS/downsized/accordion01.jpg',
                         'img/targets/BOSS/downsized/aceofdiamond.jpg',
                     ],
-                    new_pa_stimuli: [
+                    new_pa_learning: [
                         'img/targets/BOSS/downsized/artichoke01b.jpg',
                         'img/targets/BOSS/downsized/badmintonracket.jpg',
                         'img/targets/BOSS/downsized/ballofstring.jpg',
                     ]
                 },
                 inconsistent_schema: {
-                    schema_stimuli: [
+                    schema_learning: [
                         'img/targets/BOSS/downsized/acorn.jpg',
                         'img/targets/BOSS/downsized/acousticguitar02.jpg',
                         'img/targets/BOSS/downsized/addressplate.jpg'
                     ],
-                    new_pa_stimuli: [
+                    new_pa_learning: [
                         'img/targets/BOSS/downsized/barnowl.jpg',
                         'img/targets/BOSS/downsized/barrel01.jpg',
                         'img/targets/BOSS/downsized/basketball01.jpg',
                     ],
                 },
                 stable_landmark: {
-                    schema_stimuli: [
+                    schema_learning: [
                         'img/targets/BOSS/downsized/africanelephant.jpg',
                         'img/targets/BOSS/downsized/aloe01.jpg',
                         'img/targets/BOSS/downsized/americangoldfinch.jpg',
                     ],
-                    new_pa_stimuli: [
+                    new_pa_learning: [
                         'img/targets/BOSS/downsized/bassethound.jpg',
                         'img/targets/BOSS/downsized/battleaxe.jpg',
                         'img/targets/BOSS/downsized/beachpaddle01a.jpg',
                     ]
                 },
                 no_schema: {
-                    schema_stimuli: [
+                    schema_learning: [
                         'img/targets/BOSS/downsized/anchor.jpg',
                         'img/targets/BOSS/downsized/ant.jpg',
                         'img/targets/BOSS/downsized/armchair02.jpg',
                     ],
-                    new_pa_stimuli: [
+                    new_pa_learning: [
                         'img/targets/BOSS/downsized/beachumbrella01.jpg',
                         'img/targets/BOSS/downsized/bed.jpg',
                         'img/targets/BOSS/downsized/bench01.jpg',
                     ]
                 },
                 raw_learning: {
-                    new_pa_stimuli: [
+                    new_pa_learning: [
                         'img/targets/BOSS/downsized/bicycle.jpg',
                         'img/targets/BOSS/downsized/bikepump01.jpg',
                         'img/targets/BOSS/downsized/birdnest.jpg',

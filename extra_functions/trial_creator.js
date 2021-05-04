@@ -18,7 +18,7 @@ function trial_creator(all_conditions){
                     let n_trials_per_ses = n_trials_per_pa * iStageStimuli.length
                     let istage_n_ses = []
 
-                    if (stage == 'schema_stimuli'){
+                    if (stage == 'schema_learning'){
                         istage_n_ses = jatos.studySessionData.inputData.n_schema_ses_per_cond
                     } else {
                         istage_n_ses = jatos.studySessionData.inputData.n_new_pa_ses_per_cond                       

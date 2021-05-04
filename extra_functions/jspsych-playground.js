@@ -119,12 +119,18 @@ jsPsych.plugins["playground"] = (function() {
         pretty_name: 'Experimental Stage',
         default: null,
         description: 'Schema learning or New PA learning'
-      },                
+      },       
+      coords: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Coordinates',
+        array: true,
+        default: null,
+        description: 'This array contains row column coordinates for the image.'
+      },               
     }
   }
 
   plugin.trial = function(display_element, trial) {
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     var timeout = true
@@ -135,24 +141,12 @@ jsPsych.plugins["playground"] = (function() {
       col: null,
       correct: null, //null if missed, else true/false
     }
-    // debugger
+    debugger
 
     // if its schema learning, then define a string like 'ses1' 'ses2' etc, to access img coords. Else if its new pa learning, then define a string 'new_pa'
-    let str_to_use = []
-    let img_array  = []
-    if (trial.stage == 'schema_learning'){
+    let curr_session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition][trial.stage]
+    let img_array    = jatos.studySessionData.inputData.stimuli[trial.condition][trial.stage]
 
-      str_to_use = ['ses'+(jatos.studySessionData.inputData.condition_ses_counters[trial.condition])]
-
-      img_array = jatos.studySessionData.inputData.schema_learning[trial.condition]
-
-    } else if (jatos.studySessionData.inputData.expt_stage == 'new_pa'){
-
-      str_to_use = 'new_pa'
-
-      img_array = jatos.studySessionData.inputData.new_pa_learning[trial.condition]
-
-    }
     // Create the board
     grid_box = board_creator(400,
       jatos.studySessionData.inputData.n_rows,
@@ -160,12 +154,9 @@ jsPsych.plugins["playground"] = (function() {
       jatos.studySessionData.inputData.condition_colors[trial.condition],
       false,
       img_array,
-      jatos.studySessionData.inputData.condition_coords[trial.condition][str_to_use])
+      jatos.studySessionData.inputData.condition_coords[trial.condition][trial.stage]['ses' + curr_session])
 
     //Add mouseclick listener MUST EDIT
-
-    var stim_coords = jatos.studySessionData.inputData.condition_coords[trial.condition]
-    [str_to_use][trial.stimulus_idx-1]
 
     var all_cells = grid_box.querySelectorAll('.cells')
 
@@ -214,7 +205,7 @@ jsPsych.plugins["playground"] = (function() {
       info.row = parseInt(curr_row_col[2],10)
       info.col = parseInt(curr_row_col[4],10)
 
-      if (info.row == stim_coords[0] & info.col == stim_coords[1]){
+      if (info.row == trial.coords[0] & info.col == trial.coords[1]){
         info.correct = true
       } else {
         info.correct = false
@@ -279,8 +270,8 @@ jsPsych.plugins["playground"] = (function() {
       trial_data.stage = trial.stage
       trial_data.session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
       trial_data.stimulus = trial.stimulus
-      trial_data.corr_row = stim_coords[0]
-      trial_data.corr_col = stim_coords[1]
+      trial_data.corr_row = trial.coords[0]
+      trial_data.corr_col = trial.coords[1]
 
       
 

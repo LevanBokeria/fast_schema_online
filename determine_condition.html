@@ -42,14 +42,19 @@
             jatos.studySessionData.inputData.n_rows = 12
             jatos.studySessionData.inputData.n_cols = 12
 
-            jatos.studySessionData.inputData.n_schema_ses_per_cond = 3
-            jatos.studySessionData.inputData.n_schema_ses_total = jatos.studySessionData.inputData.n_schema_ses_per_cond * 4
-            jatos.studySessionData.inputData.n_new_pa_ses_per_cond = 1
-            jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 5
+            jatos.studySessionData.inputData.n_ses_per_condition = {
+                schema_learning: 3,
+                new_pa_learning: 1,
+            }
+            jatos.studySessionData.inputData.n_ses_total = {
+                schema_learning: jatos.studySessionData.inputData.n_schema_ses_per_cond * 4,
+                new_pa_learning: jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 5
+            }
 
-            jatos.studySessionData.inputData.n_trials_per_pa = 10
-            jatos.studySessionData.inputData.n_schema_learning = 3
-            jatos.studySessionData.inputData.n_new_pa_learning = 2
+            jatos.studySessionData.inputData.n_trials_per_pa = {
+                schema_learning: 10,
+                new_pa_learning: 10,
+            }
 
             // Define all the possible colors. Later, map these by randomization or latin square
             jatos.studySessionData.inputData.condition_colors = {
@@ -61,11 +66,27 @@
             }
 
             jatos.studySessionData.inputData.condition_ses_counters = {
-                consistent_schema: 0,
-                inconsistent_schema: 0,
-                stable_landmark: 0,
-                no_schema: 0,
-                raw_learning: 0,
+
+                consistent_schema: {
+                    schema_learning: 0,
+                    new_pa_learning: 0,
+                },
+                inconsistent_schema: {
+                    schema_learning: 0,
+                    new_pa_learning: 0,
+                },
+                stable_landmark: {
+                    schema_learning: 0,
+                    new_pa_learning: 0,
+                },
+                no_schema: {
+                    schema_learning: 0,
+                    new_pa_learning: 0,
+                },
+                raw_learning: {
+                    schema_learning: 0,
+                    new_pa_learning: 0,
+                },
             }
 
             jatos.studySessionData.inputData.condition_coords = {

@@ -43,7 +43,7 @@
             let curr_stage     = trials_for_this_session[0].stage
 
             // Update the session counter for this condition
-            jatos.studySessionData.inputData.condition_ses_counters[curr_condition] ++
+            jatos.studySessionData.inputData.condition_ses_counters[curr_condition][curr_stage] ++
 
             var session_procedure = {
                 timeline: [
@@ -54,7 +54,8 @@
                         stimulus_idx: jsPsych.timelineVariable('stimulus_idx'),
                         stimulus_width: '50px',
                         condition: jsPsych.timelineVariable('condition'),
-                        stage: jsPsych.timelineVariable('stage')
+                        stage: jsPsych.timelineVariable('stage'),
+                        coords: jsPsych.timelineVariable('coords')
                     }
                 ],
                 timeline_variables: trials_for_this_session,

@@ -1,40 +1,39 @@
 function trial_creator(all_conditions){
 
     let all_trials = []
-    let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa
     // let n_trials_per_ses = n_trials_per_pa * stimuli.consistent_schema.length
 
 
     // for (iSes=0; iSes<jatos.studySessionData.inputData.n_schema_ses_per_cond; iSes++){
 
         Object.keys(all_conditions).forEach(function(iCond,index){
-            debugger
+            // debugger
             let iCondStages = all_conditions[iCond]
 
             Object.keys(iCondStages).forEach(function(stage,counter){
-
+                let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa[stage]
                 let iStageStimuli = iCondStages[stage]
 
                     let n_trials_per_ses = n_trials_per_pa * iStageStimuli.length
-                    let istage_n_ses = []
-
-                    if (stage == 'schema_learning'){
-                        istage_n_ses = jatos.studySessionData.inputData.n_schema_ses_per_cond
-                    } else {
-                        istage_n_ses = jatos.studySessionData.inputData.n_new_pa_ses_per_cond                       
-                    }
+                    let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[stage]
 
                     for (iSes=0; iSes<istage_n_ses; iSes++){
 
-                        let allpas    = []
-                        let allpaidxs = []
+                        let allpas      = []
+                        let allpaidxs   = []
+                        let allpacoords = []
+
+                        // Which coordinates to use
+                        let iCoordsForAllSessions = jatos.studySessionData.inputData.condition_coords[iCond][stage]['ses'+(iSes+1)]
 
                         for (iSt=0; iSt<iStageStimuli.length; iSt++){
                             let pa_stimuli = Array(n_trials_per_pa).fill(iStageStimuli[iSt])
                             let pa_idxs    = Array(n_trials_per_pa).fill((iSt+1))
+                            let pa_coords  = Array(n_trials_per_pa).fill(iCoordsForAllSessions[iSt])
 
                             allpas.push(...pa_stimuli)
                             allpaidxs.push(...pa_idxs)
+                            allpacoords.push(...pa_coords)
                         }
                         let session_trials = []
                         for (i=0; i < n_trials_per_ses; i++){
@@ -45,6 +44,7 @@ function trial_creator(all_conditions){
                                 stimulus_idx: allpaidxs[i],
                                 condition: iCond,
                                 stage: stage,
+                                coords: allpacoords[i]
                             }
                         }
                         // randomize the order of the trials 

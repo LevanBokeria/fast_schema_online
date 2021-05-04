@@ -113,7 +113,13 @@ jsPsych.plugins["playground"] = (function() {
         pretty_name: 'Experimental Condition',
         default: null,
         description: 'Name of the schema condition for this trial'
-      },            
+      },  
+      stage: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Experimental Stage',
+        default: null,
+        description: 'Schema learning or New PA learning'
+      },                
     }
   }
 
@@ -270,7 +276,7 @@ jsPsych.plugins["playground"] = (function() {
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
-      trial_data.expt_stage = jatos.studySessionData.inputData.expt_stage
+      trial_data.stage = trial.stage
       trial_data.session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
       trial_data.stimulus = trial.stimulus
       trial_data.corr_row = stim_coords[0]

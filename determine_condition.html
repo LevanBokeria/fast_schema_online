@@ -45,6 +45,9 @@
 
             jatos.studySessionData.inputData.n_schema_ses_per_cond = 3
             jatos.studySessionData.inputData.n_schema_ses_total = jatos.studySessionData.inputData.n_schema_ses_per_cond * 4
+            jatos.studySessionData.inputData.n_new_pa_ses_per_cond = 1
+            jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 5
+
             jatos.studySessionData.inputData.n_trials_per_pa = 10
             jatos.studySessionData.inputData.n_schema_stimuli = 3
             jatos.studySessionData.inputData.n_new_pa_stimuli = 2
@@ -264,8 +267,7 @@
 
             // debugger
             // Create the trials
-            jatos.studySessionData.inputData.schema_trials = trial_creator(jatos.studySessionData.inputData.schema_stimuli)
-            jatos.studySessionData.inputData.new_pa_trials = trial_creator(jatos.studySessionData.inputData.new_pa_stimuli)
+            jatos.studySessionData.inputData.all_sessions = trial_creator(jatos.studySessionData.inputData.stimuli)
    
             // ////////////////////////////////////////////////////////////////////////////////////////////
             // ////////////////////////////////////////////////////////////////////////////////////////////

@@ -178,53 +178,77 @@
                 stable_landmark: {
                     schema_learning: {
                         ses1: [
-                            [8,2],
-                            [5,5],
-                            [2,11],
+                            [5,2],
+                            [2,5],
+                            [8,5],
+                            [5,8],
+                            [5,11],
+                            [8,11],                        
                         ],
                         ses2: [
-                            [2,2],
-                            [5,5],
-                            [11,8],
+                            [5,2],
+                            [2,5],
+                            [8,5],
+                            [5,8],
+                            [5,11],
+                            [8,11], 
                         ],
                         ses3: [
-                            [8,11],
-                            [5,5], 
-                            [11,2],
+                            [5,2],
+                            [2,5],
+                            [8,5],
+                            [5,8],
+                            [5,11],
+                            [8,11], 
                         ],
                     },
 
                     new_pa_learning: {
                         ses1: [
-                            [2,5],
-                            [5,11],
-                            [8,5],
+                            [8,2],
+                            [5,5],
+                            [11,5],
+                            [2,8],
+                            [8,8],
+                            [11,8],                        
                         ],     
                     },                          
                 },
                 no_schema: {
                     schema_learning: {
                         ses1: [
-                            [2,2],
-                            [11,5],
-                            [5,8],
+                            [5,2],
+                            [9,4],
+                            [3,6],
+                            [6,7],
+                            [10,9],
+                            [6,10],                       
                         ],
                         ses2: [
-                            [8,8],
-                            [2,5],    
-                            [11,11],
+                            [5,2],
+                            [9,4],
+                            [3,6],
+                            [6,7],
+                            [10,9],
+                            [6,10],
                         ],
                         ses3: [
-                            [2,8],
                             [5,2],
-                            [8,5],
+                            [9,4],
+                            [3,6],
+                            [6,7],
+                            [10,9],
+                            [6,10],
                         ],
                     },
                     new_pa_learning: {
                             ses1: [
                                 [8,2],
-                                [2,11],
-                                [5,5],
+                                [10,4],
+                                [4,5],
+                                [11,7],
+                                [8,8],
+                                [3,9],
                             ],
                     },
                 },
@@ -240,6 +264,24 @@
             }
 
             jatos.studySessionData.inputData.stimuli = {
+                stable_landmark: {
+                    schema_learning: [
+                        'img/targets/BOSS/downsized/bicycle.jpg',
+                        'img/targets/BOSS/downsized/bikepump01.jpg',
+                        'img/targets/BOSS/downsized/birdnest.jpg',
+                        'img/targets/BOSS/downsized/blackbear.jpg',
+                        'img/targets/BOSS/downsized/bolt01a.jpg',
+                        'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
+                    ],
+                    new_pa_learning: [
+                        'img/targets/BOSS/downsized/bow.jpg',
+                        'img/targets/BOSS/downsized/bowlingball.jpg',
+                        'img/targets/BOSS/downsized/bowlingpin.jpg',
+                        'img/targets/BOSS/downsized/bowtie.jpg',
+                        'img/targets/BOSS/downsized/boxtruck.jpg',
+                        'img/targets/BOSS/downsized/broadsword.jpg',
+                    ]
+                },
                 inconsistent_schema: {
                     schema_learning: [
                         'img/targets/BOSS/downsized/artichoke01b.jpg',
@@ -276,29 +318,22 @@
                         'img/targets/BOSS/downsized/armchair02.jpg',
                     ]
                 },
-
-                stable_landmark: {
-                    schema_learning: [
-                        'img/targets/BOSS/downsized/africanelephant.jpg',
-                        'img/targets/BOSS/downsized/aloe01.jpg',
-                        'img/targets/BOSS/downsized/americangoldfinch.jpg',
-                    ],
-                    new_pa_learning: [
-                        'img/targets/BOSS/downsized/bassethound.jpg',
-                        'img/targets/BOSS/downsized/battleaxe.jpg',
-                        'img/targets/BOSS/downsized/beachpaddle01a.jpg',
-                    ]
-                },
                 no_schema: {
                     schema_learning: [
-                        'img/targets/BOSS/downsized/anchor.jpg',
-                        'img/targets/BOSS/downsized/ant.jpg',
-                        'img/targets/BOSS/downsized/armchair02.jpg',
+                        'img/targets/BOSS/downsized/buffaloskull.jpg',
+                        'img/targets/BOSS/downsized/bulldozer.jpg',
+                        'img/targets/BOSS/downsized/bullet.jpg',
+                        'img/targets/BOSS/downsized/bulletbelt.jpg',
+                        'img/targets/BOSS/downsized/bun.jpg',
+                        'img/targets/BOSS/downsized/butterfly.jpg',
                     ],
                     new_pa_learning: [
-                        'img/targets/BOSS/downsized/beachumbrella01.jpg',
-                        'img/targets/BOSS/downsized/bed.jpg',
-                        'img/targets/BOSS/downsized/bench01.jpg',
+                        'img/targets/BOSS/downsized/cactus.jpg',
+                        'img/targets/BOSS/downsized/callbell.jpg',
+                        'img/targets/BOSS/downsized/campfire.jpg',
+                        'img/targets/BOSS/downsized/candelabra.jpg',
+                        'img/targets/BOSS/downsized/car.jpg',
+                        'img/targets/BOSS/downsized/caribou02.jpg',
                     ]
                 },
                 raw_learning: {
@@ -348,6 +383,23 @@
                 'img/targets/BOSS/downsized/boxtruck.jpg',
                 'img/targets/BOSS/downsized/broadsword.jpg',
                 'img/targets/BOSS/downsized/callbell.jpg',
+                'img/targets/BOSS/downsized/buffaloskull.jpg',
+                'img/targets/BOSS/downsized/bulldozer.jpg',
+                'img/targets/BOSS/downsized/bullet.jpg',
+                'img/targets/BOSS/downsized/bulletbelt.jpg',
+                'img/targets/BOSS/downsized/bun.jpg',
+                'img/targets/BOSS/downsized/butterfly.jpg',
+                'img/targets/BOSS/downsized/cactus.jpg',
+                'img/targets/BOSS/downsized/callbell.jpg',
+                'img/targets/BOSS/downsized/campfire.jpg',
+                'img/targets/BOSS/downsized/candelabra.jpg',
+                'img/targets/BOSS/downsized/car.jpg',
+                'img/targets/BOSS/downsized/caribou02.jpg',
+                'img/targets/BOSS/downsized/carsidemirror01.jpg',
+                'img/targets/BOSS/downsized/cartonofeggs.jpg',
+                'img/targets/BOSS/downsized/castle.jpg',
+                'img/targets/BOSS/downsized/cat.jpg',
+                'img/targets/BOSS/downsized/centurionhelmet.jpg',
             ]
 
             debugger

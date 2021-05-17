@@ -3,7 +3,7 @@ function trial_creator(all_conditions){
     let all_trials = []
 
     Object.keys(all_conditions).forEach(function(iCond,index){
-        debugger
+        // debugger
         let iCondStages = all_conditions[iCond]
 
         Object.keys(iCondStages).forEach(function(stage,counter){
@@ -45,14 +45,14 @@ function trial_creator(all_conditions){
                     }
                     // randomize the order of the trials 
                     // debugger
-                    // session_trials = 
-                    // jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
+                    session_trials = 
+                    jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
 
                     all_trials.push(session_trials)
                 }
         })
     });
-    debugger
+    // debugger
 
     return all_trials
 }

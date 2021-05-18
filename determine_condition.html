@@ -20,7 +20,7 @@
         jatos.onLoad(function() {
 
             // Define all the conditions here ///////////////////////////////////////////////////////////
-            jatos.studySessionData.inputData = {}
+            // jatos.studySessionData.inputData = {}
             jatos.studySessionData.outputData = {}
             jatos.studySessionData.outputData.session_results = []
 
@@ -42,44 +42,35 @@
             jatos.studySessionData.inputData.n_rows = 12
             jatos.studySessionData.inputData.n_cols = 12
 
-            jatos.studySessionData.inputData.n_ses_per_condition = {
-                schema_learning: 3,
-                new_pa_learning: 1,
-            }
             jatos.studySessionData.inputData.n_ses_total = {
                 schema_learning: jatos.studySessionData.inputData.n_schema_ses_per_cond * 4,
                 new_pa_learning: jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 5
             }
 
-            jatos.studySessionData.inputData.n_trials_per_pa = {
-                schema_learning: 10,
-                new_pa_learning: 10,
-            }
-
             // Define all the possible colors. Later, map these by randomization or latin square
             jatos.studySessionData.inputData.condition_colors = {
-                consistent_schema: 'red',
-                inconsistent_schema: 'yellow',
-                stable_landmark: 'blue',
-                no_schema: 'green',
+                non_adj_8_4: 'red',
+                adj_8_4: 'yellow',
+                non_adj_6_6: 'blue',
+                adj_6_6: 'green',
                 raw_learning: 'gray',
             }
 
             jatos.studySessionData.inputData.condition_ses_counters = {
 
-                consistent_schema: {
+                non_adj_8_4: {
                     schema_learning: 0,
                     new_pa_learning: 0,
                 },
-                inconsistent_schema: {
+                adj_8_4: {
                     schema_learning: 0,
                     new_pa_learning: 0,
                 },
-                stable_landmark: {
+                non_adj_6_6: {
                     schema_learning: 0,
                     new_pa_learning: 0,
                 },
-                no_schema: {
+                adj_6_6: {
                     schema_learning: 0,
                     new_pa_learning: 0,
                 },
@@ -90,7 +81,7 @@
             }
 
             jatos.studySessionData.inputData.condition_coords = {
-                consistent_schema: {
+                non_adj_8_4: {
 
                     schema_learning: {
                         ses1: [
@@ -133,7 +124,7 @@
                         ],        
                     },                          
                 },
-                inconsistent_schema: {
+                adj_8_4: {
                     schema_learning: {
                         ses1: [
                             [4,2],
@@ -175,7 +166,7 @@
                         ], 
                     },                          
                 },
-                stable_landmark: {
+                non_adj_6_6: {
                     schema_learning: {
                         ses1: [
                             [5,2],
@@ -214,10 +205,10 @@
                         ],     
                     },                          
                 },
-                no_schema: {
+                adj_6_6: {
                     schema_learning: {
                         ses1: [
-                            [5,2],
+                            [6,3],
                             [9,4],
                             [3,6],
                             [6,7],
@@ -225,7 +216,7 @@
                             [6,10],                       
                         ],
                         ses2: [
-                            [5,2],
+                            [6,3],
                             [9,4],
                             [3,6],
                             [6,7],
@@ -233,7 +224,7 @@
                             [6,10],
                         ],
                         ses3: [
-                            [5,2],
+                            [6,3],
                             [9,4],
                             [3,6],
                             [6,7],
@@ -264,7 +255,25 @@
             }
 
             jatos.studySessionData.inputData.stimuli = {
-                stable_landmark: {
+                adj_6_6: {
+                    schema_learning: [
+                        'img/targets/BOSS/downsized/buffaloskull.jpg',
+                        'img/targets/BOSS/downsized/bulldozer.jpg',
+                        'img/targets/BOSS/downsized/bullet.jpg',
+                        'img/targets/BOSS/downsized/bulletbelt.jpg',
+                        'img/targets/BOSS/downsized/bun.jpg',
+                        'img/targets/BOSS/downsized/butterfly.jpg',
+                    ],
+                    new_pa_learning: [
+                        'img/targets/BOSS/downsized/cactus.jpg',
+                        'img/targets/BOSS/downsized/callbell.jpg',
+                        'img/targets/BOSS/downsized/campfire.jpg',
+                        'img/targets/BOSS/downsized/candelabra.jpg',
+                        'img/targets/BOSS/downsized/car.jpg',
+                        'img/targets/BOSS/downsized/caribou02.jpg',
+                    ]
+                },
+                non_adj_6_6: {
                     schema_learning: [
                         'img/targets/BOSS/downsized/bicycle.jpg',
                         'img/targets/BOSS/downsized/bikepump01.jpg',
@@ -282,7 +291,7 @@
                         'img/targets/BOSS/downsized/broadsword.jpg',
                     ]
                 },
-                inconsistent_schema: {
+                adj_8_4: {
                     schema_learning: [
                         'img/targets/BOSS/downsized/artichoke01b.jpg',
                         'img/targets/BOSS/downsized/badmintonracket.jpg',
@@ -300,7 +309,7 @@
                         'img/targets/BOSS/downsized/bench01.jpg',
                     ],
                 },
-                consistent_schema: {
+                non_adj_8_4: {
                     schema_learning: [
                         'img/targets/BOSS/downsized/8ball.jpg',
                         'img/targets/BOSS/downsized/accordion01.jpg',
@@ -316,24 +325,6 @@
                         'img/targets/BOSS/downsized/anchor.jpg',
                         'img/targets/BOSS/downsized/ant.jpg',
                         'img/targets/BOSS/downsized/armchair02.jpg',
-                    ]
-                },
-                no_schema: {
-                    schema_learning: [
-                        'img/targets/BOSS/downsized/buffaloskull.jpg',
-                        'img/targets/BOSS/downsized/bulldozer.jpg',
-                        'img/targets/BOSS/downsized/bullet.jpg',
-                        'img/targets/BOSS/downsized/bulletbelt.jpg',
-                        'img/targets/BOSS/downsized/bun.jpg',
-                        'img/targets/BOSS/downsized/butterfly.jpg',
-                    ],
-                    new_pa_learning: [
-                        'img/targets/BOSS/downsized/cactus.jpg',
-                        'img/targets/BOSS/downsized/callbell.jpg',
-                        'img/targets/BOSS/downsized/campfire.jpg',
-                        'img/targets/BOSS/downsized/candelabra.jpg',
-                        'img/targets/BOSS/downsized/car.jpg',
-                        'img/targets/BOSS/downsized/caribou02.jpg',
                     ]
                 },
                 raw_learning: {
@@ -403,8 +394,25 @@
             ]
 
             debugger
+
+            let key;
+
+            if (jatos.studySessionData.inputData.condition_to_run == '8/4 ver 1'){
+                key = 'adj_8_4'
+            } else if (jatos.studySessionData.inputData.condition_to_run == '8/4 ver 2'){
+                key = 'non_adj_8_4'
+            } else if (jatos.studySessionData.inputData.condition_to_run == '6/6 ver 1'){
+                key = 'adj_6_6'
+            } else if (jatos.studySessionData.inputData.condition_to_run == '6/6 ver 2'){
+                key = 'non_adj_6_6'
+            }
+
+            let cond_to_run = {}
+
+            cond_to_run[key] = jatos.studySessionData.inputData.stimuli[key]
+
             // Create the trials
-            jatos.studySessionData.inputData.all_sessions = trial_creator(jatos.studySessionData.inputData.stimuli)
+            jatos.studySessionData.inputData.all_sessions = trial_creator(cond_to_run)
    
             // ////////////////////////////////////////////////////////////////////////////////////////////
             // ////////////////////////////////////////////////////////////////////////////////////////////

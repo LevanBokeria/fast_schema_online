@@ -170,7 +170,7 @@ jsPsych.plugins["playground"] = (function() {
 		
     //show prompt_question with the trial counter
     let iTrial = jsPsych.data.get().values().length + 1
-    display_element.insertAdjacentHTML('beforeend', trial.prompt_question += ' Trial ' + iTrial);
+    display_element.insertAdjacentHTML('beforeend', ' Trial ' + iTrial);
 
 		//show stimulus
     let stimulus_element = document.createElement('img')
@@ -187,6 +187,8 @@ jsPsych.plugins["playground"] = (function() {
     feedback_el.innerText = 'null'
     feedback_el.id = 'feedback_text'
     feedback_el.style.visibility = 'hidden'
+    feedback_el.style['font-size'] = '125%'
+    feedback_el.style['font-weight'] = 'bold' 
 
     display_element.appendChild(feedback_el)
 
@@ -235,8 +237,14 @@ jsPsych.plugins["playground"] = (function() {
         document.querySelector('#feedback_text').style.visibility = 'visible'
       } else {
 
-        correct == true ? feedback_text = 'Correct!' : feedback_text = 'Incorrect...'
-
+        if (correct == true){
+          feedback_text = 'Correct!'
+          document.querySelector('#feedback_text').style.color = 'green'
+        } else {
+          feedback_text = 'Incorrect...!'
+          document.querySelector('#feedback_text').style.color = 'red'
+        }
+        
         // show the feedback
         document.querySelector('#feedback_text').innerText = feedback_text
         document.querySelector('#feedback_text').style.visibility = 'visible'

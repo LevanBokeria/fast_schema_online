@@ -49,9 +49,6 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
         iEl.id = 'PA_' + (iImg+1)
         iEl.src = img_array[iImg]
         iEl.style = 
-        'max-width: 100%;' +
-        'max-height: 100%;' + 
-        'display: block;' +
         'visibility: ' + visibility_status + ';'
 
         let nth_child_idx = (i_row-1)*n_cols + i_col

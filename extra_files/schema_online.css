@@ -55,3 +55,10 @@ ul {
 #feedback_text {
     font-size: 80%;
 }
+
+.PA {
+    border: 1px solid #444;
+    max-width: 95%;
+    max-height: 95%;
+    display: block;
+}

@@ -7,6 +7,7 @@
 	<script src="jspsych-6.3.1/jspsych.js" ></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js'></script>
 	<script src="jatos.js"></script>
 	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
 	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
@@ -18,7 +19,8 @@
 		//start timeline
 		jatos.onLoad(function() {
 
-		
+			jatos.studySessionData.inputData = {}
+
 			//make a timeline
 			let timeline =[]; 
 
@@ -32,6 +34,49 @@
 					'<p>On each trial, click the cell where you think the item is located. </p>' + 
 				'</div>',																										
 			];
+
+
+			var condition_options = ["8/4 ver 1", "8/4 ver 2", "6/6 ver 1", "6/6 ver 2"];
+
+			var condition_choice_page = {
+			type: 'survey-multi-choice',
+			questions: [
+				{prompt: "Which condition do you want to run?", name: 'condition', options: condition_options, required:true}, 
+			],
+			};
+
+			var n_training_ses_page = {
+				type: 'html-slider-response',
+				stimulus: '<p>Number of training sessions</p>',
+				labels: ['1','2','3','4','5','6'],
+				min: 1,
+				max: 6,
+				step: 1,
+				slider_start: 3,
+				prompt: "<p>Choose the number of TRAINING sessions </p>"
+			};
+
+			var n_testing_ses_page = {
+				type: 'html-slider-response',
+				stimulus: '<p>Number of testing sessions</p>',
+				labels: ['1','2','3','4','5','6'],
+				min: 1,
+				max: 6,
+				step: 1,
+				slider_start: 1,
+				prompt: "<p>Choose the number of TESTING sessions </p>"
+			};
+
+			var n_trials_per_pa = {
+				type: 'html-slider-response',
+				stimulus: '<p>Number of trials per PA</p>',
+				labels: ['5','6','7','8','9','10','11','12','13','14','15'],
+				min: 5,
+				max: 15,
+				step: 1,
+				slider_start: 10,
+				prompt: "<p>Choose the number trials per PA </p>"
+			};			
 
 			var trial_duration_page = {
 				type: 'html-slider-response',
@@ -76,6 +121,10 @@
 				button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
 			};
 
+			timeline.push(condition_choice_page);
+			timeline.push(n_training_ses_page);
+			timeline.push(n_testing_ses_page);
+			timeline.push(n_trials_per_pa);
 			timeline.push(trial_duration_page);
 			timeline.push(feedback_duration_page);
 			timeline.push(iti_duration_page);
@@ -95,9 +144,23 @@
 					// Record results
 					var results = jsPsych.data.get().values();
 
-					jatos.studySessionData.inputData.trial_duration    = results[0].response
-					jatos.studySessionData.inputData.feedback_duration = results[1].response
-					jatos.studySessionData.inputData.iti_duration      = results[2].response
+					debugger
+
+					jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+
+					jatos.studySessionData.inputData.n_ses_per_condition = {
+						schema_learning: results[1].response,
+						new_pa_learning: results[2].response,
+					}
+
+					jatos.studySessionData.inputData.n_trials_per_pa = {
+						schema_learning: results[3].response,
+						new_pa_learning: results[3].response,
+					}
+
+					jatos.studySessionData.inputData.trial_duration    = results[4].response
+					jatos.studySessionData.inputData.feedback_duration = results[5].response
+					jatos.studySessionData.inputData.iti_duration      = results[6].response
 
 					jatos.submitResultData('[instructions_start_' + '---' + 
 					JSON.stringify(jatos.studySessionData) +

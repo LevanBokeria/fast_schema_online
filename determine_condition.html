@@ -31,6 +31,7 @@
                 session_pa: 4,
                 break: 5,
                 data_submission: 6,
+                debriefing: 7,
             }
 
             jatos.studySessionData.inputData.curr_condition = ''
@@ -50,7 +51,7 @@
             // Define all the possible colors. Later, map these by randomization or latin square
             jatos.studySessionData.inputData.condition_colors = {
                 non_adj_8_4: 'red',
-                adj_8_4: 'yellow',
+                adj_8_6: 'yellow',
                 non_adj_6_6: 'blue',
                 adj_6_6: 'green',
                 raw_learning: 'gray',
@@ -62,7 +63,7 @@
                     schema_learning: 0,
                     new_pa_learning: 0,
                 },
-                adj_8_4: {
+                adj_8_6: {
                     schema_learning: 0,
                     new_pa_learning: 0,
                 },
@@ -136,7 +137,7 @@
                         ],                                                        
                     },                          
                 },
-                adj_8_4: {
+                adj_8_6: {
                     schema_learning: {
                         ses1: [
                             [4,2],
@@ -171,18 +172,24 @@
                     },
                     new_pa_learning: {
                         ses1: [
+                            [10,2],
+                            [2,3],
                             [5,4],
                             [11,7],
                             [7,9],
                             [3,10],
                         ], 
                         ses2: [
+                            [10,2],
+                            [2,3],                            
                             [5,4],
                             [11,7],
                             [7,9],
                             [3,10],
                         ], 
                         ses3: [
+                            [10,2],
+                            [2,3],                            
                             [5,4],
                             [11,7],
                             [7,9],
@@ -346,7 +353,7 @@
                         'img/targets/BOSS/downsized/broadsword.jpg',
                     ]
                 },
-                adj_8_4: {
+                adj_8_6: {
                     schema_learning: [
                         'img/targets/BOSS/downsized/artichoke01b.jpg',
                         'img/targets/BOSS/downsized/badmintonracket.jpg',
@@ -362,6 +369,8 @@
                         'img/targets/BOSS/downsized/beachumbrella01.jpg',
                         'img/targets/BOSS/downsized/bed.jpg',
                         'img/targets/BOSS/downsized/bench01.jpg',
+                        'img/targets/BOSS/downsized/carsidemirror01.jpg',
+                        'img/targets/BOSS/downsized/cartonofeggs.jpg',                        
                     ],
                 },
                 non_adj_8_4: {
@@ -428,7 +437,6 @@
                 'img/targets/BOSS/downsized/bowtie.jpg',
                 'img/targets/BOSS/downsized/boxtruck.jpg',
                 'img/targets/BOSS/downsized/broadsword.jpg',
-                'img/targets/BOSS/downsized/callbell.jpg',
                 'img/targets/BOSS/downsized/buffaloskull.jpg',
                 'img/targets/BOSS/downsized/bulldozer.jpg',
                 'img/targets/BOSS/downsized/bullet.jpg',
@@ -453,7 +461,7 @@
             let key;
 
             if (jatos.studySessionData.inputData.condition_to_run == '8/4 ver 1'){
-                key = 'adj_8_4'
+                key = 'adj_8_6'
             } else if (jatos.studySessionData.inputData.condition_to_run == '8/4 ver 2'){
                 key = 'non_adj_8_4'
             } else if (jatos.studySessionData.inputData.condition_to_run == '6/6 ver 1'){

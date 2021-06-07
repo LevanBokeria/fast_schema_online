@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+    <title>Debriefing</title>	
+	<script src="jspsych-6.3.1/jspsych.js" ></script>
+	<script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+	<script src="jatos.js"></script>
+	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
+  </head>
+
+  <body>
+  <script>
+
+		//start timeline
+		jatos.onLoad(function() {
+			
+            var timeline = []
+
+            var comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
+            
+            // debugger
+            var general_questions_page = {
+                type: 'survey-text',
+                questions: [
+                    {prompt: 'Did you have any strategy for remembering the locations of the items?', rows: 3, columns: 100},
+                    {prompt: 'Was the number of items you had to find too high?', rows: 3, columns: 100},
+                    {prompt: 'Was the trial duration ok? Was the feedback duration ok?', rows: 3, columns: 100},
+                    {prompt: 'Did you find the items close to the border easier to remember?', rows: 3, columns: 100},
+                    {prompt: 'In the last session where you learned 3 new item locations, did you find it easier having already learned the locations of previous items? If so, why?', rows: 3, columns: 100},              
+                    {prompt: 'In the last session where you learned 3 new item locations, did you feel like you were using your previous knowledge of the other items, to encode the locations of the new items?', rows: 3, columns: 100},
+                    {prompt: 'Any other suggestion for improvements? Thanks!', rows: 3, columns: 100},
+                    ],
+                button_label: 'Finish',
+                preamble: '<p style="font-size: 30px;"><b>Please answer the following questions:</b></p>',
+                data: {test_part: 'debriefing'},
+	    	};	
+
+			timeline.push(general_questions_page);
+
+			jsPsych.init({
+				
+				timeline: timeline,
+
+				on_finish: function(data) {
+
+					// Make JATOS remember that this session was run
+                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+          
+          debugger
+          jatos.studySessionData.outputData.debriefing = jsPsych.data.get().values()
+
+					jatos.submitResultData('[debriefing_start_' + '---' + 
+					JSON.stringify(jatos.studySessionData) +
+					'---' + '_debriefing_end]', 
+					function(){jatos.startComponentByPos(comp_to_start)});
+
+					// jsPsych.data.displayData();
+				}
+			});
+
+		});
+
+
+	</script>
+</body>
+</html>

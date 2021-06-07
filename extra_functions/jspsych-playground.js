@@ -148,7 +148,7 @@ jsPsych.plugins["playground"] = (function() {
     let img_array    = jatos.studySessionData.inputData.stimuli[trial.condition][trial.stage]
 
     // Create the board
-    grid_box = board_creator(400,
+    grid_box = board_creator(700,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
       jatos.studySessionData.inputData.condition_colors[trial.condition],

@@ -18,7 +18,7 @@
     <script>
 
         jatos.onLoad(function() {
-            // debugger
+            debugger
 
             // iterate the session
             jatos.studySessionData.inputData.curr_session ++
@@ -36,7 +36,6 @@
                 timeline: [
                     {   
                         type: 'playground',
-                        prompt_question: 'Where is this item located?',
                         stimulus: jsPsych.timelineVariable('img_path'),
                         stimulus_idx: jsPsych.timelineVariable('stimulus_idx'),
                         stimulus_width: '50px',

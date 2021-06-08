@@ -59,7 +59,9 @@
         }
 
         jatos.studySessionData.inputData.condition_ses_counters = {
-
+            practice: {
+                practice: 0,
+            },
             non_adj_8_4: {
                 schema_learning: 0,
                 new_pa_learning: 0,
@@ -605,7 +607,7 @@
                 //     schema_learning: jatos.studySessionData.inputData.n_schema_ses_per_cond * 2,
                 //     new_pa_learning: jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 1
                 // }
-
+                // debugger
                 let key;
 
                 if (jatos.studySessionData.inputData.condition_to_run == '8/6 ver 1'){
@@ -621,7 +623,7 @@
                 let cond_to_run = {}
 
                 // cond_to_run[key] = jatos.studySessionData.inputData.stimuli[key]
-                debugger
+                // debugger
                 cond_to_run['practice'] = jatos.studySessionData.inputData.stimuli['practice']
                 cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']
                 cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']

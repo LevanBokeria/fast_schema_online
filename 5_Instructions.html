@@ -19,17 +19,8 @@
 	//start timeline
 	jatos.onLoad(function() {
 
-		jatos.studySessionData.inputData = {}
-
 		//make a timeline
-		let timeline =[];
-
-		let instructions = {
-			type: 'instructions',
-			pages : instruction_pages,						
-			show_clickable_nav: true,
-			button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
-		};			 
+		let timeline =[];			 
 
 		// Define pages for phase 1
 		let instruction_pages = [			
@@ -39,13 +30,41 @@
 			'<div class="instruct">'+
 				'<p>Welcome to the session!</p>' + 
 				'<p>On each trial, you will see a picture of some item displayed below a board. You have to guess where that item is located on the board, by clicking the location with your mouse. </p>' +
-				'<p>You will have 3 seconds on year trial!</p>' +
-				'<p><br>Click next to see an example of what the board will look like.</p>' +
+				'<p>You will have 3 seconds on yeach trial!</p>' +
+				'<p><br>Click next to do a few practice trials.</p>' +
 			'</div>',																										
 		];
 
+		let instructions = {
+			type: 'instructions',
+			pages : instruction_pages,						
+			show_clickable_nav: true,
+			button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+		};		
+
 		timeline.push(instructions);
 
+
+		jsPsych.init({
+			timeline: timeline,
+
+			on_finish: function(data){
+
+				// Make JATOS remember that this session was run
+				jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+				jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+				jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+				// debugger
+				// Record results
+				jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
+
+				jatos.submitResultData('[instructions_start---' + 
+				JSON.stringify(jatos.studySessionData) +
+				'---instructions_end]', 
+				jatos.startNextComponent);
+
+			}
+		})
 
 
 	});

@@ -45,8 +45,8 @@ function trial_creator(all_conditions){
                     }
                     // randomize the order of the trials 
                     // debugger
-                    session_trials = 
-                    jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
+                    // session_trials = 
+                    // jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
 
                     all_trials.push(session_trials)
                 }

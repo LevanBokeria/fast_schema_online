@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Practice Session</title>
+        <script src='jatos.js'></script>
+        <script src='./jspsych-6.3.1/jspsych.js'></script>        
+        <script src='./extra_functions/lodash.js'></script>
+        <script src='./extra_functions/jspsych-playground.js'></script>
+        <script src='./extra_functions/trial_creator.js'></script>
+        <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
+        <script src="./jspsych-6.3.1/plugins/jspsych-image-keyboard-response.js"></script>
+        <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
+        <script src="./extra_functions/board_creator.js"></script>
+        <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'></link>
+        <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'></link>
+    </head>
+    <body></body>
+    <script>
+
+        jatos.onLoad(function() {
+            // debugger
+
+            // iterate the session
+            jatos.studySessionData.inputData.curr_session ++
+            let curr_session = jatos.studySessionData.inputData.curr_session
+
+            let trials_for_this_session = jatos.studySessionData.inputData.all_sessions[curr_session-1]
+
+            let curr_condition = trials_for_this_session[0].condition
+            let curr_stage     = trials_for_this_session[0].stage
+
+            // Update the session counter for this condition
+            jatos.studySessionData.inputData.condition_ses_counters[curr_condition][curr_stage] ++
+
+            var image_display = {
+                type: 'image-keyboard-response',
+                stimulus: jsPsych.timelineVariable('img_path'),
+                stimulus_width: 100,
+                choices: jsPsych.NO_KEYS,
+                trial_duration: 1000,
+            }
+
+            var board_display = {
+                type: 'playground',
+                stimulus: jsPsych.timelineVariable('img_path'),
+                stimulus_idx: jsPsych.timelineVariable('stimulus_idx'),
+                stimulus_width: '50px',
+                condition: jsPsych.timelineVariable('condition'),
+                stage: jsPsych.timelineVariable('stage'),
+                coords: jsPsych.timelineVariable('coords')                
+            }
+
+            var session_procedure = {
+                timeline: [image_display,board_display],
+                timeline_variables: trials_for_this_session,
+            }
+            
+            var timeline = []
+
+            timeline.push(session_procedure)
+
+
+            var imgs_to_preload = jatos.studySessionData.inputData.all_images
+
+            jsPsych.init({
+                timeline: timeline,                    
+                preload_images: [imgs_to_preload],
+                default_iti: jatos.studySessionData.inputData.iti_duration, 
+
+                on_finish: function(data) {
+                    // debugger
+
+                    // Save the data
+                    var session_results = jsPsych.data.get().values()
+
+                    jatos.studySessionData.outputData.session_results.push(...session_results)
+
+					// Make JATOS remember that this session was run
+                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+                    // Which comp to start
+                    let comp_to_start = jatos.studySessionData.inputData.component_positions.break
+
+					jatos.submitResultData('[session_pa_start_' + '---' + 
+					JSON.stringify(jatos.studySessionData) +
+					'---' + '_session_pa_end]', 
+					function(){jatos.startComponentByPos(comp_to_start)});
+
+                    // console.log('Over');
+                    // jsPsych.data.displayData('json');
+                }       
+            });
+   
+            // ///////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+        });
+    
+    </script>
+</html>

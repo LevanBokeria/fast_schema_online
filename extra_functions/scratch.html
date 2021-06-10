@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img style='height:200px' src='../img/targets/BOSS/downsized/accordion01.jpg' alt='image'>    
+<img style='height:100px; border:1px solid black' id='theimage' onclick="showCoords(event)" src='../img/targets/BOSS/downsized/8ball.jpg' alt='image'>
+
+<p id="demo"></p>
+
+<script>
+function showCoords(event) {
+  var x = event.screenX;
+  var y = event.screenY;
+
+  var el_dims_locs = document.querySelector('#theimage').getBoundingClientRect()
+  console.log('top ' + el_dims_locs.top)
+  console.log('left ' + el_dims_locs.left)
+  console.log('height ' + el_dims_locs.height)
+  console.log('width ' + el_dims_locs.width)
+
+  var el_x = document.querySelector('#theimage').getBoundingClientRect().left
+  var el_y = document.querySelector('#theimage').getBoundingClientRect().top
+  var el_h = document.querySelector('#theimage').getBoundingClientRect().height
+  var el_w = document.querySelector('#theimage').getBoundingClientRect().width  
+
+  var sc_coords = "screenX coords: " + x + ", screenY coords: " + y
+  var cl_coords = "clientX coords: " + event.clientX + ", clientY coords: " + event.clientY
+  var el_coords = "elementLeft coords: " + el_x + ", elementTop coords: " + el_y
+  var el_hw = "elHeight: " + el_h + ", elWidth: " + el_w
+  // console.log(sc_coords);
+  // console.log(cl_coords);
+  // console.log(el_coords);
+  // console.log(el_hw);
+  
+//   console.log(event.clientX)
+//   console.log(event.clientY)
+
+//   document.getElementById("demo").innerHTML = coords;
+}
+</script>
+
+</body>
+</html>

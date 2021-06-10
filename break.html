@@ -34,6 +34,13 @@
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.debriefing
 
+			} else if(curr_session == 1){
+
+				// So we just finished the practice session
+				instructions_text = 'Great! Lets start with the real trials. You will learn location of pictures on 2 different boards. <br> For each board, you will do 4 sessions of learning. <br> Click next to start with the first board'
+
+				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
+
 			} else {
 
 				let previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].condition
@@ -44,13 +51,13 @@
 
 				if (previous_condition != next_condition){
 					// So we're changing the board
-					instructions_text = 'Please take a break. <br> Next, you will learn a new board with new pictures.'
+					instructions_text = 'Please take a break. <br> <strong>Next, you will learn a new board with new pictures.</strong>'
 				} else if (previous_stage != next_stage){
-					instructions_text = 'Please take a break. <br> For the next session, you will stay on this same board, but you will learn some new pictures.'
+					instructions_text = 'Please take a break. <br> For the next session, you will stay on this same board, but you will learn locations of some new pictures!'
 				} else {
-					instructions_text = 'Please take a break and once ready move to the next session.'
+					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this board. Once you are ready please move to the next session.'
 				}
-
+				
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa
 
 			}

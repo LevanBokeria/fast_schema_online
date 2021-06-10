@@ -44,10 +44,20 @@ function trial_creator(all_conditions){
                         }
                     }
                     // randomize the order of the trials 
-                    // debugger
-                    // session_trials = 
-                    // jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
+                    debugger
 
+                    if (stage=='practice'){
+                        session_trials = jsPsych.randomization.shuffle(session_trials)
+                    } else {
+                        session_trials = jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.img_path === b.img_path})
+                    }
+               
+
+                    // Add a key about the trial counter
+                    for (iT=0; iT < session_trials.length; iT++){
+                        session_trials[iT]['trial_counter_prompt'] = '<p>Trial ' + (iT+1) + '/' + session_trials.length +'</p>'
+                    }
+                    // debugger
                     all_trials.push(session_trials)
                 }
         })

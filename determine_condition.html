@@ -28,16 +28,15 @@
         jatos.studySessionData.inputData = {}
         jatos.studySessionData.outputData = {}
         jatos.studySessionData.outputData.session_results = []
+        jatos.studySessionData.outputData.session_results_image_screen = []
 
         jatos.studySessionData.inputData.curr_session = 0
         
         // Component positions
         jatos.studySessionData.inputData.component_positions = {
-            instructions: 2,
-            practice_session: 3,
-            post_practice_instr: 4,
-            session_pa: 4,
-            break: 5,
+            instructions: 3,
+            session_pa: 4,            
+            break: 5,            
             data_submission: 6,
             debriefing: 7,
         }
@@ -53,8 +52,8 @@
             practice: 'purple',
             non_adj_8_4: 'red',
             adj_8_6: 'yellow',
-            non_adj_6_6: 'blue',
-            adj_6_6: 'green',
+            schema_c: 'blue',
+            schema_ic: 'green',
             raw_learning: 'gray',
         }
 
@@ -564,6 +563,35 @@
             timeline.push(trial_duration_page);
             timeline.push(feedback_duration_page);
             timeline.push(iti_duration_page);
+        } else {
+
+            let just_page = {
+                type: 'instructions',
+                pages: ['<p>Click</p>'],						
+                show_clickable_nav: true,
+                button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+		    };	    
+
+            timeline.push(just_page)
+
+            jatos.studySessionData.inputData.condition_to_run = '8/6 ver 1'
+
+            jatos.studySessionData.inputData.n_ses_per_condition = {
+                practice: 1,
+                schema_learning: 3,
+                new_pa_learning: 1,
+            }
+
+            jatos.studySessionData.inputData.n_trials_per_pa = {
+                practice: 2,
+                schema_learning: 1,
+                new_pa_learning: 1,
+            }
+
+            jatos.studySessionData.inputData.trial_duration    = 100
+            jatos.studySessionData.inputData.feedback_duration = 100
+            jatos.studySessionData.inputData.iti_duration      = 50    
+
         }
 
 		jsPsych.init({
@@ -572,34 +600,30 @@
 
 			on_finish: function(data) {
 
-				// Make JATOS remember that this session was run
-				jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
-				jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
-				jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-
 				// Record results
 				var results = jsPsych.data.get().values();
 
 				// debugger
 
-				jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+                if (!autoConditions){
+                    jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
 
-				jatos.studySessionData.inputData.n_ses_per_condition = {
-                    practice: 1,
-					schema_learning: results[1].response,
-					new_pa_learning: results[2].response,
-				}
+                    jatos.studySessionData.inputData.n_ses_per_condition = {
+                        practice: 1,
+                        schema_learning: results[1].response,
+                        new_pa_learning: results[2].response,
+                    }
 
-				jatos.studySessionData.inputData.n_trials_per_pa = {
-                    practice: 2,
-					schema_learning: results[3].response,
-					new_pa_learning: results[3].response,
-				}
+                    jatos.studySessionData.inputData.n_trials_per_pa = {
+                        practice: 2,
+                        schema_learning: results[3].response,
+                        new_pa_learning: results[3].response,
+                    }
 
-				jatos.studySessionData.inputData.trial_duration    = results[4].response
-				jatos.studySessionData.inputData.feedback_duration = results[5].response
-				jatos.studySessionData.inputData.iti_duration      = results[6].response
-
+                    jatos.studySessionData.inputData.trial_duration    = results[4].response
+                    jatos.studySessionData.inputData.feedback_duration = results[5].response
+                    jatos.studySessionData.inputData.iti_duration      = results[6].response
+                }
                 ////////////////////////////////////////////////////////////////////////////////
                 // Variables created/assigned after the end of module
 

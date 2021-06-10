@@ -64,7 +64,13 @@ jsPsych.plugins["playground"] = (function() {
         array: true,
         default: null,
         description: 'This array contains row column coordinates for the image.'
-      },               
+      },        
+      show_stimulus: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Show prompt stimulus',
+        default: false,
+        description: 'This will decide whether the prompt item is shown or now.'
+      }       
     }
   }
 
@@ -107,19 +113,20 @@ jsPsych.plugins["playground"] = (function() {
     // debugger
 		
     //show prompt_question with the trial counter
-    let iTrial = jsPsych.data.get().values().length + 1
-    display_element.insertAdjacentHTML('beforeend', ' Trial ' + iTrial);
+    // let iTrial = jsPsych.data.get().values().length + 1
+    // display_element.insertAdjacentHTML('beforeend', ' Trial ' + iTrial);
 
-		//show stimulus
-    let stimulus_element = document.createElement('img')
-    stimulus_element.className = 'prompt_stimulus'
-    stimulus_element.style.width = trial.stimulus_width
-    stimulus_element.src = trial.stimulus
-    stimulus_element.style.display = 'block'
-    stimulus_element.style.margin = 'auto'
+    if (trial.show_stimulus){
+      //show stimulus
+      let stimulus_element = document.createElement('img')
+      stimulus_element.className = 'prompt_stimulus'
+      stimulus_element.style.width = trial.stimulus_width
+      stimulus_element.src = trial.stimulus
+      stimulus_element.style.display = 'block'
+      stimulus_element.style.margin = 'auto'
 
-    display_element.appendChild(stimulus_element);    
-
+      display_element.appendChild(stimulus_element);    
+    }
     // Add an empty feedback element
     let feedback_el = document.createElement('P')
     feedback_el.innerText = 'null'
@@ -138,9 +145,19 @@ jsPsych.plugins["playground"] = (function() {
 
     function getResponse(e){
       info = {}
-
+      
       info.rt = performance.now() - startTime
 
+      // Get the exact mouse coordinates relative to the page
+      info.mouse_clientX = e.clientX
+      info.mouse_clientY = e.clientY
+
+      // Get the dimensions and location of the target item
+      var pa_dim_loc = document.querySelector('#PA_'+trial.stimulus_idx).getBoundingClientRect()
+      info.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
+      info.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2
+
+      // Get row/col of the cell clicked
       let curr_row_col = e.currentTarget.id.split('_')
       info.row = parseInt(curr_row_col[2],10)
       info.col = parseInt(curr_row_col[4],10)
@@ -200,7 +217,6 @@ jsPsych.plugins["playground"] = (function() {
     
     }
 
-
     function endTrial() {
       // console.log('Another trial');
       
@@ -218,8 +234,6 @@ jsPsych.plugins["playground"] = (function() {
       trial_data.stimulus = trial.stimulus
       trial_data.corr_row = trial.coords[0]
       trial_data.corr_col = trial.coords[1]
-
-      
 
       // clear the display
       display_element.innerHTML = '';

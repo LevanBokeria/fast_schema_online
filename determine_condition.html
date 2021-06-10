@@ -210,54 +210,54 @@
             schema_ic: {
                 schema_learning: {
                     ses1: [
-                        [5,2],
-                        [2,5],
+                        [6,2],
+                        [2,3],
                         [8,5],
-                        [5,8],
-                        [11,8],
-                        [8,11],                        
+                        [4,8],
+                        [9,10],
+                        [3,11],                        
                     ],
                     ses2: [
-                        [5,2],
-                        [2,5],
+                        [4,8],
                         [8,5],
-                        [5,8],
-                        [11,8],
-                        [8,11], 
+                        [3,11],
+                        [9,10],
+                        [2,3],
+                        [6,2],    
                     ],
                     ses3: [
-                        [5,2],
-                        [2,5],
+                        [2,3],
+                        [3,11],
+                        [6,2],
                         [8,5],
-                        [5,8],
-                        [11,8],
-                        [8,11], 
+                        [4,8],
+                        [9,10],    
                     ],
                 },
                 new_pa_learning: {
                     ses1: [
-                        [8,2],
-                        [5,5],
-                        [11,5],
-                        [2,8],
-                        [8,8],
-                        [5,11],                        
+                        [10,2],
+                        [3,4],
+                        [7,5],
+                        [9,7],
+                        [2,9],
+                        [8,9],                        
                     ],   
                     ses2: [
-                        [8,2],
-                        [5,5],
-                        [11,5],
-                        [2,8],
-                        [8,8],
-                        [5,11],                        
+                        [10,2],
+                        [3,4],
+                        [7,5],
+                        [9,7],
+                        [2,9],
+                        [8,9],                       
                     ],   
                     ses3: [
-                        [8,2],
-                        [5,5],
-                        [11,5],
-                        [2,8],
-                        [8,8],
-                        [5,11],                        
+                        [10,2],
+                        [3,4],
+                        [7,5],
+                        [9,7],
+                        [2,9],
+                        [8,9],                        
                     ],                                                     
                 },                          
             },
@@ -567,7 +567,7 @@
 
             let just_page = {
                 type: 'instructions',
-                pages: ['<p>Click</p>'],						
+                pages: ['<p>Click to continue</p>'],						
                 show_clickable_nav: true,
                 button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
 		    };	    
@@ -584,15 +584,17 @@
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 2,
-                schema_learning: 1,
-                new_pa_learning: 1,
+                schema_learning: 10,
+                new_pa_learning: 10,
             }
 
-            jatos.studySessionData.inputData.trial_duration    = 100
-            jatos.studySessionData.inputData.feedback_duration = 100
-            jatos.studySessionData.inputData.iti_duration      = 50    
+            jatos.studySessionData.inputData.trial_duration    = 3000
+            jatos.studySessionData.inputData.feedback_duration = 500
+            jatos.studySessionData.inputData.iti_duration      = 500    
 
         }
+
+        jatos.studySessionData.inputData.image_pres_duration = 500
 
 		jsPsych.init({
 			

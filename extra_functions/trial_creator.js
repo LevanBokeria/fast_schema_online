@@ -44,7 +44,7 @@ function trial_creator(all_conditions){
                         }
                     }
                     // randomize the order of the trials 
-                    debugger
+                    // debugger
 
                     if (stage=='practice'){
                         session_trials = jsPsych.randomization.shuffle(session_trials)

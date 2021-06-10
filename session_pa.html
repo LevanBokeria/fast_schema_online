@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Practice Session</title>
+        <title>Sessions</title>
         <script src='jatos.js'></script>
         <script src='./jspsych-6.3.1/jspsych.js'></script>        
         <script src='./extra_functions/lodash.js'></script>
@@ -37,7 +37,7 @@
                 stimulus: jsPsych.timelineVariable('img_path'),
                 stimulus_width: 100,
                 choices: jsPsych.NO_KEYS,
-                trial_duration: 100,
+                trial_duration: jatos.studySessionData.inputData.image_pres_duration,
                 prompt: jsPsych.timelineVariable('trial_counter_prompt'),
             }
 
@@ -74,8 +74,6 @@
                     var session_results = jsPsych.data.get().values()
 
                     // Separate out image presentation from responding
-                    debugger
-
                     jatos.studySessionData.outputData.session_results.push(...session_results.filter(el => 'condition' in el))
                     jatos.studySessionData.outputData.session_results_image_screen.push(...session_results.filter(el => !('condition' in el)))
 

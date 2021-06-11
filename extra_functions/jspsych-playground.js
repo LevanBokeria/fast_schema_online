@@ -91,8 +91,15 @@ jsPsych.plugins["playground"] = (function() {
     let curr_session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition][trial.stage]
     let img_array    = jatos.studySessionData.inputData.stimuli[trial.condition][trial.stage]
 
+    // Create the wrapper arena for box to move in
+    wrapper_arena = document.createElement('div')
+    wrapper_arena.id = 'wrapper_arena'
+    wrapper_arena.style.height = '700px'
+    wrapper_arena.style.width = '700px'
+    wrapper_arena.style.border = '1px solid black'
+    
     // Create the board
-    grid_box = board_creator(700,
+    grid_box = board_creator(600,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
       jatos.studySessionData.inputData.condition_colors[trial.condition],
@@ -102,6 +109,14 @@ jsPsych.plugins["playground"] = (function() {
 
     //Add mouseclick listener MUST EDIT
 
+    // Randomly modify grid position
+    let top_offset = Math.floor(Math.random() * 100)
+    let left_offset = Math.floor(Math.random() * 100)
+
+    grid_box.style.position = 'relative'
+    grid_box.style.top = top_offset + 'px'
+    grid_box.style.left = left_offset + 'px'
+
     var all_cells = grid_box.querySelectorAll('.cells')
 
     for (iC=0; iC<all_cells.length; iC++){
@@ -109,7 +124,9 @@ jsPsych.plugins["playground"] = (function() {
       all_cells[iC].addEventListener('click',getResponse)
     }
 
-    display_element.appendChild(grid_box)
+    wrapper_arena.appendChild(grid_box)
+    display_element.appendChild(wrapper_arena)
+
     // debugger
 		
     //show prompt_question with the trial counter

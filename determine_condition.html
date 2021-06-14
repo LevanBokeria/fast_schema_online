@@ -575,6 +575,7 @@
         ]
 
         let autoConditions = jatos.componentJsonInput.autoConditions
+        let debugMode      = jatos.componentJsonInput.debugMode
 
         if (!autoConditions){
 
@@ -666,13 +667,6 @@
             timeline.push(iti_duration_page);
         } else {
 
-            // let just_page = {
-            //     type: 'instructions',
-            //     pages: ['<p>Click to continue</p>'],						
-            //     show_clickable_nav: true,
-            //     button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
-		    // };	    
-
             var condition_options = ['cb1','cb2','cb3','cb4'];
 
             var condition_choice_page = {
@@ -705,6 +699,31 @@
         }
 
         jatos.studySessionData.inputData.image_pres_duration = 500
+
+        // If we're debugging, make everything shorter
+        if (debugMode){
+
+
+            jatos.studySessionData.inputData.n_ses_per_condition = {
+                practice: 1,
+                schema_learning: 2,
+                new_pa_learning: 1,
+            }
+
+            jatos.studySessionData.inputData.n_trials_per_pa = {
+                practice: 2,
+                schema_learning: 2,
+                new_pa_learning: 2,
+            }
+
+            jatos.studySessionData.inputData.trial_duration    = 3000
+            jatos.studySessionData.inputData.feedback_duration = 500
+            jatos.studySessionData.inputData.iti_duration      = 50
+
+            jatos.studySessionData.inputData.image_pres_duration = 50
+
+        }
+
 
 		jsPsych.init({
 			
@@ -769,54 +788,54 @@
                     cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']
 
                     jatos.studySessionData.inputData.condition_coords.schema_c = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_c,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_c,
-                        }
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_c,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_c,
+                    }
                     jatos.studySessionData.inputData.condition_coords.schema_ic = {
                         schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_ic,
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_ic,
                     }
 
                 } else if (jatos.studySessionData.inputData.condition_to_run == 'cb2'){
-                    key = 'non_adj_8_4'
+                    // key = 'non_adj_8_4'
                     cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']
                     cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']        
                     
                     jatos.studySessionData.inputData.condition_coords.schema_c = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_c,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_c,
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_c,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_c,
                     }
                     jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_ic,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_ic,
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_ic,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_ic,
                     }                  
 
                 } else if (jatos.studySessionData.inputData.condition_to_run == 'cb3'){
-                    key = 'adj_6_6'
+                    // key = 'adj_6_6'
                     cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']                    
                     cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']   
                     
                     jatos.studySessionData.inputData.condition_coords.schema_c = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_c,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_c,
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_c,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_c,
                     }
                     jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_ic,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_ic,
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_ic,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_ic,
                     }                   
 
                 } else if (jatos.studySessionData.inputData.condition_to_run == 'cb4'){
-                    key = 'non_adj_6_6'
+                    // key = 'non_adj_6_6'
                     cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']                    
                     cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c'] 
                     
                     jatos.studySessionData.inputData.condition_coords.schema_c = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_c,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_c,
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1.schema_c,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2.schema_c,
                     } 
                     jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                            schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_ic,
-                            new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_ic,
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1.schema_ic,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2.schema_ic,
                     }                      
                 }
 
@@ -827,9 +846,6 @@
                 jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
                 jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
                 jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-
-                // Input data gets lost for some reason???
-                // jatos.studySessionData.inputData = JSON.parse(JSON.stringify(jatos.studySessionData.inputData))
 
                 jatos.submitResultData("[conditions_start---" + 
                 JSON.stringify(jatos.studySessionData) + "---conditions_end]", jatos.startNextComponent);

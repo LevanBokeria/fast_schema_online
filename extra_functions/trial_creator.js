@@ -53,9 +53,16 @@ function trial_creator(all_conditions){
                     }
                
 
-                    // Add a key about the trial counter
+                    // Add a key about the trial counter and random offset 
                     for (iT=0; iT < session_trials.length; iT++){
+
+                        // Trial counter
                         session_trials[iT]['trial_counter_prompt'] = '<p>Trial ' + (iT+1) + '/' + session_trials.length +'</p>'
+
+                        // top and left offsets
+                        session_trials[iT]['top_offset'] = Math.floor(Math.random() * 180)
+                        session_trials[iT]['left_offset'] = Math.floor(Math.random() * 180)
+
                     }
                     // debugger
                     all_trials.push(session_trials)

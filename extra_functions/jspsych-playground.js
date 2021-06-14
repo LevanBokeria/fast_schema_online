@@ -64,7 +64,19 @@ jsPsych.plugins["playground"] = (function() {
         array: true,
         default: null,
         description: 'This array contains row column coordinates for the image.'
-      },        
+      },   
+      top_offset: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Board top offset',
+        default: null,
+        description: 'Y offset of the board to randomize its position'
+      },            
+      left_offset: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Board left offset',
+        default: null,
+        description: 'X offset of the board to randomize its position'
+      },                  
       show_stimulus: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show prompt stimulus',
@@ -99,7 +111,7 @@ jsPsych.plugins["playground"] = (function() {
     wrapper_arena.style.border = '1px solid black'
     
     // Create the board
-    grid_box = board_creator(600,
+    grid_box = board_creator(500,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
       jatos.studySessionData.inputData.condition_colors[trial.condition],
@@ -110,12 +122,9 @@ jsPsych.plugins["playground"] = (function() {
     //Add mouseclick listener MUST EDIT
 
     // Randomly modify grid position
-    let top_offset = Math.floor(Math.random() * 100)
-    let left_offset = Math.floor(Math.random() * 100)
-
     grid_box.style.position = 'relative'
-    grid_box.style.top = top_offset + 'px'
-    grid_box.style.left = left_offset + 'px'
+    grid_box.style.top = trial.top_offset + 'px'
+    grid_box.style.left = trial.left_offset + 'px'
 
     var all_cells = grid_box.querySelectorAll('.cells')
 
@@ -251,6 +260,8 @@ jsPsych.plugins["playground"] = (function() {
       trial_data.stimulus = trial.stimulus
       trial_data.corr_row = trial.coords[0]
       trial_data.corr_col = trial.coords[1]
+      trial_data.top_offset = trial.top_offset
+      trial_data.left_offset = trial.left_offset
 
       // clear the display
       display_element.innerHTML = '';

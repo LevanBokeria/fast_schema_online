@@ -60,8 +60,8 @@ function trial_creator(all_conditions){
                         session_trials[iT]['trial_counter_prompt'] = '<p>Trial ' + (iT+1) + '/' + session_trials.length +'</p>'
 
                         // top and left offsets
-                        session_trials[iT]['top_offset'] = Math.floor(Math.random() * 180)
-                        session_trials[iT]['left_offset'] = Math.floor(Math.random() * 180)
+                        session_trials[iT]['top_offset'] = Math.floor(Math.random() * 160)
+                        session_trials[iT]['left_offset'] = Math.floor(Math.random() * 160)
 
                     }
                     // debugger

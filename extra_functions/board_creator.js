@@ -1,7 +1,15 @@
 function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_pas,
     img_array,img_board_coords){
 
+    // Create the grid 
+    grid_border = document.createElement('div')
+    grid_border.id = 'grid_border'
 
+    grid_border.style['background-image'] = "url('img/border_images/circles-trans.png')"
+
+    grid_border.style.height = (board_size_px + 40) + 'px'
+    grid_border.style.width  = (board_size_px + 40) + 'px'
+      // debugger
     // Create the grid box element
     let grid_box = document.createElement('div')
     grid_box.id = 'grid-box'
@@ -10,7 +18,12 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
         'width:' + board_size_px + 'px;' + 
         'grid-template-columns: repeat('+n_cols+', 1fr);' +
         'grid-template-rows: repeat('+n_rows+', 1fr);' +
-        'border: 10px solid ' + current_condition_color + ';'
+        'border: 10px solid ' + current_condition_color + ';' + 
+        'background-color: white;' + 
+        'position: absolute;' +
+        'top: 50%;' + 
+        'left: 50%;' + 
+        'transform: translate(-50%, -50%);'
 
     for (ir = 0; ir < n_rows; ir++){
 
@@ -22,7 +35,8 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
         iCell.id = 'cell_r_' + (ir+1) + '_c_' + (ic+1)
 
         iCell.style = 
-          'background-color: white;'
+          'background-color: '+ current_condition_color +';' +
+          'opacity: 0.4;'
           // 'border-right: 3px solid ' + current_condition_color + ';' +
           // 'border-bottom: 3px solid ' + current_condition_color + ';'
 
@@ -58,5 +72,7 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_
 
     }
 
-    return grid_box
+    grid_border.appendChild(grid_box)
+
+    return grid_border
 }

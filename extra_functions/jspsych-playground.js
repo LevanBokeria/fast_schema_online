@@ -109,9 +109,9 @@ jsPsych.plugins["playground"] = (function() {
     wrapper_arena.style.height = '700px'
     wrapper_arena.style.width = '700px'
     wrapper_arena.style.border = '1px solid black'
-    
+    // debugger
     // Create the board
-    grid_box = board_creator(500,
+    grid_border = board_creator(500,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
       jatos.studySessionData.inputData.condition_colors[trial.condition],
@@ -122,18 +122,18 @@ jsPsych.plugins["playground"] = (function() {
     //Add mouseclick listener MUST EDIT
 
     // Randomly modify grid position
-    grid_box.style.position = 'relative'
-    grid_box.style.top = trial.top_offset + 'px'
-    grid_box.style.left = trial.left_offset + 'px'
+    grid_border.style.position = 'relative'
+    grid_border.style.top = trial.top_offset + 'px'
+    grid_border.style.left = trial.left_offset + 'px'
 
-    var all_cells = grid_box.querySelectorAll('.cells')
+    var all_cells = grid_border.querySelectorAll('.cells')
 
     for (iC=0; iC<all_cells.length; iC++){
       // console.log(iC)
       all_cells[iC].addEventListener('click',getResponse)
     }
 
-    wrapper_arena.appendChild(grid_box)
+    wrapper_arena.appendChild(grid_border)
     display_element.appendChild(wrapper_arena)
 
     // debugger
@@ -233,6 +233,7 @@ jsPsych.plugins["playground"] = (function() {
 
       // Show the true feedback!
       document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
+      document.querySelector('#PA_'+trial.stimulus_idx).parentElement.style.opacity = 1
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();

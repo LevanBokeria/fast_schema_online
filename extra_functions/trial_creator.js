@@ -12,7 +12,7 @@ function trial_creator(all_conditions){
 
                 let n_trials_per_ses = n_trials_per_pa * iStageStimuli.length
                 let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[stage]
-
+                // debugger
                 for (iSes=0; iSes<istage_n_ses; iSes++){
 
                     let allpas      = []
@@ -36,6 +36,7 @@ function trial_creator(all_conditions){
 
                         session_trials[i] = {
                             color: jatos.studySessionData.inputData.condition_colors[iCond],
+                            border_pattern: jatos.studySessionData.inputData.condition_border_patterns[iCond],
                             img_path: allpas[i],
                             stimulus_idx: allpaidxs[i],
                             condition: iCond,

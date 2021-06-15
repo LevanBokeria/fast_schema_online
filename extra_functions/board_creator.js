@@ -1,12 +1,15 @@
-function board_creator(board_size_px,n_rows,n_cols,current_condition_color,show_pas,
+function board_creator(board_size_px,n_rows,n_cols,current_condition_color,current_condition_border_pattern,show_pas,
     img_array,img_board_coords){
+
+    // Border image to use
+    let border_image_path = 'img/border_images/' + current_condition_border_pattern + '.png'
 
     // Create the grid 
     grid_border = document.createElement('div')
     grid_border.id = 'grid_border'
 
-    grid_border.style['background-image'] = "url('img/border_images/circles-trans.png')"
-
+    grid_border.style['background-image'] = "url(" + border_image_path + ")"
+    grid_border.style['background-size'] = 'contain'
     grid_border.style.height = (board_size_px + 40) + 'px'
     grid_border.style.width  = (board_size_px + 40) + 'px'
       // debugger

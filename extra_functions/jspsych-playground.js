@@ -115,6 +115,7 @@ jsPsych.plugins["playground"] = (function() {
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
       jatos.studySessionData.inputData.condition_colors[trial.condition],
+      jatos.studySessionData.inputData.condition_border_patterns[trial.condition],
       false,
       img_array,
       jatos.studySessionData.inputData.condition_coords[trial.condition][trial.stage]['ses' + curr_session])

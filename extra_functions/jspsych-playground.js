@@ -118,7 +118,9 @@ jsPsych.plugins["playground"] = (function() {
       jatos.studySessionData.inputData.condition_border_patterns[trial.condition],
       false,
       img_array,
-      jatos.studySessionData.inputData.condition_coords[trial.condition][trial.stage]['ses' + curr_session])
+      jatos.studySessionData.inputData.condition_coords[trial.condition][trial.stage]['ses' + curr_session],
+      trial.stage,
+      trial.condition)
 
     //Add mouseclick listener MUST EDIT
 
@@ -235,6 +237,22 @@ jsPsych.plugins["playground"] = (function() {
       // Show the true feedback!
       document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
       document.querySelector('#PA_'+trial.stimulus_idx).parentElement.style.opacity = 1
+
+      // Also show the schema items?
+
+      if (trial.stage == 'schema_learning' | trial.stage == 'practice'){
+
+        // Just make all the PAs show up
+        document.querySelectorAll('.PA').forEach(item => item.style.visibility = 'visible')
+        document.querySelectorAll('.PA').forEach(item => item.parentElement.style.opacity = 1)
+
+      } else if (trial.stage == 'new_pa_learning'){
+
+        // Just make all the PAs show up
+        document.querySelectorAll('.oPA').forEach(item => item.style.visibility = 'visible')
+        document.querySelectorAll('.oPA').forEach(item => item.parentElement.style.opacity = 1)        
+
+      }
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();

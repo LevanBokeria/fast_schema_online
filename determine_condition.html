@@ -583,17 +583,20 @@
         let autoConditions = jatos.componentJsonInput.autoConditions
         let debugMode      = jatos.componentJsonInput.debugMode
 
+
+        // Add the page about counterbalancing conditions
+        var condition_options = ['cb1','cb2','cb3','cb4'];
+
+        var condition_choice_page = {
+            type: 'survey-multi-choice',
+            questions: [
+                {prompt: "Please choose", name: 'condition', options: condition_options, required:true}, 
+            ],
+        };   
+
+        timeline.push(condition_choice_page);
+
         if (!autoConditions){
-
-            // Participant chooses
-            var condition_options = ["8/6 ver 1", "8/4 ver 2", "6/6 ver 1", "6/6 ver 2"];
-
-            var condition_choice_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Which condition do you want to run?", name: 'condition', options: condition_options, required:true}, 
-                ],
-            };
 
             var n_training_ses_page = {
                 type: 'html-slider-response',
@@ -664,7 +667,6 @@
                 prompt: "<p>Choose the duration for ITI</p>"
             };			
 
-            timeline.push(condition_choice_page);
             timeline.push(n_training_ses_page);
             timeline.push(n_testing_ses_page);
             timeline.push(n_trials_per_pa);
@@ -672,19 +674,6 @@
             timeline.push(feedback_duration_page);
             timeline.push(iti_duration_page);
         } else {
-
-            var condition_options = ['cb1','cb2','cb3','cb4'];
-
-            var condition_choice_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Please choose", name: 'condition', options: condition_options, required:true}, 
-                ],
-            };            
-
-            timeline.push(condition_choice_page)
-
-            // jatos.studySessionData.inputData.condition_to_run = '8/6 ver 1'
 
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
@@ -704,11 +693,11 @@
 
         }
 
+        // How long to show the prompt image
         jatos.studySessionData.inputData.image_pres_duration = 500
 
         // If we're debugging, make everything shorter
         if (debugMode){
-
 
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
@@ -730,7 +719,6 @@
 
         }
 
-
 		jsPsych.init({
 			
 			timeline: timeline,
@@ -740,7 +728,7 @@
 				// Record results
 				var results = jsPsych.data.get().values();
 
-				// debugger
+				debugger
 
                 if (!autoConditions){
                     jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
@@ -762,14 +750,6 @@
                     jatos.studySessionData.inputData.iti_duration      = results[6].response
                 }
                 ////////////////////////////////////////////////////////////////////////////////
-                // Variables created/assigned after the end of module
-
-                // jatos.studySessionData.inputData.n_ses_total = {
-                //     schema_learning: jatos.studySessionData.inputData.n_schema_ses_per_cond * 2,
-                //     new_pa_learning: jatos.studySessionData.inputData.n_new_pa_ses_total = jatos.studySessionData.inputData.n_new_pa_ses_per_cond * 1
-                // }
-                // debugger
-                // let key;
 
                 // Start with the practice condition either wat
                 let cond_to_run = {}
@@ -785,7 +765,7 @@
                             }
                         }
                 }
-                // debugger
+
                 // Which counterbalancing was chosen?
                 jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
 

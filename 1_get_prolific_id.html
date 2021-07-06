@@ -63,14 +63,16 @@
           
             jatos.submitResultData("[get_pid_comp_start---" + 
               JSON.stringify(jatos.studySessionData) + 
-              "---get_pid_comp_end]", jatos.startNextComponent);
+              "---get_pid_comp_end]", 
+              function(){jatos.startComponentByPos(8)});
           }
         });
       } else {
         jatos.studySessionData.prolific_ID = "test";
 
         jatos.submitResultData('[get_pid_comp_start---' + JSON.stringify(jatos.studySessionData) + 
-        '---get_pid_comp_end]', jatos.startNextComponent);     
+        '---get_pid_comp_end]',
+        function(){jatos.startComponentByPos(8)});
       }
 
       var w = window.innerWidth;

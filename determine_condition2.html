@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Determine condition2</title>
+        <script src='jatos.js'></script>
+        <script src='./jspsych-6.3.1/jspsych.js'></script>        
+        <script src='./extra_functions/lodash.js'></script>
+        <script src='./extra_functions/jspsych-playground2.js'></script>
+        <script src='./extra_functions/trial_creator2.js'></script>
+        <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
+        <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
+        <script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
+        <script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
+        <script src='./jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js'></script>
+        <script src="./extra_functions/board_creator2.js"></script>
+        <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'></link>
+        <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'></link>
+    </head>
+    <body></body>
+    <script>
+
+    jatos.onLoad(function() {
+        
+        // Define all the conditions here ///////////////////////////////////////////////////////////
+        var timeline = []
+
+        jatos.studySessionData.inputData = {}
+        jatos.studySessionData.outputData = {}
+        jatos.studySessionData.outputData.session_results_schema_display = []
+        jatos.studySessionData.outputData.session_results_pa_learning = []
+        jatos.studySessionData.outputData.session_results_image_screen = []
+
+        jatos.studySessionData.inputData.curr_session = 0
+        
+        // Component positions
+        jatos.studySessionData.inputData.component_positions = {
+            instructions: 3,
+            session_pa: 4,            
+            break: 5,            
+            data_submission: 6,
+            debriefing: 7,
+            session_pa2: 9,
+        }
+
+        jatos.studySessionData.inputData.curr_condition = ''
+
+        // Add the cells
+        jatos.studySessionData.inputData.n_rows = 12
+        jatos.studySessionData.inputData.n_cols = 12
+
+        // Define all the possible colors. Later, map these by randomization or latin square
+        jatos.studySessionData.inputData.condition_colors = {
+            practice: 'purple',
+            non_adj_8_4: 'red',
+            adj_8_6: 'yellow',
+            schema_c: 'blue',
+            schema_ic: 'green',
+            raw_learning: 'gray',
+        }
+
+        jatos.studySessionData.inputData.condition_border_patterns = {
+            practice: 'triangles',
+            schema_c: 'circles',
+            schema_ic: 'diamonds'
+        }
+
+        jatos.studySessionData.inputData.condition_ses_counters = {
+            practice: 0,
+            schema_ic: 0,
+            schema_c: 0,
+        }
+        
+        jatos.studySessionData.inputData.arrangement_coords = {
+            arr_pair_1: {
+                arr_pair_1_1: [
+                            [6,3],
+                            [9,4],
+                            [3,6],
+                            [7,7],
+                            [10,9],
+                            [5,10],
+                        ],
+                arr_pair_1_2: [
+                            [8,2],
+                            [10,4],
+                            [4,5],
+                            [11,7],
+                            [8,8],
+                            [3,9],
+                    ],
+            },
+            arr_pair_2: {
+                arr_pair_2_1: [
+                            [6,2],
+                            [2,3],
+                            [8,5],
+                            [4,8],
+                            [9,10],
+                            [3,11],                        
+                        ],
+                arr_pair_2_2: [
+                            [10,2],
+                            [3,4],
+                            [7,5],
+                            [9,7],
+                            [2,9],
+                            [8,9],                        
+                        ], 
+            }
+        }
+
+        jatos.studySessionData.inputData.stimuli = {
+            practice: {
+                practice:[
+                    'img/targets/BOSS/downsized/castle.jpg',
+                    'img/targets/BOSS/downsized/cat.jpg',
+                    'img/targets/BOSS/downsized/centurionhelmet.jpg',
+                ]
+            },
+            schema_c: {
+                schema_learning: [
+                    'img/targets/BOSS/downsized/buffaloskull.jpg',
+                    'img/targets/BOSS/downsized/bulldozer.jpg',
+                    'img/targets/BOSS/downsized/bullet.jpg',
+                    'img/targets/BOSS/downsized/bulletbelt.jpg',
+                    'img/targets/BOSS/downsized/bun.jpg',
+                    'img/targets/BOSS/downsized/butterfly.jpg',
+                ],
+                new_pa_learning: [
+                    'img/targets/BOSS/downsized/cactus.jpg',
+                    'img/targets/BOSS/downsized/callbell.jpg',
+                    'img/targets/BOSS/downsized/campfire.jpg',
+                    'img/targets/BOSS/downsized/candelabra.jpg',
+                    'img/targets/BOSS/downsized/car.jpg',
+                    'img/targets/BOSS/downsized/caribou02.jpg',
+                ],
+            },
+            schema_ic: {
+                schema_learning: [
+                    'img/targets/BOSS/downsized/bicycle.jpg',
+                    'img/targets/BOSS/downsized/bikepump01.jpg',
+                    'img/targets/BOSS/downsized/birdnest.jpg',
+                    'img/targets/BOSS/downsized/blackbear.jpg',
+                    'img/targets/BOSS/downsized/bolt01a.jpg',
+                    'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
+                ],
+                new_pa_learning: [
+                    'img/targets/BOSS/downsized/bow.jpg',
+                    'img/targets/BOSS/downsized/bowlingball.jpg',
+                    'img/targets/BOSS/downsized/bowlingpin.jpg',
+                    'img/targets/BOSS/downsized/bowtie.jpg',
+                    'img/targets/BOSS/downsized/boxtruck.jpg',
+                    'img/targets/BOSS/downsized/broadsword.jpg',
+                ],
+            },
+        }            
+
+        jatos.studySessionData.inputData.all_images = [
+            'img/targets/BOSS/downsized/8ball.jpg',
+            'img/targets/BOSS/downsized/accordion01.jpg',
+            'img/targets/BOSS/downsized/aceofdiamond.jpg',
+            'img/targets/BOSS/downsized/acorn.jpg',
+            'img/targets/BOSS/downsized/acousticguitar02.jpg',
+            'img/targets/BOSS/downsized/addressplate.jpg',
+            'img/targets/BOSS/downsized/africanelephant.jpg',
+            'img/targets/BOSS/downsized/aloe01.jpg',
+            'img/targets/BOSS/downsized/americangoldfinch.jpg',
+            'img/targets/BOSS/downsized/anchor.jpg',
+            'img/targets/BOSS/downsized/ant.jpg',
+            'img/targets/BOSS/downsized/armchair02.jpg',
+            'img/targets/BOSS/downsized/artichoke01b.jpg',
+            'img/targets/BOSS/downsized/badmintonracket.jpg',
+            'img/targets/BOSS/downsized/ballofstring.jpg',
+            'img/targets/BOSS/downsized/barnowl.jpg',
+            'img/targets/BOSS/downsized/barrel01.jpg',
+            'img/targets/BOSS/downsized/basketball01.jpg',
+            'img/targets/BOSS/downsized/bassethound.jpg',
+            'img/targets/BOSS/downsized/battleaxe.jpg',
+            'img/targets/BOSS/downsized/beachpaddle01a.jpg',
+            'img/targets/BOSS/downsized/beachumbrella01.jpg',
+            'img/targets/BOSS/downsized/bed.jpg',
+            'img/targets/BOSS/downsized/bench01.jpg',
+            'img/targets/BOSS/downsized/bicycle.jpg',
+            'img/targets/BOSS/downsized/bikepump01.jpg',
+            'img/targets/BOSS/downsized/birdnest.jpg',
+            'img/targets/BOSS/downsized/blackbear.jpg',
+            'img/targets/BOSS/downsized/bolt01a.jpg',
+            'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
+            'img/targets/BOSS/downsized/bow.jpg',
+            'img/targets/BOSS/downsized/bowlingball.jpg',
+            'img/targets/BOSS/downsized/bowlingpin.jpg',
+            'img/targets/BOSS/downsized/bowtie.jpg',
+            'img/targets/BOSS/downsized/boxtruck.jpg',
+            'img/targets/BOSS/downsized/broadsword.jpg',
+            'img/targets/BOSS/downsized/buffaloskull.jpg',
+            'img/targets/BOSS/downsized/bulldozer.jpg',
+            'img/targets/BOSS/downsized/bullet.jpg',
+            'img/targets/BOSS/downsized/bulletbelt.jpg',
+            'img/targets/BOSS/downsized/bun.jpg',
+            'img/targets/BOSS/downsized/butterfly.jpg',
+            'img/targets/BOSS/downsized/cactus.jpg',
+            'img/targets/BOSS/downsized/callbell.jpg',
+            'img/targets/BOSS/downsized/campfire.jpg',
+            'img/targets/BOSS/downsized/candelabra.jpg',
+            'img/targets/BOSS/downsized/car.jpg',
+            'img/targets/BOSS/downsized/caribou02.jpg',
+            'img/targets/BOSS/downsized/carsidemirror01.jpg',
+            'img/targets/BOSS/downsized/cartonofeggs.jpg',
+            'img/targets/BOSS/downsized/castle.jpg',
+            'img/targets/BOSS/downsized/cat.jpg',
+            'img/targets/BOSS/downsized/centurionhelmet.jpg',
+        ]
+
+        let autoConditions = jatos.componentJsonInput.autoConditions
+        let debugMode      = jatos.componentJsonInput.debugMode
+
+
+        // Add the page about counterbalancing conditions
+        var condition_options = ['cb1','cb2','cb3','cb4'];
+
+        var condition_choice_page = {
+            type: 'survey-multi-choice',
+            questions: [
+                {prompt: "Please choose", name: 'condition', options: condition_options, required:false}, 
+            ],
+        };   
+
+        timeline.push(condition_choice_page);
+
+        if (!autoConditions){
+
+            var n_schema_c_ses_page = {
+                type: 'html-slider-response',
+                stimulus: '<p>Number of schema C sessions</p>',
+                labels: ['1','2','3','4','5','6'],
+                min: 1,
+                max: 6,
+                step: 1,
+                slider_start: 3,
+                prompt: "<p>Choose the number of schema C sessions </p>"
+            };
+
+            var n_schema_ic_ses_page = {
+                type: 'html-slider-response',
+                stimulus: '<p>Number of schema IC sessions</p>',
+                labels: ['1','2','3','4','5','6'],
+                min: 1,
+                max: 6,
+                step: 1,
+                slider_start: 3,
+                prompt: "<p>Choose the number of schema IC sessions </p>"
+            };
+
+            var n_trials_per_pa = {
+                type: 'html-slider-response',
+                stimulus: '<p>Number of trials per PA</p>',
+                labels: ['2','3','4','5','6','7','8','9','10','11','12','13','14','15'],
+                min: 2,
+                max: 15,
+                step: 1,
+                slider_start: 10,
+                prompt: "<p>Choose the number trials per PA </p>"
+            };			
+
+            var schema_display_duration_page = {
+                type: 'html-slider-response',
+                stimulus: '<p>Schema PA display duration</p>',
+                // labels: ['500','750','1000', '1250','1500', '1750','2000', '2250','2500', '2750','3000', '3250','3500', '3750','4000'],
+                labels: ['500','1000','1500','2000','2500','3000','3500','4000','4500','5000','5500','6000'],
+                min: 500,
+                max: 6000,
+                step: 250,
+                slider_start: 3000,
+                prompt: "<p>Choose how long the schema items get displayed ahead of trial</p>"
+            };
+
+            var response_window_duration_page = {
+                type: 'html-slider-response',
+                stimulus: '<p>Response Window duration</p>',
+                // labels: ['500','750','1000', '1250','1500', '1750','2000', '2250','2500', '2750','3000', '3250','3500', '3750','4000'],
+                labels: ['500','1000','1500','2000','2500','3000','3500','4000','4500','5000','5500','6000'],
+                min: 500,
+                max: 6000,
+                step: 250,
+                slider_start: 3000,
+                prompt: "<p>Choose the duration of response window for each trial</p>"
+            };
+
+            var feedback_duration_page = {
+                type: 'html-slider-response',
+                stimulus: '<p>Feedback duration</p>',
+                // labels: ['0','100','200','300','400','500','600','700','800','900','1000'],
+                labels: ['250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
+                min: 250,
+                max: 3000,
+                step: 250,
+                slider_start: 1000,
+                prompt: "<p>Choose the duration for the feedback</p>"
+            };		
+            
+            var iti_duration_page = {
+                type: 'html-slider-response',
+                stimulus: '<p>ITI duration</p>',
+                // labels: ['100','200','300','400','500','600','700','800','900','1000'],
+                labels: ['250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
+                min: 250,
+                max: 3000,
+                step: 250,
+                slider_start: 500,
+                prompt: "<p>Choose the duration for ITI</p>"
+            };			
+
+            timeline.push(n_schema_c_ses_page);
+            timeline.push(n_schema_ic_ses_page);
+            timeline.push(n_trials_per_pa);
+            timeline.push(schema_display_duration_page);
+            timeline.push(response_window_duration_page);
+            timeline.push(feedback_duration_page);
+            timeline.push(iti_duration_page);
+
+        } else {
+
+            jatos.studySessionData.inputData.n_ses_per_condition = {
+                practice: 1,
+                schema_c: 3,
+                schema_ic: 3,
+            }
+
+            jatos.studySessionData.inputData.n_trials_per_pa = {
+                practice: 2,
+                schema_c: 10,
+                schema_ic: 10,
+            }
+
+            jatos.studySessionData.inputData.schema_display_duration_page = 2000
+            jatos.studySessionData.inputData.response_window_duration     = 3000
+            jatos.studySessionData.inputData.feedback_duration = 1000
+            jatos.studySessionData.inputData.iti_duration      = 500    
+
+            jatos.studySessionData.inputData.condition_to_run = 'cb1'
+
+        }
+
+        // How long to show the prompt image
+        jatos.studySessionData.inputData.image_pres_duration = 500
+
+        // If we're debugging, make everything shorter
+        // if (debugMode){
+
+        //     jatos.studySessionData.inputData.n_ses_per_condition = {
+        //         practice: 1,
+        //         schema_learning: 1,
+        //         new_pa_learning: 1,
+        //     }
+
+        //     jatos.studySessionData.inputData.n_trials_per_pa = {
+        //         practice: 2,
+        //         schema_learning: 2,
+        //         new_pa_learning: 2,
+        //     }
+
+        //     jatos.studySessionData.inputData.schema_display_duration_page = 2000
+        //     jatos.studySessionData.inputData.response_window_duration     = 3000
+        //     jatos.studySessionData.inputData.feedback_duration = 1000
+        //     jatos.studySessionData.inputData.iti_duration      = 50
+
+        //     jatos.studySessionData.inputData.image_pres_duration = 50
+
+        // }
+
+		jsPsych.init({
+			
+			timeline: timeline,
+
+			on_finish: function(data) {
+
+				// Record results
+				var results = jsPsych.data.get().values();
+
+                if (!autoConditions){
+                    jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+
+                    jatos.studySessionData.inputData.n_ses_per_condition = {
+                        practice: 1,
+                        schema_c: results[1].response,
+                        schema_ic: results[2].response,
+                    }
+
+                    jatos.studySessionData.inputData.n_trials_per_pa = {
+                        practice: 2,
+                        schema_c: results[3].response,
+                        schema_ic: results[3].response,
+                    }
+
+
+                    jatos.studySessionData.inputData.schema_display_duration_page = results[4].response
+                    jatos.studySessionData.inputData.response_window_duration     = results[5].response
+                    jatos.studySessionData.inputData.feedback_duration = results[6].response
+                    jatos.studySessionData.inputData.iti_duration      = results[7].response 
+
+                    // Which counterbalancing was chosen?
+                    jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+
+                }
+                ////////////////////////////////////////////////////////////////////////////////
+
+                // Start with the practice condition either way
+                let cond_to_run = {}
+                // cond_to_run['practice'] = jatos.studySessionData.inputData.stimuli['practice']
+                // jatos.studySessionData.inputData.condition_coords = {
+                //         practice: {
+                //             practice: {
+                //                 ses1: [
+                //                     [9,3],
+                //                     [2,5],
+                //                     [4,10],
+                //                 ]
+                //             }
+                //         }
+                // }
+                jatos.studySessionData.inputData.condition_coords = {}
+
+
+
+                if (jatos.studySessionData.inputData.condition_to_run == 'cb1'){
+                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']
+                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']
+
+                    jatos.studySessionData.inputData.condition_coords.schema_c = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                    }
+                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
+                    }
+
+                } else if (jatos.studySessionData.inputData.condition_to_run == 'cb2'){
+                    // key = 'non_adj_8_4'
+                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']
+                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']        
+                    
+                    jatos.studySessionData.inputData.condition_coords.schema_c = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
+                    }
+                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                    }                  
+
+                } else if (jatos.studySessionData.inputData.condition_to_run == 'cb3'){
+                    // key = 'adj_6_6'
+                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']                    
+                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']   
+                    
+                    jatos.studySessionData.inputData.condition_coords.schema_c = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                    }
+                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
+                    }                   
+
+                } else if (jatos.studySessionData.inputData.condition_to_run == 'cb4'){
+                    // key = 'non_adj_6_6'
+                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']                    
+                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c'] 
+                    
+                    jatos.studySessionData.inputData.condition_coords.schema_c = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
+                    } 
+                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                    }                      
+                }
+
+                // Create the trials
+                jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
+
+                // Make JATOS remember that this session was run
+                jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+                jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+                jatos.submitResultData("[conditions_start---" + 
+                JSON.stringify(jatos.studySessionData) + "---conditions_end]", function(){jatos.startComponentByPos(9)});
+
+			} // on finish
+		});     // jsPsych.init   
+
+    }); // jatos on load
+
+    </script>
+</html>

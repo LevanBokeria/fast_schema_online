@@ -5,7 +5,7 @@
         <script src='jatos.js'></script>
         <script src='./jspsych-6.3.1/jspsych.js'></script>        
         <script src='./extra_functions/lodash.js'></script>
-        <script src='./extra_functions/jspsych-playground.js'></script>
+        <script src='./extra_functions/jspsych-playground2.js'></script>
         <script src='./extra_functions/trial_creator.js'></script>
         <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-image-keyboard-response.js"></script>
@@ -27,22 +27,34 @@
             let trials_for_this_session = jatos.studySessionData.inputData.all_sessions[curr_session-1]
 
             let curr_condition = trials_for_this_session[0].condition
-            let curr_stage     = trials_for_this_session[0].stage
 
             // Update the session counter for this condition
-            jatos.studySessionData.inputData.condition_ses_counters[curr_condition][curr_stage] ++
+            jatos.studySessionData.inputData.condition_ses_counters[curr_condition] ++
+
+            var schema_display = {
+                type: 'playground2',
+                condition: jsPsych.timelineVariable('condition'),
+                top_offset: jsPsych.timelineVariable('top_offset'),
+                left_offset: jsPsych.timelineVariable('left_offset'),
+                show_all_pas: true,
+                allow_response: false,
+                show_feedback: false,
+                trial_duration: jatos.studySessionData.inputData.schema_display_duration,
+            }
 
             var image_display = {
                 type: 'image-keyboard-response',
-                stimulus: jsPsych.timelineVariable('img_path'),
+                stimulus: jsPsych.timelineVariable('new_pa_img'),
                 stimulus_width: 100,
                 choices: jsPsych.NO_KEYS,
                 trial_duration: jatos.studySessionData.inputData.image_pres_duration,
                 prompt: jsPsych.timelineVariable('trial_counter_prompt'),
             }
 
-            var board_display = {
-                type: 'playground',
+
+
+            var new_pa_learning = {
+                type: 'playground2',
                 stimulus: jsPsych.timelineVariable('img_path'),
                 stimulus_idx: jsPsych.timelineVariable('stimulus_idx'),
                 stimulus_width: '50px',
@@ -54,7 +66,7 @@
             }
 
             var session_procedure = {
-                timeline: [image_display,board_display],
+                timeline: [schema_display,image_display,new_pa_learning],
                 timeline_variables: trials_for_this_session,
             }
             

@@ -3,7 +3,7 @@ function trial_creator2(all_conditions){
     let all_trials = []
 
     Object.keys(all_conditions).forEach(function(iCond,index){
-        // debugger
+        
         let iCondStages = all_conditions[iCond]
 
             let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa[iCond]
@@ -29,6 +29,7 @@ function trial_creator2(all_conditions){
                         var trial = {
                             new_pa_img: iCondStages.new_pa_learning[iPA],
                             new_pa_img_idx: iPA,
+                            new_pa_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].new_pa_learning[iPA],
                             new_pa_all_imgs: iCondStages.new_pa_learning,
                             new_pa_all_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].new_pa_learning,
                             schema_pa_imgs: iCondStages.schema_learning,

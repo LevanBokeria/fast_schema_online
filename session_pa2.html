@@ -18,7 +18,7 @@
     <script>
 
         jatos.onLoad(function() {
-            // debugger
+            debugger
 
             // iterate the session
             jatos.studySessionData.inputData.curr_session ++
@@ -53,22 +53,22 @@
                 prompt: jsPsych.timelineVariable('trial_counter_prompt'),
             }
 
-
-
             var new_pa_learning = {
                 type: 'playground2',
-                stimulus: jsPsych.timelineVariable('img_path'),
-                stimulus_idx: jsPsych.timelineVariable('stimulus_idx'),
-                stimulus_width: '50px',
                 condition: jsPsych.timelineVariable('condition'),
-                stage: jsPsych.timelineVariable('stage'),
-                coords: jsPsych.timelineVariable('coords'),
                 top_offset: jsPsych.timelineVariable('top_offset'),
-                left_offset: jsPsych.timelineVariable('left_offset')
+                left_offset: jsPsych.timelineVariable('left_offset'),
+                show_schema_pas: false,
+                show_new_pas: false,
+                allow_response: true,
+                show_feedback: true,
+                trial_duration: jatos.studySessionData.inputData.schema_display_duration,
+                trial_counter: jsPsych.timelineVariable('trial_counter'),
+                show_schema_pas_at_feedback: jatos.studySessionData.inputData.show_schema_pa_at_feedback_page,
             }
 
             var session_procedure = {
-                timeline: [schema_display,image_display,new_pa_learning],
+                timeline: [image_display,schema_display,new_pa_learning],
                 timeline_variables: trials_for_this_session,
             }
             
@@ -85,7 +85,7 @@
             jsPsych.init({
                 timeline: timeline,                    
                 preload_images: [imgs_to_preload],
-                default_iti: jatos.studySessionData.inputData.iti_duration, 
+                default_iti: 0, //jatos.studySessionData.inputData.iti_duration, 
 
                 on_finish: function(data) {
 

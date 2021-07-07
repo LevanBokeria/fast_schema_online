@@ -264,7 +264,7 @@
 
             var schema_display_duration_page = {
                 type: 'html-slider-response',
-                stimulus: '<p>Schema PA display duration</p>',
+                stimulus: '<p>How long to show the schema PAs before the trial?</p>',
                 // labels: ['500','750','1000', '1250','1500', '1750','2000', '2250','2500', '2750','3000', '3250','3500', '3750','4000'],
                 labels: ['500','1000','1500','2000','2500','3000','3500','4000','4500','5000','5500','6000'],
                 min: 500,
@@ -310,6 +310,16 @@
                 prompt: "<p>Choose the duration for ITI</p>"
             };			
 
+            // Add the page about counterbalancing conditions
+            var condition_options = ['cb1','cb2','cb3','cb4'];
+
+            var show_schema_pa_at_feedback_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "At feedback, should the schema-PAs be displayed alongside the new PA that is being learned?", name: 'condition', options: ['yes','no'], required:false}, 
+                ],
+            }; 
+
             timeline.push(n_schema_c_ses_page);
             timeline.push(n_schema_ic_ses_page);
             timeline.push(n_trials_per_pa);
@@ -317,6 +327,7 @@
             timeline.push(response_window_duration_page);
             timeline.push(feedback_duration_page);
             timeline.push(iti_duration_page);
+            timeline.push(show_schema_pa_at_feedback_page);
 
         } else {
 
@@ -334,15 +345,17 @@
 
             jatos.studySessionData.inputData.schema_display_duration = 2000
             jatos.studySessionData.inputData.response_window_duration     = 3000
-            jatos.studySessionData.inputData.feedback_duration = 1000
+            jatos.studySessionData.inputData.feedback_duration = 2000
             jatos.studySessionData.inputData.iti_duration      = 500    
 
-            jatos.studySessionData.inputData.condition_to_run = 'cb1'
+            jatos.studySessionData.inputData.condition_to_run = 'cb3'
+
+            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
 
         }
 
         // How long to show the prompt image
-        jatos.studySessionData.inputData.image_pres_duration = 500
+        jatos.studySessionData.inputData.image_pres_duration = 1000
 
         // If we're debugging, make everything shorter
         // if (debugMode){
@@ -397,7 +410,9 @@
                     jatos.studySessionData.inputData.response_window_duration     = results[5].response
                     jatos.studySessionData.inputData.feedback_duration = results[6].response
                     jatos.studySessionData.inputData.iti_duration      = results[7].response 
+                    debugger
 
+                    results[8].response == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
                     // Which counterbalancing was chosen?
                     jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
 
@@ -477,7 +492,7 @@
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
                     }                      
                 }
-
+                debugger
                 // Create the trials
                 jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
 

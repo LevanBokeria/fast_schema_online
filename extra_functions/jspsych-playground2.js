@@ -64,7 +64,13 @@ jsPsych.plugins["playground2"] = (function() {
         pretty_name: 'Show feedback or not',
         default: true,
         description: 'Show feedback or not'
-      },                 
+      },  
+      show_schema_pas_at_feedback: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Show schema PAs at feedback',
+        default: false,
+        description: 'This will decide whether all the schema PAs are shown at the feedback stage.'
+      },                     
       trial_duration: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Trial duration',
@@ -94,7 +100,7 @@ jsPsych.plugins["playground2"] = (function() {
     // debugger
 
     // Get all the info from this trial here as a local variable
-    var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session][trial.trial_counter]
+    var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session-1][trial.trial_counter]
 
 
     // Create the wrapper arena for box to move in
@@ -142,9 +148,15 @@ jsPsych.plugins["playground2"] = (function() {
 
     startTime = performance.now();
 
-    // if(trial.trial_duration !== null){
+    if (trial.allow_response) {
+
       jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, trial.trial_duration);
-    // }
+
+    } else {
+    
+      jsPsych.pluginAPI.setTimeout(function(){endTrial()}, trial.trial_duration);
+
+    }
 
     function getResponse(e){
       info = {}
@@ -156,7 +168,7 @@ jsPsych.plugins["playground2"] = (function() {
       info.mouse_clientY = e.clientY
 
       // Get the dimensions and location of the target item
-      var pa_dim_loc = document.querySelector('#PA_'+trial.stimulus_idx).getBoundingClientRect()
+      var pa_dim_loc = document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).getBoundingClientRect()
       info.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
       info.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2
 
@@ -165,7 +177,7 @@ jsPsych.plugins["playground2"] = (function() {
       info.row = parseInt(curr_row_col[2],10)
       info.col = parseInt(curr_row_col[4],10)
 
-      if (info.row == trial.coords[0] & info.col == trial.coords[1]){
+      if (info.row == curr_trial.new_pa_img_coords[0] & info.col == curr_trial.new_pa_img_coords[1]){
         info.correct = true
       } else {
         info.correct = false
@@ -207,12 +219,19 @@ jsPsych.plugins["playground2"] = (function() {
       }
 
       // Show the true feedback!
-      document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
-      document.querySelector('#PA_'+trial.stimulus_idx).parentElement.style.opacity = 1
+      document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).style.visibility = 'visible'
+      document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).parentElement.style.opacity = 1
+
+      // If wanted, also show the schema PAs
+      if (trial.show_schema_pas_at_feedback){
+        
+        document.querySelectorAll("[id^='schemaPA']").forEach(item => item.style.visibility = 'visible')
+        document.querySelectorAll("[id^='schemaPA']").forEach(item => item.parentElement.style.opacity = 1)
+
+      }
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
-
 
       // If we're showing feedback, then make a timeout function
       if (trial.show_feedback){
@@ -238,11 +257,10 @@ jsPsych.plugins["playground2"] = (function() {
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
-      trial_data.stage = trial.stage
       trial_data.session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
-      trial_data.stimulus = trial.stimulus
-      trial_data.corr_row = trial.coords[0]
-      trial_data.corr_col = trial.coords[1]
+      trial_data.new_pa_img = curr_trial.new_pa_img
+      trial_data.corr_row = curr_trial.new_pa_img_coords[0]
+      trial_data.corr_col = curr_trial.new_pa_img_coords[1]
       trial_data.top_offset = trial.top_offset
       trial_data.left_offset = trial.left_offset
 

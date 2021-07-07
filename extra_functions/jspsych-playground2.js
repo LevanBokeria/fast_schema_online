@@ -41,18 +41,18 @@ jsPsych.plugins["playground2"] = (function() {
         default: null,
         description: 'X offset of the board to randomize its position'
       },                  
-      show_stimulus: {
+      show_schema_pas: {
         type: jsPsych.plugins.parameterType.BOOL,
-        pretty_name: 'Show prompt stimulus',
+        pretty_name: 'Show schema PAs',
         default: false,
-        description: 'This will decide whether the prompt item is shown or now.'
-      },
-      show_all_pas: {
-        type: jsPsych.plugins.parameterType.BOOL,
-        pretty_name: 'Show all PAs',
-        default: false,
-        description: 'This will decide whether all the PAs are shown from the beginning.'
+        description: 'This will decide whether all the schema PAs are shown from the beginning.'
       },      
+      show_new_pas: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Show new PAs',
+        default: false,
+        description: 'This will decide whether all the new PAs are shown from the beginning.'
+      },            
       allow_response: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Allow participant to respond',
@@ -71,6 +71,12 @@ jsPsych.plugins["playground2"] = (function() {
         default: null,
         description: 'The maximum duration to wait for a response or untill moving on.'
       },
+      trial_counter: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Trial counter',
+        default: null,
+        description: 'Which trial is this within this session?'
+      },
     }
   }
 
@@ -85,7 +91,11 @@ jsPsych.plugins["playground2"] = (function() {
       col: null,
       correct: null, //null if missed, else true/false
     }
-    debugger
+    // debugger
+
+    // Get all the info from this trial here as a local variable
+    var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session][trial.trial_counter]
+
 
     // Create the wrapper arena for box to move in
     wrapper_arena = document.createElement('div')
@@ -98,15 +108,9 @@ jsPsych.plugins["playground2"] = (function() {
     grid_border = board_creator2(500,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
-      jatos.studySessionData.inputData.condition_colors[trial.condition],
-      jatos.studySessionData.inputData.condition_border_patterns[trial.condition],
-      trial.show_all_pas,
-      img_array,
-      jatos.studySessionData.inputData.condition_coords[trial.condition][trial.stage]['ses' + curr_session],
-      trial.stage,
-      trial.condition)
-
-    //Add mouseclick listener MUST EDIT
+      trial.show_schema_pas,
+      trial.show_new_pas,
+      curr_trial)
 
     // Randomly modify grid position
     grid_border.style.position = 'relative'
@@ -115,31 +119,17 @@ jsPsych.plugins["playground2"] = (function() {
 
     var all_cells = grid_border.querySelectorAll('.cells')
 
-    for (iC=0; iC<all_cells.length; iC++){
-      // console.log(iC)
-      all_cells[iC].addEventListener('click',getResponse)
+    
+    if (trial.allow_response){
+      for (iC=0; iC<all_cells.length; iC++){
+        // console.log(iC)
+        all_cells[iC].addEventListener('click',getResponse)
+      }
     }
 
     wrapper_arena.appendChild(grid_border)
     display_element.appendChild(wrapper_arena)
 
-    // debugger
-		
-    //show prompt_question with the trial counter
-    // let iTrial = jsPsych.data.get().values().length + 1
-    // display_element.insertAdjacentHTML('beforeend', ' Trial ' + iTrial);
-
-    if (trial.show_stimulus){
-      //show stimulus
-      let stimulus_element = document.createElement('img')
-      stimulus_element.className = 'prompt_stimulus'
-      stimulus_element.style.width = trial.stimulus_width
-      stimulus_element.src = trial.stimulus
-      stimulus_element.style.display = 'block'
-      stimulus_element.style.margin = 'auto'
-
-      display_element.appendChild(stimulus_element);    
-    }
     // Add an empty feedback element
     let feedback_el = document.createElement('P')
     feedback_el.innerText = 'null'
@@ -153,7 +143,7 @@ jsPsych.plugins["playground2"] = (function() {
     startTime = performance.now();
 
     // if(trial.trial_duration !== null){
-      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, jatos.studySessionData.inputData.trial_duration);
+      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, trial.trial_duration);
     // }
 
     function getResponse(e){
@@ -191,8 +181,6 @@ jsPsych.plugins["playground2"] = (function() {
     }
 
     function doFeedback(correct, timeout) {
-      // console.log('doFB called!')
-      // debugger
 
       // Remove all the event listeners from all the cells.
       document.querySelectorAll('.cells').forEach(function(el){
@@ -222,29 +210,20 @@ jsPsych.plugins["playground2"] = (function() {
       document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
       document.querySelector('#PA_'+trial.stimulus_idx).parentElement.style.opacity = 1
 
-      // Also show the schema items?
-
-      if (trial.stage == 'schema_learning' | trial.stage == 'practice'){
-
-        // Just make all the PAs show up
-        document.querySelectorAll('.PA').forEach(item => item.style.visibility = 'visible')
-        document.querySelectorAll('.PA').forEach(item => item.parentElement.style.opacity = 1)
-
-      } else if (trial.stage == 'new_pa_learning'){
-
-        // Just make all the PAs show up
-        document.querySelectorAll('.oPA').forEach(item => item.style.visibility = 'visible')
-        document.querySelectorAll('.oPA').forEach(item => item.parentElement.style.opacity = 1)        
-
-      }
-
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
-      jsPsych.pluginAPI.setTimeout(function() {
+
+      // If we're showing feedback, then make a timeout function
+      if (trial.show_feedback){
+        jsPsych.pluginAPI.setTimeout(function() {
+          endTrial();
+        }, 
+        jatos.studySessionData.inputData.feedback_duration);
+      } else {
         endTrial();
-      }, jatos.studySessionData.inputData.feedback_duration);
-    
+      }
+
     }
 
     function endTrial() {

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+    <title>Break</title>	
+	<script src="jspsych-6.3.1/jspsych.js" ></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
+	<script src="jatos.js"></script>
+	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
+  </head>
+
+  <body>
+  <script>
+
+		//start timeline
+		jatos.onLoad(function() {
+			// debugger
+			let comp_to_start = []
+		
+			//make a timeline
+			let timeline =[]; 
+
+			let instructions_text = []
+
+			let curr_session = jatos.studySessionData.inputData.curr_session
+
+			if (curr_session == jatos.studySessionData.inputData.all_sessions.length){
+
+				instructions_text = 'Thank you. You have finished the experiment. Please complete a short debriefing.'
+
+				comp_to_start = jatos.studySessionData.inputData.component_positions.debriefing2
+
+			} else {
+
+				let previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].condition
+				let next_condition     = jatos.studySessionData.inputData.all_sessions[curr_session][0].condition
+
+				if (previous_condition != next_condition){
+					// So we're changing the board
+					instructions_text = 'Please take a break. <br> <strong>Next, you will learn a new board with new pictures.</strong>'
+				} else {
+					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this board. Once you are ready please move to the next session.'
+				}
+				
+				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
+
+			}
+			var instructions = {
+					type: 'instructions',
+					pages : [			
+						'<div class= "header">'+
+							'<h1> Break </h1>'+
+						'</div>'+	
+						'<div class="instruct">'+
+							'<p>' + instructions_text + '</p>' + 
+						'</div>',
+					],						
+					show_clickable_nav: true,
+					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+				};
+
+			timeline.push(instructions);
+
+			jsPsych.init({
+				
+				timeline: timeline,
+
+				on_finish: function(data) {
+
+					// Make JATOS remember that this session was run
+                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+					jatos.submitResultData('[break_start_' + '---' + 
+					JSON.stringify(jatos.studySessionData) +
+					'---' + '_break_end]', 
+					function(){jatos.startComponentByPos(comp_to_start)});
+
+					// jsPsych.data.displayData();
+				}
+			});
+
+		});
+
+
+	</script>
+</body>
+</html>

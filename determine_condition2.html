@@ -27,7 +27,7 @@
         jatos.studySessionData.inputData = {}
         jatos.studySessionData.outputData = {}
         jatos.studySessionData.outputData.session_results_schema_display = []
-        jatos.studySessionData.outputData.session_results_pa_learning = []
+        jatos.studySessionData.outputData.session_results_new_pa_learning = []
         jatos.studySessionData.outputData.session_results_image_screen = []
 
         jatos.studySessionData.inputData.curr_session = 0
@@ -40,6 +40,8 @@
             data_submission: 6,
             debriefing: 7,
             session_pa2: 9,
+            break2: 10,
+            debriefing2: 11,
         }
 
         jatos.studySessionData.inputData.curr_condition = ''
@@ -236,7 +238,7 @@
                 min: 1,
                 max: 6,
                 step: 1,
-                slider_start: 3,
+                slider_start: 1,
                 prompt: "<p>Choose the number of schema C sessions </p>"
             };
 
@@ -247,7 +249,7 @@
                 min: 1,
                 max: 6,
                 step: 1,
-                slider_start: 3,
+                slider_start: 1,
                 prompt: "<p>Choose the number of schema IC sessions </p>"
             };
 
@@ -258,7 +260,7 @@
                 min: 2,
                 max: 15,
                 step: 1,
-                slider_start: 10,
+                slider_start: 4,
                 prompt: "<p>Choose the number trials per PA </p>"
             };			
 
@@ -270,7 +272,7 @@
                 min: 500,
                 max: 6000,
                 step: 250,
-                slider_start: 3000,
+                slider_start: 2000,
                 prompt: "<p>Choose how long the schema items get displayed ahead of trial</p>"
             };
 
@@ -294,7 +296,7 @@
                 min: 250,
                 max: 3000,
                 step: 250,
-                slider_start: 1000,
+                slider_start: 2000,
                 prompt: "<p>Choose the duration for the feedback</p>"
             };		
             
@@ -302,11 +304,11 @@
                 type: 'html-slider-response',
                 stimulus: '<p>ITI duration</p>',
                 // labels: ['100','200','300','400','500','600','700','800','900','1000'],
-                labels: ['250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
-                min: 250,
+                labels: ['0','250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
+                min: 0,
                 max: 3000,
                 step: 250,
-                slider_start: 500,
+                slider_start: 0,
                 prompt: "<p>Choose the duration for ITI</p>"
             };			
 
@@ -346,7 +348,7 @@
             jatos.studySessionData.inputData.schema_display_duration = 2000
             jatos.studySessionData.inputData.response_window_duration     = 3000
             jatos.studySessionData.inputData.feedback_duration = 2000
-            jatos.studySessionData.inputData.iti_duration      = 500    
+            jatos.studySessionData.inputData.iti_duration      = 0    
 
             jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
@@ -358,28 +360,32 @@
         jatos.studySessionData.inputData.image_pres_duration = 1000
 
         // If we're debugging, make everything shorter
-        // if (debugMode){
+        if (debugMode){
 
-        //     jatos.studySessionData.inputData.n_ses_per_condition = {
-        //         practice: 1,
-        //         schema_learning: 1,
-        //         new_pa_learning: 1,
-        //     }
+            jatos.studySessionData.inputData.image_pres_duration = 50
 
-        //     jatos.studySessionData.inputData.n_trials_per_pa = {
-        //         practice: 2,
-        //         schema_learning: 2,
-        //         new_pa_learning: 2,
-        //     }
+            jatos.studySessionData.inputData.n_ses_per_condition = {
+                practice: 1,
+                schema_c: 2,
+                schema_ic: 2,
+            }
 
-        //     jatos.studySessionData.inputData.schema_display_duration_page = 2000
-        //     jatos.studySessionData.inputData.response_window_duration     = 3000
-        //     jatos.studySessionData.inputData.feedback_duration = 1000
-        //     jatos.studySessionData.inputData.iti_duration      = 50
+            jatos.studySessionData.inputData.n_trials_per_pa = {
+                practice: 2,
+                schema_c: 2,
+                schema_ic: 2,
+            }
 
-        //     jatos.studySessionData.inputData.image_pres_duration = 50
+            jatos.studySessionData.inputData.schema_display_duration = 50
+            jatos.studySessionData.inputData.response_window_duration     = 200
+            jatos.studySessionData.inputData.feedback_duration = 20
+            jatos.studySessionData.inputData.iti_duration      = 0    
 
-        // }
+            jatos.studySessionData.inputData.condition_to_run = 'cb3'
+
+            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+
+        }
 
 		jsPsych.init({
 			
@@ -412,7 +418,7 @@
                     jatos.studySessionData.inputData.iti_duration      = results[7].response 
                     debugger
 
-                    results[8].response == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+                    results[8].response.condition == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
                     // Which counterbalancing was chosen?
                     jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
 
@@ -492,7 +498,7 @@
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
                     }                      
                 }
-                debugger
+                
                 // Create the trials
                 jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
 

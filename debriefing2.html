@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+    <title>Debriefing</title>	
+	<script src="jspsych-6.3.1/jspsych.js" ></script>
+	<script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+	<script src="jatos.js"></script>
+	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
+  </head>
+
+  <body>
+  <script>
+
+		//start timeline
+		jatos.onLoad(function() {
+			
+            var timeline = []
+
+            var comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
+            
+            // debugger
+            var general_questions_page = {
+                type: 'survey-text',
+                questions: [
+                    {prompt: 'Any feedback?', rows: 3, columns: 100}, 
+                    ],
+                button_label: 'Finish',
+                preamble: '<p style="font-size: 30px;"><b>Please answer the following questions:</b></p>',
+                data: {test_part: 'debriefing'},
+	    	};	
+
+			timeline.push(general_questions_page);
+
+			jsPsych.init({
+				
+				timeline: timeline,
+
+				on_finish: function(data) {
+
+					// Make JATOS remember that this session was run
+                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+          
+          jatos.studySessionData.outputData.debriefing = jsPsych.data.get().values()
+
+					jatos.submitResultData('[debriefing_start_' + '---' + 
+					JSON.stringify(jatos.studySessionData) +
+					'---' + '_debriefing_end]', 
+					function(){jatos.startComponentByPos(comp_to_start)});
+
+					// jsPsych.data.displayData();
+				}
+			});
+
+		});
+
+
+	</script>
+</body>
+</html>

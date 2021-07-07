@@ -263,6 +263,7 @@ jsPsych.plugins["playground2"] = (function() {
       trial_data.corr_col = curr_trial.new_pa_img_coords[1]
       trial_data.top_offset = trial.top_offset
       trial_data.left_offset = trial.left_offset
+      trial_data.trial_stage = trial.data.trial_stage
 
       // clear the display
       display_element.innerHTML = '';

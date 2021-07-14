@@ -54,17 +54,20 @@
         // Define all the possible colors. Later, map these by randomization or latin square
         jatos.studySessionData.inputData.condition_colors = {
             practice: 'purple',
-            non_adj_8_4: 'red',
-            adj_8_6: 'yellow',
             schema_c: 'blue',
             schema_ic: 'green',
-            raw_learning: 'gray',
+            landmark_schema: 'red',
+            random_locations: 'yellow',            
+            no_schema: 'gray',
         }
 
         jatos.studySessionData.inputData.condition_border_patterns = {
             practice: 'triangles',
             schema_c: 'circles',
-            schema_ic: 'diamonds'
+            schema_ic: 'diamonds',
+            random_locations: 'bullseye',
+            landmark_schema: 'bullsdiamond',
+            no_schema: 'stars'
         }
 
         jatos.studySessionData.inputData.condition_ses_counters = {
@@ -110,8 +113,60 @@
                             [8,9],                        
                         ], 
             },
-
-            random_locations: []
+            arr_pair_3: {
+                arr_pair_3_1: [
+                            [3,3],
+                            [8,4],
+                            [4,7],
+                            [10,8],
+                            [2,10],
+                            [7,10],                        
+                        ],
+                arr_pair_3_2: [
+                            [10,2],
+                            [4,4],
+                            [9,6],
+                            [4,9],
+                            [7,9],
+                            [11,11],                        
+                        ], 
+            },
+            arr_pair_4: {
+                arr_pair_4_1: [
+                            [9,2],
+                            [5,3],
+                            [8,5],
+                            [2,6],
+                            [5,9],
+                            [10,10],                        
+                        ],
+                arr_pair_4_2: [
+                            [2,2],
+                            [11,3],
+                            [5,4],
+                            [6,7],
+                            [9,9],
+                            [3,10],                        
+                        ], 
+            },
+            arr_pair_5: {
+                arr_pair_5_1: [
+                            [5,3],
+                            [2,4],
+                            [8,5],
+                            [11,8],
+                            [6,9],
+                            [3,10],                        
+                        ],
+                arr_pair_5_2: [
+                            [6,3],
+                            [10,3],
+                            [4,6],
+                            [8,7],
+                            [10,9],
+                            [7,11],                        
+                        ], 
+            },                           
         }
 
         jatos.studySessionData.inputData.stimuli = {
@@ -502,80 +557,27 @@
 
                 }
                 ////////////////////////////////////////////////////////////////////////////////
-
-                // Start with the practice condition either way
+                debugger
                 let cond_to_run = {}
-                // cond_to_run['practice'] = jatos.studySessionData.inputData.stimuli['practice']
-                // jatos.studySessionData.inputData.condition_coords = {
-                //         practice: {
-                //             practice: {
-                //                 ses1: [
-                //                     [9,3],
-                //                     [2,5],
-                //                     [4,10],
-                //                 ]
-                //             }
-                //         }
-                // }
+                cond_to_run = jato.studySessionData.inputData.stimuli
+
+
                 jatos.studySessionData.inputData.condition_coords = {}
 
+                jatos.studySessionData.inputData.condition_coords.schema_c.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1
+                jatos.studySessionData.inputData.condition_coords.schema_c.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2
+                
+                jatos.studySessionData.inputData.condition_coords.schema_ic.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1
+                jatos.studySessionData.inputData.condition_coords.schema_ic.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2
 
+                jatos.studySessionData.inputData.condition_coords.random_locations.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1
+                jatos.studySessionData.inputData.condition_coords.random_locations.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2
 
-                if (jatos.studySessionData.inputData.condition_to_run == 'cb1'){
-                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']
-                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']
+                jatos.studySessionData.inputData.condition_coords.landmark_schema.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1
+                jatos.studySessionData.inputData.condition_coords.landmark_schema.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2
 
-                    jatos.studySessionData.inputData.condition_coords.schema_c = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                    }
-                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                    }
-
-                } else if (jatos.studySessionData.inputData.condition_to_run == 'cb2'){
-                    // key = 'non_adj_8_4'
-                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']
-                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']        
-                    
-                    jatos.studySessionData.inputData.condition_coords.schema_c = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                    }
-                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                    }                  
-
-                } else if (jatos.studySessionData.inputData.condition_to_run == 'cb3'){
-                    // key = 'adj_6_6'
-                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']                    
-                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c']   
-                    
-                    jatos.studySessionData.inputData.condition_coords.schema_c = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                    }
-                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                    }                   
-
-                } else if (jatos.studySessionData.inputData.condition_to_run == 'cb4'){
-                    // key = 'non_adj_6_6'
-                    cond_to_run['schema_ic'] = jatos.studySessionData.inputData.stimuli['schema_ic']                    
-                    cond_to_run['schema_c'] = jatos.studySessionData.inputData.stimuli['schema_c'] 
-                    
-                    jatos.studySessionData.inputData.condition_coords.schema_c = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                    } 
-                    jatos.studySessionData.inputData.condition_coords.schema_ic = {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                    }                      
-                }
+                jatos.studySessionData.inputData.condition_coords.no_schema.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1
+                jatos.studySessionData.inputData.condition_coords.no_schema.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2
                 
                 // Create the trials
                 jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)

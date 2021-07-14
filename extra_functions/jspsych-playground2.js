@@ -83,6 +83,12 @@ jsPsych.plugins["playground2"] = (function() {
         default: null,
         description: 'Which trial is this within this session?'
       },
+      hide_cursor: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'hide cursor?',
+        default: false,
+        description: 'If its schema-PA display stage, hide the cursor.'
+      },           
     }
   }
 
@@ -99,6 +105,13 @@ jsPsych.plugins["playground2"] = (function() {
     }
     // debugger
 
+    // Hide the cursos?
+    if (trial.hide_cursor){
+      document.querySelector('.jspsych-content-wrapper').classList.add('noCursor')
+    } else {
+      document.querySelector('.jspsych-content-wrapper').classList.remove('noCursor')
+    }
+    
     // Get all the info from this trial here as a local variable
     var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session-1][trial.trial_counter]
 

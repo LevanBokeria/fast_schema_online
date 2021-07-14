@@ -7,6 +7,7 @@
         <script src='./extra_functions/lodash.js'></script>
         <script src='./extra_functions/jspsych-playground2.js'></script>
         <script src='./extra_functions/trial_creator.js'></script>
+        <script src='./extra_functions/math.js'></script>
         <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-image-keyboard-response.js"></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
@@ -33,14 +34,15 @@
             var schema_display = {
                 type: 'playground2',
                 condition: jsPsych.timelineVariable('condition'),
-                top_offset: jsPsych.timelineVariable('top_offset'),
-                left_offset: jsPsych.timelineVariable('left_offset'),
+                top_offset: jsPsych.timelineVariable('top_offset-schema-display'),
+                left_offset: jsPsych.timelineVariable('left_offset-schema-display'),
                 show_schema_pas: true,
                 show_new_pas: false,
                 allow_response: false,
                 show_feedback: false,
                 trial_duration: jatos.studySessionData.inputData.schema_display_duration,
                 trial_counter: jsPsych.timelineVariable('trial_counter'),
+                hide_cursor: true,
                 data: { trial_stage: 'schema_display' }
             }
 
@@ -57,8 +59,8 @@
             var new_pa_learning = {
                 type: 'playground2',
                 condition: jsPsych.timelineVariable('condition'),
-                top_offset: jsPsych.timelineVariable('top_offset'),
-                left_offset: jsPsych.timelineVariable('left_offset'),
+                top_offset: jsPsych.timelineVariable('top_offset-new-pa-learning'),
+                left_offset: jsPsych.timelineVariable('left_offset-new-pa-learning'),
                 show_schema_pas: false,
                 show_new_pas: false,
                 allow_response: true,
@@ -66,11 +68,13 @@
                 trial_duration: jatos.studySessionData.inputData.response_window_duration,
                 trial_counter: jsPsych.timelineVariable('trial_counter'),
                 show_schema_pas_at_feedback: jatos.studySessionData.inputData.show_schema_pa_at_feedback_page,
-                data: { trial_stage: 'new_pa_learning' }
+                hide_cursor: false,
+                data: { trial_stage: 'new_pa_learning' },
+                post_trial_gap: 1500
             }
 
             var session_procedure = {
-                timeline: [image_display,schema_display,new_pa_learning],
+                timeline: [schema_display,image_display,new_pa_learning],
                 timeline_variables: trials_for_this_session,
             }
             

@@ -115,14 +115,13 @@ jsPsych.plugins["playground2"] = (function() {
     // Get all the info from this trial here as a local variable
     var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session-1][trial.trial_counter]
 
-
     // Create the wrapper arena for box to move in
     wrapper_arena = document.createElement('div')
     wrapper_arena.id = 'wrapper_arena'
     wrapper_arena.style.height = '700px'
     wrapper_arena.style.width = '700px'
     wrapper_arena.style.border = '1px solid black'
-    // debugger
+    
     // Create the board
     grid_border = board_creator2(500,
       jatos.studySessionData.inputData.n_rows,

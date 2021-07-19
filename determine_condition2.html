@@ -170,13 +170,13 @@
         }
 
         jatos.studySessionData.inputData.stimuli = {
-            practice: {
-                practice:[
-                    'img/targets/BOSS/downsized/8ball.jpg',
-                    'img/targets/BOSS/downsized/accordion01.jpg',
-                    'img/targets/BOSS/downsized/aceofdiamond.jpg',
-                ]
-            },
+            // practice: {
+            //     practice:[
+            //         'img/targets/BOSS/downsized/8ball.jpg',
+            //         'img/targets/BOSS/downsized/accordion01.jpg',
+            //         'img/targets/BOSS/downsized/aceofdiamond.jpg',
+            //     ]
+            // },
             schema_c: {
                 schema_learning: [
                     'img/targets/BOSS/downsized/acorn.jpg',
@@ -470,12 +470,18 @@
                 practice: 1,
                 schema_c: 3,
                 schema_ic: 3,
+                landmark_schema: 3,
+                random_locations: 3,
+                no_schema: 3,
             }
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 2,
                 schema_c: 10,
                 schema_ic: 10,
+                landmark_schema: 10,
+                random_locations: 10,
+                no_schema: 10,
             }
 
             jatos.studySessionData.inputData.schema_display_duration = 2000
@@ -557,27 +563,44 @@
 
                 }
                 ////////////////////////////////////////////////////////////////////////////////
-                debugger
+                // debugger
                 let cond_to_run = {}
-                cond_to_run = jato.studySessionData.inputData.stimuli
+                cond_to_run = jatos.studySessionData.inputData.stimuli
+
+                cond_to_run = {
+                    no_schema: jatos.studySessionData.inputData.stimuli.no_schema
+                }
 
 
                 jatos.studySessionData.inputData.condition_coords = {}
 
-                jatos.studySessionData.inputData.condition_coords.schema_c.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1
-                jatos.studySessionData.inputData.condition_coords.schema_c.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2
-                
-                jatos.studySessionData.inputData.condition_coords.schema_ic.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1
-                jatos.studySessionData.inputData.condition_coords.schema_ic.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2
+                jatos.studySessionData.inputData.condition_coords = {
 
-                jatos.studySessionData.inputData.condition_coords.random_locations.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1
-                jatos.studySessionData.inputData.condition_coords.random_locations.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2
+                    schema_c: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                    },
 
-                jatos.studySessionData.inputData.condition_coords.landmark_schema.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1
-                jatos.studySessionData.inputData.condition_coords.landmark_schema.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2
+                    schema_ic: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
+                    },
 
-                jatos.studySessionData.inputData.condition_coords.no_schema.schema_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1
-                jatos.studySessionData.inputData.condition_coords.no_schema.new_pa_learning = jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2
+                    random_locations: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1, 
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2,
+                    },
+
+                    landmark_schema: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1, 
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2,
+                    },
+
+                    no_schema: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1, 
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2,
+                    },                    
+                }
                 
                 // Create the trials
                 jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)

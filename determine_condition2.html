@@ -65,9 +65,9 @@
             practice: 'triangles',
             schema_c: 'circles',
             schema_ic: 'diamonds',
-            random_locations: 'bullseye',
-            landmark_schema: 'bullsdiamond',
-            no_schema: 'stars'
+            random_locations: 'bullseye_larger',
+            landmark_schema: 'bullsdiamond_larger',
+            no_schema: 'stars_larger'
         }
 
         jatos.studySessionData.inputData.condition_ses_counters = {
@@ -568,7 +568,7 @@
                 cond_to_run = jatos.studySessionData.inputData.stimuli
 
                 cond_to_run = {
-                    no_schema: jatos.studySessionData.inputData.stimuli.no_schema
+                    schema_c: jatos.studySessionData.inputData.stimuli.schema_c
                 }
 
 

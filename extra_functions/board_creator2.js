@@ -14,8 +14,8 @@ function board_creator2(board_size_px,
 
     grid_border.style['background-image'] = "url(" + border_image_path + ")"
     grid_border.style['background-size'] = 'contain'
-    grid_border.style.height = (board_size_px + 40) + 'px'
-    grid_border.style.width  = (board_size_px + 40) + 'px'
+    grid_border.style.height = (board_size_px + 60) + 'px'
+    grid_border.style.width  = (board_size_px + 60) + 'px'
       
     // Create the grid box element
     let grid_box = document.createElement('div')

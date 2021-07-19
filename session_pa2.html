@@ -42,7 +42,7 @@
                 show_feedback: false,
                 trial_duration: jatos.studySessionData.inputData.schema_display_duration,
                 trial_counter: jsPsych.timelineVariable('trial_counter'),
-                hide_cursor: true,
+                hide_cursor: false,
                 data: { trial_stage: 'schema_display' }
             }
 
@@ -61,20 +61,21 @@
                 condition: jsPsych.timelineVariable('condition'),
                 top_offset: jsPsych.timelineVariable('top_offset-new-pa-learning'),
                 left_offset: jsPsych.timelineVariable('left_offset-new-pa-learning'),
-                show_schema_pas: false,
+                show_schema_pas: true,
                 show_new_pas: false,
                 allow_response: true,
                 show_feedback: true,
                 trial_duration: jatos.studySessionData.inputData.response_window_duration,
                 trial_counter: jsPsych.timelineVariable('trial_counter'),
-                show_schema_pas_at_feedback: jatos.studySessionData.inputData.show_schema_pa_at_feedback_page,
+                // show_schema_pas_at_feedback: jatos.studySessionData.inputData.show_schema_pa_at_feedback_page,
+                show_schema_pas_at_feedback: true,
                 hide_cursor: false,
                 data: { trial_stage: 'new_pa_learning' },
-                post_trial_gap: 1500
+                post_trial_gap: 0
             }
 
             var session_procedure = {
-                timeline: [schema_display,image_display,new_pa_learning],
+                timeline: [image_display,schema_display,new_pa_learning],
                 timeline_variables: trials_for_this_session,
             }
             

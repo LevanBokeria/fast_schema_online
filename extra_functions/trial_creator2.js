@@ -45,9 +45,11 @@ function trial_creator2(all_conditions){
                         if (iCond == 'schema_ic'){
                             schema_learning_coords = jsPsych.randomization.shuffle(schema_learning_coords)
                         } else if (iCond == 'random_locations'){
-                            
-                            
+                            // debugger
                             // Then, create a random location of 6 PAs
+
+                            // Reset to repopulate
+                            schema_learning_coords = []
 
                             for (iLoc=0; iLoc <= 5; iLoc++){
 
@@ -67,14 +69,19 @@ function trial_creator2(all_conditions){
                                         // If all the distances are ok
                                         for (iCheck=0; iCheck < schema_learning_coords.length; iCheck++){
 
-                                            let iDist = math.distance(schema_learning_coords[iCheck],rand_rc)
+                                            var iDist = math.distance(schema_learning_coords[iCheck],rand_rc)
 
-                                            if (iDist < Math.sqrt(2)){
+                                            if (iDist <1.9){
                                                 cond_sat = false
                                                 break
                                             }
                                         }
                                         
+                                        if (cond_sat == true){
+                                            console.log(iDist)
+                                            // debugger
+                                        }
+
                                         if (cond_sat == false){
 
                                             // generate another row
@@ -143,7 +150,7 @@ function trial_creator2(all_conditions){
 
                                         let iDist = math.distance(check_against[iCheck],rand_rc)
 
-                                        if (iDist < Math.sqrt(2)){
+                                        if (iDist < 1.9){
                                             cond_sat = false
                                             break
                                         }
@@ -214,7 +221,14 @@ function trial_creator2(all_conditions){
                     session_trials[iT]['left_offset-schema-display'] = Math.floor(Math.random() * 160)
 
                     session_trials[iT]['top_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
-                    session_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)                    
+                    session_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)           
+                    
+                    // top and left offsets
+                    session_trials[iT]['top_offset-schema-display'] = 0
+                    session_trials[iT]['left_offset-schema-display'] = 0
+
+                    session_trials[iT]['top_offset-new-pa-learning'] = 0
+                    session_trials[iT]['left_offset-new-pa-learning'] = 0
 
                 }
                 // debugger

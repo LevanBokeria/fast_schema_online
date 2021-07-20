@@ -224,11 +224,11 @@ function trial_creator2(all_conditions){
                     session_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)           
                     
                     // top and left offsets
-                    session_trials[iT]['top_offset-schema-display'] = 0
-                    session_trials[iT]['left_offset-schema-display'] = 0
+                    // session_trials[iT]['top_offset-schema-display'] = 0
+                    // session_trials[iT]['left_offset-schema-display'] = 0
 
-                    session_trials[iT]['top_offset-new-pa-learning'] = 0
-                    session_trials[iT]['left_offset-new-pa-learning'] = 0
+                    // session_trials[iT]['top_offset-new-pa-learning'] = 0
+                    // session_trials[iT]['left_offset-new-pa-learning'] = 0
 
                 }
                 // debugger

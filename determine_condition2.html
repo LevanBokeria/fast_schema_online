@@ -360,31 +360,42 @@
             ],
         };   
 
-        timeline.push(condition_choice_page);
+        // timeline.push(condition_choice_page);
 
         if (!autoConditions){
 
-            var n_schema_c_ses_page = {
-                type: 'html-slider-response',
-                stimulus: '<p>Number of schema C sessions</p>',
-                labels: ['1','2','3','4','5','6'],
-                min: 1,
-                max: 6,
-                step: 1,
-                slider_start: 1,
-                prompt: "<p>Choose the number of schema C sessions </p>"
-            };
+            // var n_schema_c_ses_page = {
+            //     type: 'html-slider-response',
+            //     stimulus: '<p>Number of schema C sessions</p>',
+            //     labels: ['1','2','3','4','5','6'],
+            //     min: 1,
+            //     max: 6,
+            //     step: 1,
+            //     slider_start: 2,
+            //     prompt: "<p>Choose the number of schema C sessions </p>"
+            // };
 
-            var n_schema_ic_ses_page = {
+            // var n_schema_ic_ses_page = {
+            //     type: 'html-slider-response',
+            //     stimulus: '<p>Number of schema IC sessions</p>',
+            //     labels: ['1','2','3','4','5','6'],
+            //     min: 1,
+            //     max: 6,
+            //     step: 1,
+            //     slider_start: 1,
+            //     prompt: "<p>Choose the number of schema IC sessions </p>"
+            // };
+
+            var n_ses_page = {
                 type: 'html-slider-response',
-                stimulus: '<p>Number of schema IC sessions</p>',
+                stimulus: '<p>Number of sessions for each of the 5 conditions</p>',
                 labels: ['1','2','3','4','5','6'],
                 min: 1,
                 max: 6,
                 step: 1,
-                slider_start: 1,
-                prompt: "<p>Choose the number of schema IC sessions </p>"
-            };
+                slider_start: 2,
+                prompt: "<p>Choose the number of sessions </p>"
+            }
 
             var n_trials_per_pa = {
                 type: 'html-slider-response',
@@ -405,7 +416,7 @@
                 min: 500,
                 max: 6000,
                 step: 250,
-                slider_start: 2000,
+                slider_start: 1500,
                 prompt: "<p>Choose how long the schema items get displayed ahead of trial</p>"
             };
 
@@ -429,7 +440,7 @@
                 min: 250,
                 max: 3000,
                 step: 250,
-                slider_start: 2000,
+                slider_start: 1500,
                 prompt: "<p>Choose the duration for the feedback</p>"
             };		
             
@@ -455,48 +466,57 @@
                 ],
             }; 
 
-            timeline.push(n_schema_c_ses_page);
-            timeline.push(n_schema_ic_ses_page);
+            var hide_mouse_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "When the schema PAs are being displayed, should we hide the mouse?", name: 'condition', options: ['yes','no'], required:false}, 
+                ],
+            };             
+
+            timeline.push(n_ses_page)
+            // timeline.push(n_schema_c_ses_page);
+            // timeline.push(n_schema_ic_ses_page);
             timeline.push(n_trials_per_pa);
             timeline.push(schema_display_duration_page);
             timeline.push(response_window_duration_page);
             timeline.push(feedback_duration_page);
             timeline.push(iti_duration_page);
             timeline.push(show_schema_pa_at_feedback_page);
+            timeline.push(hide_mouse_page)
 
         } else {
 
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
-                schema_c: 3,
-                schema_ic: 3,
-                landmark_schema: 3,
-                random_locations: 3,
-                no_schema: 3,
+                schema_c: 2,
+                schema_ic: 2,
+                landmark_schema: 2,
+                random_locations: 2,
+                no_schema: 2,
             }
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 2,
-                schema_c: 10,
-                schema_ic: 10,
-                landmark_schema: 10,
-                random_locations: 10,
-                no_schema: 10,
+                schema_c: 4,
+                schema_ic: 4,
+                landmark_schema: 4,
+                random_locations: 4,
+                no_schema: 4,
             }
 
-            jatos.studySessionData.inputData.schema_display_duration = 2000
-            jatos.studySessionData.inputData.response_window_duration     = 3000
-            jatos.studySessionData.inputData.feedback_duration = 2000
+            jatos.studySessionData.inputData.schema_display_duration = 1500
+            jatos.studySessionData.inputData.response_window_duration = 3000
+            jatos.studySessionData.inputData.feedback_duration = 1500
             jatos.studySessionData.inputData.iti_duration      = 0    
 
-            jatos.studySessionData.inputData.condition_to_run = 'cb3'
+            // jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
             jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
 
         }
 
         // How long to show the prompt image
-        jatos.studySessionData.inputData.image_pres_duration = 1000
+        jatos.studySessionData.inputData.image_pres_duration = 500
 
         // If we're debugging, make everything shorter
         if (debugMode){
@@ -520,7 +540,7 @@
             jatos.studySessionData.inputData.feedback_duration = 20
             jatos.studySessionData.inputData.iti_duration      = 0    
 
-            jatos.studySessionData.inputData.condition_to_run = 'cb3'
+            // jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
             jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
 
@@ -536,30 +556,39 @@
 				var results = jsPsych.data.get().values();
 
                 if (!autoConditions){
-                    jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
-
+                    // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+                    debugger
                     jatos.studySessionData.inputData.n_ses_per_condition = {
                         practice: 1,
-                        schema_c: results[1].response,
-                        schema_ic: results[2].response,
+                        schema_c: results[0].response,
+                        schema_ic: results[0].response,
+                        landmark_schema: results[0].response,
+                        random_locations: results[0].response,
+                        no_schema: results[0].response,
                     }
 
                     jatos.studySessionData.inputData.n_trials_per_pa = {
                         practice: 2,
-                        schema_c: results[3].response,
-                        schema_ic: results[3].response,
+                        schema_c: results[1].response,
+                        schema_ic: results[1].response,
+                        landmark_schema: results[1].response,
+                        random_locations: results[1].response,
+                        no_schema: results[1].response,
                     }
 
 
-                    jatos.studySessionData.inputData.schema_display_duration = results[4].response
-                    jatos.studySessionData.inputData.response_window_duration     = results[5].response
-                    jatos.studySessionData.inputData.feedback_duration = results[6].response
-                    jatos.studySessionData.inputData.iti_duration      = results[7].response 
-                    debugger
+                    jatos.studySessionData.inputData.schema_display_duration = results[2].response
+                    jatos.studySessionData.inputData.response_window_duration = results[3].response
+                    jatos.studySessionData.inputData.feedback_duration = results[4].response
+                    jatos.studySessionData.inputData.iti_duration      = results[5].response 
 
-                    results[8].response.condition == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+                    results[6].response.condition == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+
+
+                    results[7].response.condition == 'yes' ? jatos.studySessionData.inputData.hide_mouse = true : jatos.studySessionData.inputData.hide_mouse = false
+
                     // Which counterbalancing was chosen?
-                    jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+                    // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
 
                 }
                 ////////////////////////////////////////////////////////////////////////////////
@@ -567,9 +596,9 @@
                 let cond_to_run = {}
                 cond_to_run = jatos.studySessionData.inputData.stimuli
 
-                cond_to_run = {
-                    landmark_schema: jatos.studySessionData.inputData.stimuli.landmark_schema
-                }
+                // cond_to_run = {
+                //     landmark_schema: jatos.studySessionData.inputData.stimuli.landmark_schema
+                // }
 
 
                 jatos.studySessionData.inputData.condition_coords = {}

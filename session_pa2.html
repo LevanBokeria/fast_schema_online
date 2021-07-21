@@ -10,6 +10,7 @@
         <script src='./extra_functions/math.js'></script>
         <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-image-keyboard-response.js"></script>
+        <script src="./jspsych-6.3.1/plugins/jspsych-preload.js"></script>
         <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
         <script src="./extra_functions/board_creator2.js"></script>
         <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'></link>
@@ -74,24 +75,35 @@
                 post_trial_gap: 500
             }
 
-            var session_procedure = {
+
+
+            debugger
+            var imgs_to_preload = jatos.studySessionData.inputData.all_images
+            imgs_to_preload.push('img/border_images/circles.png')
+            imgs_to_preload.push('img/border_images/diamonds.png')
+            imgs_to_preload.push('img/border_images/triangles.png')
+            imgs_to_preload.push('img/border_images/bullseye_larger.png')
+            imgs_to_preload.push('img/border_images/bullsdiamond_larger.png')
+            imgs_to_preload.push('img/border_images/stars_larger.png')
+
+            // Create the preload trial
+            var preload_trial = {
+                type: 'preload',
+                images: imgs_to_preload,
+            }
+
+             var session_procedure = {
                 timeline: [schema_display,image_display,new_pa_learning],
                 timeline_variables: trials_for_this_session,
             }
             
             var timeline = []
 
+            timeline.push(preload_trial)
             timeline.push(session_procedure)
-
-            // debugger
-            var imgs_to_preload = jatos.studySessionData.inputData.all_images
-            imgs_to_preload.push('img/border_images/circles.png')
-            imgs_to_preload.push('img/border_images/diamonds.png')
-            imgs_to_preload.push('img/border_images/triangles.png')
 
             jsPsych.init({
                 timeline: timeline,                    
-                preload_images: [imgs_to_preload],
                 default_iti: jatos.studySessionData.inputData.iti_duration, 
 
                 on_finish: function(data) {

@@ -177,22 +177,22 @@
             //         'img/targets/BOSS/downsized/aceofdiamond.jpg',
             //     ]
             // },
-            schema_c: {
+            landmark_schema: {
                 schema_learning: [
-                    'img/targets/BOSS/downsized/acorn.jpg',
-                    'img/targets/BOSS/downsized/acousticguitar02.jpg',
-                    'img/targets/BOSS/downsized/addressplate.jpg',
-                    'img/targets/BOSS/downsized/africanelephant.jpg',
-                    'img/targets/BOSS/downsized/aloe01.jpg',
-                    'img/targets/BOSS/downsized/americangoldfinch.jpg',
+                    'img/targets/BOSS/downsized/bowlingball.jpg',
+                    'img/targets/BOSS/downsized/bowlingpin.jpg',
+                    'img/targets/BOSS/downsized/bowtie.jpg',
+                    'img/targets/BOSS/downsized/boxingglove01.jpg',
+                    'img/targets/BOSS/downsized/boxtruck.jpg',
+                    'img/targets/BOSS/downsized/broadsword.jpg',
                 ],
                 new_pa_learning: [
-                    'img/targets/BOSS/downsized/anchor.jpg',
-                    'img/targets/BOSS/downsized/ant.jpg',
-                    'img/targets/BOSS/downsized/antlers.jpg',
-                    'img/targets/BOSS/downsized/armchair02.jpg',
-                    'img/targets/BOSS/downsized/artichoke01b.jpg',
-                    'img/targets/BOSS/downsized/badmintonracket.jpg',
+                    'img/targets/BOSS/downsized/buffaloskull.jpg',
+                    'img/targets/BOSS/downsized/bulldozer.jpg',
+                    'img/targets/BOSS/downsized/bullet.jpg',
+                    'img/targets/BOSS/downsized/bulletbelt.jpg',
+                    'img/targets/BOSS/downsized/bun.jpg',
+                    'img/targets/BOSS/downsized/butterfly.jpg',
                 ],
             },
             schema_ic: {
@@ -211,6 +211,24 @@
                     'img/targets/BOSS/downsized/beachumbrella01.jpg',
                     'img/targets/BOSS/downsized/bed.jpg',
                     'img/targets/BOSS/downsized/beerbottle.jpg',
+                ],
+            },            
+            schema_c: {
+                schema_learning: [
+                    'img/targets/BOSS/downsized/acorn.jpg',
+                    'img/targets/BOSS/downsized/acousticguitar02.jpg',
+                    'img/targets/BOSS/downsized/addressplate.jpg',
+                    'img/targets/BOSS/downsized/africanelephant.jpg',
+                    'img/targets/BOSS/downsized/aloe01.jpg',
+                    'img/targets/BOSS/downsized/americangoldfinch.jpg',
+                ],
+                new_pa_learning: [
+                    'img/targets/BOSS/downsized/anchor.jpg',
+                    'img/targets/BOSS/downsized/ant.jpg',
+                    'img/targets/BOSS/downsized/antlers.jpg',
+                    'img/targets/BOSS/downsized/armchair02.jpg',
+                    'img/targets/BOSS/downsized/artichoke01b.jpg',
+                    'img/targets/BOSS/downsized/badmintonracket.jpg',
                 ],
             },
             random_locations: {
@@ -231,24 +249,7 @@
                     'img/targets/BOSS/downsized/bow.jpg',
                 ],
             },
-            landmark_schema: {
-                schema_learning: [
-                    'img/targets/BOSS/downsized/bowlingball.jpg',
-                    'img/targets/BOSS/downsized/bowlingpin.jpg',
-                    'img/targets/BOSS/downsized/bowtie.jpg',
-                    'img/targets/BOSS/downsized/boxingglove01.jpg',
-                    'img/targets/BOSS/downsized/boxtruck.jpg',
-                    'img/targets/BOSS/downsized/broadsword.jpg',
-                ],
-                new_pa_learning: [
-                    'img/targets/BOSS/downsized/buffaloskull.jpg',
-                    'img/targets/BOSS/downsized/bulldozer.jpg',
-                    'img/targets/BOSS/downsized/bullet.jpg',
-                    'img/targets/BOSS/downsized/bulletbelt.jpg',
-                    'img/targets/BOSS/downsized/bun.jpg',
-                    'img/targets/BOSS/downsized/butterfly.jpg',
-                ],
-            },
+
             no_schema: {
                 schema_learning: [],
                 new_pa_learning: [
@@ -462,23 +463,30 @@
             var show_schema_pa_at_feedback_page = {
                 type: 'survey-multi-choice',
                 questions: [
-                    {prompt: "At feedback, should the schema-PAs be displayed alongside the new PA that is being learned?", name: 'condition', options: ['yes','no'], required:false}, 
+                    {prompt: "At feedback, should the schema-PAs be displayed alongside the new PA that is being learned?", name: 'answer', options: ['yes','no'], required:false}, 
                 ],
             }; 
 
             var hide_mouse_page = {
                 type: 'survey-multi-choice',
                 questions: [
-                    {prompt: "When the schema PAs are being displayed, should we hide the mouse?", name: 'condition', options: ['yes','no'], required:false}, 
+                    {prompt: "When the schema PAs are being displayed, should we hide the mouse?", name: 'answer', options: ['yes','no'], required:false}, 
                 ],
             };      
 
             var run_schema_display_page = {
                 type: 'survey-multi-choice',
                 questions: [
-                    {prompt: "Do you want to see schema-PAs at the beginning of each trial?", name: 'condition', options: ['yes','no'], required:false}, 
+                    {prompt: "Do you want to see schema-PAs at the beginning of each trial?", name: 'answer', options: ['yes','no'], required:false}, 
                 ],
-            };                   
+            };
+            
+            var move_board_within_trial_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "Do you want the board to move within the trial?", name: 'answer', options: ['yes','no'], required:false}, 
+                ],
+            };            
 
             timeline.push(n_ses_page)
             // timeline.push(n_schema_c_ses_page);
@@ -491,6 +499,7 @@
             timeline.push(show_schema_pa_at_feedback_page);
             timeline.push(hide_mouse_page)
             timeline.push(run_schema_display_page)
+            timeline.push(move_board_within_trial_page)
 
         } else {
 
@@ -544,7 +553,7 @@
             }
 
             jatos.studySessionData.inputData.schema_display_duration = 50
-            jatos.studySessionData.inputData.response_window_duration     = 200
+            jatos.studySessionData.inputData.response_window_duration = 200
             jatos.studySessionData.inputData.feedback_duration = 20
             jatos.studySessionData.inputData.iti_duration      = 0    
 
@@ -590,12 +599,14 @@
                     jatos.studySessionData.inputData.feedback_duration = results[4].response
                     jatos.studySessionData.inputData.iti_duration      = results[5].response 
 
-                    results[6].response.condition == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+                    results[6].response.answer == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
 
 
-                    results[7].response.condition == 'yes' ? jatos.studySessionData.inputData.hide_mouse = true : jatos.studySessionData.inputData.hide_mouse = false
-                    debugger
-                    results[8].response.condition == 'yes' ? jatos.studySessionData.inputData.run_schema_display = true : jatos.studySessionData.inputData.run_schema_display = false
+                    results[7].response.answer == 'yes' ? jatos.studySessionData.inputData.hide_mouse = true : jatos.studySessionData.inputData.hide_mouse = false
+                    
+                    results[8].response.answer == 'yes' ? jatos.studySessionData.inputData.run_schema_display = true : jatos.studySessionData.inputData.run_schema_display = false
+
+                    results[9].response.answer == 'yes' ? jatos.studySessionData.inputData.move_board_within_trial = true : jatos.studySessionData.inputData.move_board_within_trial = false                    
 
                     // Which counterbalancing was chosen?
                     // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition

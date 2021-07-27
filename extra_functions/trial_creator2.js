@@ -104,7 +104,7 @@ function trial_creator2(all_conditions){
 
                             // debugger
                             // Take the two locations that have new PAs as neighbords, and fix those
-                            let idx_of_landmarks = [1,5] // this is hand coded, 2nd and 6th rows in the coordinates of schema_learning PAs, have new_pa_learning PAs as neighbors
+                            let idx_of_landmarks = [0,3] // this is hand coded, 2nd and 6th rows in the coordinates of schema_learning PAs, have new_pa_learning PAs as neighbors
 
                             let landmark_rcs = [
                                 schema_learning_coords[idx_of_landmarks[0]],
@@ -209,7 +209,7 @@ function trial_creator2(all_conditions){
         
                 // Add a key about the trial counter and random offset 
                 for (iT=0; iT < session_trials.length; iT++){
-
+                    
                     // Trial counter prompt
                     session_trials[iT]['trial_counter_prompt'] = '<p>Trial ' + (iT+1) + '/' + session_trials.length +'</p>'
 
@@ -220,9 +220,13 @@ function trial_creator2(all_conditions){
                     session_trials[iT]['top_offset-schema-display'] = Math.floor(Math.random() * 160)
                     session_trials[iT]['left_offset-schema-display'] = Math.floor(Math.random() * 160)
 
-                    session_trials[iT]['top_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
-                    session_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)           
-                    
+                    if (jatos.studySessionData.inputData.move_board_within_trial){
+                        session_trials[iT]['top_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
+                        session_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)           
+                    } else {
+                        session_trials[iT]['top_offset-new-pa-learning'] = session_trials[iT]['top_offset-schema-display']
+                        session_trials[iT]['left_offset-new-pa-learning'] = session_trials[iT]['left_offset-schema-display']
+                    }
                     // top and left offsets
                     // session_trials[iT]['top_offset-schema-display'] = 0
                     // session_trials[iT]['left_offset-schema-display'] = 0

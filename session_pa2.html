@@ -37,7 +37,7 @@
                 condition: jsPsych.timelineVariable('condition'),
                 top_offset: jsPsych.timelineVariable('top_offset-schema-display'),
                 left_offset: jsPsych.timelineVariable('left_offset-schema-display'),
-                show_schema_pas: true,
+                show_schema_pas: jatos.studySessionData.inputData.run_schema_display,
                 show_new_pas: false,
                 allow_response: false,
                 show_feedback: false,
@@ -75,9 +75,7 @@
                 post_trial_gap: 500
             }
 
-
-
-            debugger
+            // debugger
             var imgs_to_preload = jatos.studySessionData.inputData.all_images
             imgs_to_preload.push('img/border_images/circles.png')
             imgs_to_preload.push('img/border_images/diamonds.png')
@@ -92,8 +90,17 @@
                 images: imgs_to_preload,
             }
 
+            var subtimeline = []
+
+            if (jatos.studySessionData.inputData.run_schema_display){
+                subtimeline.push(schema_display)
+            }
+
+            subtimeline.push(image_display)
+            subtimeline.push(new_pa_learning)
+
              var session_procedure = {
-                timeline: [schema_display,image_display,new_pa_learning],
+                timeline: subtimeline,
                 timeline_variables: trials_for_this_session,
             }
             
@@ -114,7 +121,11 @@
                     // Separate out image presentation from responding
                     
                     jatos.studySessionData.outputData.session_results_image_screen.push(...session_results.filter(el => el.trial_stage == 'image_display'))
-                    jatos.studySessionData.outputData.session_results_schema_display.push(...session_results.filter(el => el.trial_stage == 'schema_display'))
+
+                    if (jatos.studySessionData.inputData.run_schema_display){
+                        jatos.studySessionData.outputData.session_results_schema_display.push(...session_results.filter(el => el.trial_stage == 'schema_display'))
+                    }
+
                     jatos.studySessionData.outputData.session_results_new_pa_learning.push(...session_results.filter(el => el.trial_stage == 'new_pa_learning'))
 
 					// Make JATOS remember that this session was run

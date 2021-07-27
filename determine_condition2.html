@@ -471,7 +471,14 @@
                 questions: [
                     {prompt: "When the schema PAs are being displayed, should we hide the mouse?", name: 'condition', options: ['yes','no'], required:false}, 
                 ],
-            };             
+            };      
+
+            var run_schema_display_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "Do you want to see schema-PAs at the beginning of each trial?", name: 'condition', options: ['yes','no'], required:false}, 
+                ],
+            };                   
 
             timeline.push(n_ses_page)
             // timeline.push(n_schema_c_ses_page);
@@ -483,6 +490,7 @@
             timeline.push(iti_duration_page);
             timeline.push(show_schema_pa_at_feedback_page);
             timeline.push(hide_mouse_page)
+            timeline.push(run_schema_display_page)
 
         } else {
 
@@ -586,6 +594,8 @@
 
 
                     results[7].response.condition == 'yes' ? jatos.studySessionData.inputData.hide_mouse = true : jatos.studySessionData.inputData.hide_mouse = false
+                    debugger
+                    results[8].response.condition == 'yes' ? jatos.studySessionData.inputData.run_schema_display = true : jatos.studySessionData.inputData.run_schema_display = false
 
                     // Which counterbalancing was chosen?
                     // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
@@ -606,28 +616,28 @@
                 jatos.studySessionData.inputData.condition_coords = {
 
                     schema_c: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                    },
-
-                    schema_ic: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                    },
-
-                    random_locations: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1, 
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1,
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2,
                     },
 
-                    landmark_schema: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1, 
+                    schema_ic: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1,
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2,
                     },
 
-                    no_schema: {
+                    random_locations: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1, 
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                    },
+
+                    landmark_schema: {
                         schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1, 
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2,
+                    },
+
+                    no_schema: {
+                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1, 
+                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
                     },                    
                 }
                 

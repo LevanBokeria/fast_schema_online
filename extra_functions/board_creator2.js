@@ -12,8 +12,8 @@ function board_creator2(board_size_px,
     grid_border = document.createElement('div')
     grid_border.id = 'grid_border'
 
-    grid_border.style['background-image'] = "url(" + border_image_path + ")"
-    grid_border.style['background-size'] = 'contain'
+    // grid_border.style['background-image'] = "url(" + border_image_path + ")"
+    // grid_border.style['background-size'] = 'contain'
     grid_border.style.height = (board_size_px + 60) + 'px'
     grid_border.style.width  = (board_size_px + 60) + 'px'
       
@@ -25,7 +25,7 @@ function board_creator2(board_size_px,
         'width:' + board_size_px + 'px;' + 
         'grid-template-columns: repeat('+n_cols+', 1fr);' +
         'grid-template-rows: repeat('+n_rows+', 1fr);' +
-        'border: 10px solid ' + curr_trial.color + ';' + 
+        // 'border: 10px solid ' + curr_trial.color + ';' + 
         'background-color: white;' + 
         'position: absolute;' +
         'top: 50%;' + 

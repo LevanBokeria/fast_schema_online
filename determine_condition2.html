@@ -486,7 +486,28 @@
                 questions: [
                     {prompt: "Do you want the board to move within the trial?", name: 'answer', options: ['yes','no'], required:false}, 
                 ],
-            };            
+            };    
+
+            var show_schema_pa_during_new_pa_response_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "Do you want to see schema PAs while responding to new PA?", name: 'answer', options: ['yes','no'], required:false}, 
+                ],
+            };                     
+
+            var condition_choices = ['schema_c','schema_ic','landmark_schema','random_locations','no_schema']
+
+            var order_of_conditions_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "Choose condition for session 1:", name: 'answer1', options: condition_choices, required:true, horizontal:true}, 
+                    {prompt: "Choose condition for session 2:", name: 'answer2', options: condition_choices, required:true, horizontal:true}, 
+                    {prompt: "Choose condition for session 3:", name: 'answer3', options: condition_choices, required:true, horizontal:true}, 
+                    {prompt: "Choose condition for session 4:", name: 'answer4', options: condition_choices, required:true, horizontal:true}, 
+                    {prompt: "Choose condition for session 5:", name: 'answer5', options: condition_choices, required:true, horizontal:true},                                                             
+                ],
+            };     
+
 
             timeline.push(n_ses_page)
             // timeline.push(n_schema_c_ses_page);
@@ -500,6 +521,8 @@
             timeline.push(hide_mouse_page)
             timeline.push(run_schema_display_page)
             timeline.push(move_board_within_trial_page)
+            timeline.push(show_schema_pa_during_new_pa_response_page)
+            timeline.push(order_of_conditions_page)
 
         } else {
 
@@ -608,14 +631,24 @@
 
                     results[9].response.answer == 'yes' ? jatos.studySessionData.inputData.move_board_within_trial = true : jatos.studySessionData.inputData.move_board_within_trial = false                    
 
+                    results[10].response.answer == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = true : jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
+
                     // Which counterbalancing was chosen?
                     // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
 
+                    // Whats the order of conditions?
+                    var cond_to_run = {}
+
+                    cond_to_run[results[11].response.answer1] = jatos.studySessionData.inputData.stimuli[results[11].response.answer1]
+                    cond_to_run[results[11].response.answer2] = jatos.studySessionData.inputData.stimuli[results[11].response.answer2]
+                    cond_to_run[results[11].response.answer3] = jatos.studySessionData.inputData.stimuli[results[11].response.answer3]
+                    cond_to_run[results[11].response.answer4] = jatos.studySessionData.inputData.stimuli[results[11].response.answer4]
+                    cond_to_run[results[11].response.answer5] = jatos.studySessionData.inputData.stimuli[results[11].response.answer5]                                                            
+                    // cond_to_run = jatos.studySessionData.inputData.stimuli
                 }
                 ////////////////////////////////////////////////////////////////////////////////
                 // debugger
-                let cond_to_run = {}
-                cond_to_run = jatos.studySessionData.inputData.stimuli
+
 
                 // cond_to_run = {
                 //     landmark_schema: jatos.studySessionData.inputData.stimuli.landmark_schema

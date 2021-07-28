@@ -170,13 +170,21 @@
         }
 
         jatos.studySessionData.inputData.stimuli = {
-            // practice: {
-            //     practice:[
-            //         'img/targets/BOSS/downsized/8ball.jpg',
-            //         'img/targets/BOSS/downsized/accordion01.jpg',
-            //         'img/targets/BOSS/downsized/aceofdiamond.jpg',
-            //     ]
-            // },
+            practice: {
+                schema_learning: [
+                    'img/targets/BOSS/downsized/caribou02.jpg',
+                    'img/targets/BOSS/downsized/carsidemirror01.jpg',
+                    'img/targets/BOSS/downsized/cartonofeggs.jpg',
+                    'img/targets/BOSS/downsized/casabamelon.jpg',
+                    'img/targets/BOSS/downsized/castle.jpg',
+                    'img/targets/BOSS/downsized/cat.jpg'
+            ],
+                new_pa_learning:[
+                    'img/targets/BOSS/downsized/8ball.jpg',
+                    'img/targets/BOSS/downsized/accordion01.jpg',
+                    'img/targets/BOSS/downsized/aceofdiamond.jpg',
+                ]
+            },
             landmark_schema: {
                 schema_learning: [
                     'img/targets/BOSS/downsized/bowlingball.jpg',
@@ -348,44 +356,11 @@
         ]
 
         let autoConditions = jatos.componentJsonInput.autoConditions
-        let debugMode      = jatos.componentJsonInput.debugMode
-
-
-        // Add the page about counterbalancing conditions
-        var condition_options = ['cb1','cb2','cb3','cb4'];
-
-        var condition_choice_page = {
-            type: 'survey-multi-choice',
-            questions: [
-                {prompt: "Please choose", name: 'condition', options: condition_options, required:false}, 
-            ],
-        };   
+        let debugMode      = jatos.componentJsonInput.debugMode 
 
         // timeline.push(condition_choice_page);
 
         if (!autoConditions){
-
-            // var n_schema_c_ses_page = {
-            //     type: 'html-slider-response',
-            //     stimulus: '<p>Number of schema C sessions</p>',
-            //     labels: ['1','2','3','4','5','6'],
-            //     min: 1,
-            //     max: 6,
-            //     step: 1,
-            //     slider_start: 2,
-            //     prompt: "<p>Choose the number of schema C sessions </p>"
-            // };
-
-            // var n_schema_ic_ses_page = {
-            //     type: 'html-slider-response',
-            //     stimulus: '<p>Number of schema IC sessions</p>',
-            //     labels: ['1','2','3','4','5','6'],
-            //     min: 1,
-            //     max: 6,
-            //     step: 1,
-            //     slider_start: 1,
-            //     prompt: "<p>Choose the number of schema IC sessions </p>"
-            // };
 
             var n_ses_page = {
                 type: 'html-slider-response',
@@ -456,9 +431,6 @@
                 slider_start: 0,
                 prompt: "<p>Choose the duration for ITI</p>"
             };			
-
-            // Add the page about counterbalancing conditions
-            var condition_options = ['cb1','cb2','cb3','cb4'];
 
             var show_schema_pa_at_feedback_page = {
                 type: 'survey-multi-choice',
@@ -544,14 +516,31 @@
                 no_schema: 4,
             }
 
-            jatos.studySessionData.inputData.schema_display_duration = 1500
+            jatos.studySessionData.inputData.schema_display_duration = 2000
             jatos.studySessionData.inputData.response_window_duration = 3000
-            jatos.studySessionData.inputData.feedback_duration = 1500
+            jatos.studySessionData.inputData.feedback_duration = 2000
             jatos.studySessionData.inputData.iti_duration      = 0    
 
             // jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
-            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true
+            jatos.studySessionData.inputData.hide_mouse = true
+            jatos.studySessionData.inputData.run_schema_display = true
+            jatos.studySessionData.inputData.move_board_within_trial = false
+            jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
+
+
+            // Add the page about counterbalancing conditions
+            var condition_options = ['cb1','cb2','cb3','cb4'];
+
+            var condition_choice_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "Please choose", name: 'condition', options: condition_options, required:true}, 
+                ],
+            };  
+
+            timeline.push(condition_choice_page)
 
         }
 
@@ -616,7 +605,6 @@
                         no_schema: results[1].response,
                     }
 
-
                     jatos.studySessionData.inputData.schema_display_duration = results[2].response
                     jatos.studySessionData.inputData.response_window_duration = results[3].response
                     jatos.studySessionData.inputData.feedback_duration = results[4].response
@@ -645,20 +633,32 @@
                     cond_to_run[results[11].response.answer4] = jatos.studySessionData.inputData.stimuli[results[11].response.answer4]
                     cond_to_run[results[11].response.answer5] = jatos.studySessionData.inputData.stimuli[results[11].response.answer5]                                                            
                     // cond_to_run = jatos.studySessionData.inputData.stimuli
+                } else {
+                    
+                    var cond_to_run = {}
+
+                    cond_to_run = jatos.studySessionData.inputData.stimuli
                 }
                 ////////////////////////////////////////////////////////////////////////////////
-                // debugger
-
-
-                // cond_to_run = {
-                //     landmark_schema: jatos.studySessionData.inputData.stimuli.landmark_schema
-                // }
-
 
                 jatos.studySessionData.inputData.condition_coords = {}
 
                 jatos.studySessionData.inputData.condition_coords = {
-
+                    practice: {
+                        schema_learning: [
+                            [5,2],
+                            [10,5],
+                            [7,6],
+                            [3,8],
+                            [11,10],
+                            [4,11]
+                        ],
+                        new_pa_learning: [
+                            [9,3],
+                            [2,5],
+                            [4,10],
+                        ]
+                    },
                     schema_c: {
                         schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1,
                         new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2,

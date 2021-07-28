@@ -1,5 +1,5 @@
 function trial_creator2(all_conditions){
-    // debugger
+    debugger
     let all_trials = []
 
     // A function to create a cartesian product of two arrays
@@ -13,9 +13,7 @@ function trial_creator2(all_conditions){
 
             let n_trials_per_pa  = jatos.studySessionData.inputData.n_trials_per_pa[iCond]
 
-            let n_trials_per_ses = n_trials_per_pa * iCondStages.schema_learning.length
             let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[iCond]
-
 
             var schema_learning_coords = jatos.studySessionData.inputData.condition_coords[iCond].schema_learning
 
@@ -174,12 +172,10 @@ function trial_creator2(all_conditions){
 
                             } // iLoc
 
-
-
                         } else if (iCond == 'no_schema'){
                             
                             // Delete this
-                            schema_learning_coords = []
+                            var schema_learning_coords = []
                             // debugger
 
                         } // which condition
@@ -205,8 +201,11 @@ function trial_creator2(all_conditions){
                 
                 } // iPA
 
-                session_trials = jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.new_pa_img === b.new_pa_img})
-        
+                if (iCond == 'practice'){
+                    session_trials = jsPsych.randomization.shuffle(session_trials)
+                } else {
+                    session_trials = jsPsych.randomization.shuffleNoRepeats(session_trials,function(a,b){return a.new_pa_img === b.new_pa_img})
+                }
                 // Add a key about the trial counter and random offset 
                 for (iT=0; iT < session_trials.length; iT++){
                     

@@ -1,5 +1,5 @@
 function trial_creator2(all_conditions){
-    debugger
+    
     let all_trials = []
 
     // A function to create a cartesian product of two arrays

@@ -17,7 +17,7 @@
 
 		//start timeline
 		jatos.onLoad(function() {
-			// debugger
+			debugger
 			let comp_to_start = []
 		
 			//make a timeline
@@ -32,6 +32,12 @@
 				instructions_text = 'Thank you. You have finished the experiment. Please complete a short debriefing.'
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.debriefing2
+			} else if (curr_session == 1){
+
+				// So we just finished the practice session
+				instructions_text = 'Great! These were practice trials on the purple board. You will not see that board or those pictures again. <br> Lets start with the real trials. You will learn location of pictures on 5 new different boards that are colored differently. <br> <strong>On some of these boards, the visible items you will see at the beginning of trials might change locations!</strong> <br> You will do 2 sessions of 24 trials (4 trials per hidden picture) on each board. <br><br> Click next to start with the first board'
+
+				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
 
 			} else {
 
@@ -40,7 +46,12 @@
 
 				if (previous_condition != next_condition){
 					// So we're changing the board
-					instructions_text = 'Please take a break. <br> <strong>Next, you will learn a new board with new pictures.</strong>'
+
+					if (next_condition == 'no_schema'){
+						instructions_text = '<strong>On the next board, there are no visible items.</strong> You will only learn location of the 6 invisible items. <br> Please take a break and move onto the next board.'
+					} else {
+						instructions_text = 'Please take a break. <br> <strong>Next, you will learn a new board with new pictures.</strong>'
+					}
 				} else {
 					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this board. Once you are ready please move to the next session.'
 				}
@@ -48,6 +59,7 @@
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
 
 			}
+
 			var instructions = {
 					type: 'instructions',
 					pages : [			

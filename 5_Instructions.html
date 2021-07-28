@@ -28,11 +28,13 @@
 				'<h1> Instructions </h1>'+
 			'</div>'+	
 			'<div class="instruct">'+
-				'<p>Welcome to the session!</p>' + 
-				'<p>On each trial, you will see a picture of some item displayed below a board. You have to guess where that item is located on the board, by clicking the location with your mouse. </p>' +
-				'<p>You will have 3 seconds on yeach trial!</p>' +
+				'<p>Welcome to the experiment!</p>' + 
+				'<p>You will learn locations of pictures on 5 different boards. </p>' +
+				'<p>On each board, there are 12 pictures, some visible and some hidden. You have to learn the location of the hidden pictures </p>' +
+				'<p>On each trial, you will first see the board along with visible pictures. Then the board will disappear, and you will be told which of the 6 hidden pictures to find. You will then have to indicate the location of this hidden picture on an empty board. You will receive feedback on whether you were correct or not. During feedback, the previously visible pictures will show up as well! </p>' + 
+				'<p>You will have 3 seconds on each trial!</p>' +
 				'<p><br>Click next to do a few practice trials.</p>' +
-			'</div>',																										
+			'</div>',												
 		];
 
 		let instructions = {
@@ -58,10 +60,12 @@
 				// Record results
 				jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
 
+				let comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
+
 				jatos.submitResultData('[instructions_start---' + 
 				JSON.stringify(jatos.studySessionData) +
 				'---instructions_end]', 
-				jatos.startNextComponent);
+				function(){jatos.startComponentByPos(comp_to_start)});
 
 			}
 		})

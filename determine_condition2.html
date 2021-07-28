@@ -425,6 +425,50 @@
             timeline.push(show_schema_pa_during_new_pa_response_page)
             timeline.push(order_of_conditions_page)
 
+        } else if (debugMode) {
+            jatos.studySessionData.inputData.n_ses_per_condition = {
+                practice: 1,
+                schema_c: 2,
+                schema_ic: 2,
+                landmark_schema: 2,
+                random_locations: 2,
+                no_schema: 2,
+            }
+
+            jatos.studySessionData.inputData.n_trials_per_pa = {
+                practice: 1,
+                schema_c: 1,
+                schema_ic: 1,
+                landmark_schema: 1,
+                random_locations: 1,
+                no_schema: 1,
+            }
+
+            jatos.studySessionData.inputData.schema_display_duration = 200
+            jatos.studySessionData.inputData.response_window_duration = 200
+            jatos.studySessionData.inputData.feedback_duration = 200
+            jatos.studySessionData.inputData.iti_duration      = 0    
+
+            // jatos.studySessionData.inputData.condition_to_run = 'cb3'
+
+            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true
+            jatos.studySessionData.inputData.hide_mouse = true
+            jatos.studySessionData.inputData.run_schema_display = true
+            jatos.studySessionData.inputData.move_board_within_trial = false
+            jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
+
+
+            // Add the page about counterbalancing conditions
+            var condition_options = ['cb1','cb2','cb3','cb4','cb5'];
+
+            var condition_choice_page = {
+                type: 'survey-multi-choice',
+                questions: [
+                    {prompt: "Please choose", name: 'condition', options: condition_options, required:true}, 
+                ],
+            };  
+
+            timeline.push(condition_choice_page)
         } else {
 
             jatos.studySessionData.inputData.n_ses_per_condition = {
@@ -438,11 +482,11 @@
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 2,
-                schema_c: 4,
-                schema_ic: 4,
-                landmark_schema: 4,
-                random_locations: 4,
-                no_schema: 4,
+                schema_c: 3,
+                schema_ic: 3,
+                landmark_schema: 3,
+                random_locations: 3,
+                no_schema: 3,
             }
 
             jatos.studySessionData.inputData.schema_display_duration = 2000
@@ -475,34 +519,6 @@
 
         // How long to show the prompt image
         jatos.studySessionData.inputData.image_pres_duration = 500
-
-        // If we're debugging, make everything shorter
-        if (debugMode){
-
-            jatos.studySessionData.inputData.image_pres_duration = 50
-
-            jatos.studySessionData.inputData.n_ses_per_condition = {
-                practice: 1,
-                schema_c: 2,
-                schema_ic: 2,
-            }
-
-            jatos.studySessionData.inputData.n_trials_per_pa = {
-                practice: 2,
-                schema_c: 2,
-                schema_ic: 2,
-            }
-
-            jatos.studySessionData.inputData.schema_display_duration = 50
-            jatos.studySessionData.inputData.response_window_duration = 200
-            jatos.studySessionData.inputData.feedback_duration = 20
-            jatos.studySessionData.inputData.iti_duration      = 0    
-
-            // jatos.studySessionData.inputData.condition_to_run = 'cb3'
-
-            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
-
-        }
 
 		jsPsych.init({
 			
@@ -563,7 +579,7 @@
                     cond_to_run[results[11].response.answer5] = jatos.studySessionData.inputData.stimuli[results[11].response.answer5]                                                            
                     // cond_to_run = jatos.studySessionData.inputData.stimuli
                 } else {
-                    
+                    // debugger
                     var cond_to_run = {}
 
                     // Which counterbalancing was chosen?
@@ -582,12 +598,12 @@
                         order_of_conditions = ['no_schema','schema_c','schema_ic','landmark_schema','random_locations']
                     } 
 
+                    cond_to_run.practice = jatos.studySessionData.inputData.stimuli.practice
                     cond_to_run[order_of_conditions[0]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[0]]
                     cond_to_run[order_of_conditions[1]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[1]]
                     cond_to_run[order_of_conditions[2]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[2]]
                     cond_to_run[order_of_conditions[3]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[3]]
                     cond_to_run[order_of_conditions[4]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[4]] 
-                    cond_to_run[order_of_conditions[5]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[5]]                                                                                                      
                 }
                 ////////////////////////////////////////////////////////////////////////////////
 

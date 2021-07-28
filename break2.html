@@ -17,7 +17,7 @@
 
 		//start timeline
 		jatos.onLoad(function() {
-			debugger
+			// debugger
 			let comp_to_start = []
 		
 			//make a timeline
@@ -35,7 +35,7 @@
 			} else if (curr_session == 1){
 
 				// So we just finished the practice session
-				instructions_text = 'Great! These were practice trials on the purple board. You will not see that board or those pictures again. <br> Lets start with the real trials. You will learn location of pictures on 5 new different boards that are colored differently. <br> <strong>On some of these boards, the visible items you will see at the beginning of trials might change locations!</strong> <br> You will do 2 sessions of 24 trials (4 trials per hidden picture) on each board. <br><br> Click next to start with the first board'
+				instructions_text = 'Great! These were practice trials on the purple board. You will not see that board or those pictures again. <br> Lets start with the real trials. You will learn location of pictures on 5 new different boards that are colored differently. <br> <strong>On some of these boards, the visible items you will see at the beginning of trials might change locations or be absent completely!</strong> <br> For each of the 5 boards, you will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' sessions, each session with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c*6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br> Click next to start with the first board'
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
 
@@ -53,7 +53,7 @@
 						instructions_text = 'Please take a break. <br> <strong>Next, you will learn a new board with new pictures.</strong>'
 					}
 				} else {
-					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this board. Once you are ready please move to the next session.'
+					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_colors[previous_condition] + ' board. Once you are ready please move to the next session.'
 				}
 				
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2

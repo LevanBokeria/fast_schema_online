@@ -102,7 +102,7 @@ function trial_creator2(all_conditions){
 
                             // debugger
                             // Take the two locations that have new PAs as neighbords, and fix those
-                            let idx_of_landmarks = [0,3] // this is hand coded, 2nd and 6th rows in the coordinates of schema_learning PAs, have new_pa_learning PAs as neighbors
+                            let idx_of_landmarks = [0,2] // this is hand coded, 2nd and 6th rows in the coordinates of schema_learning PAs, have new_pa_learning PAs as neighbors
 
                             let landmark_rcs = [
                                 schema_learning_coords[idx_of_landmarks[0]],

@@ -25,58 +25,51 @@
         // Define all the conditions here ///////////////////////////////////////////////////////////
         var timeline = []
 
-        jatos.studySessionData.inputData = {}
-        jatos.studySessionData.outputData = {}
-        jatos.studySessionData.outputData.session_results_schema_display = []
-        jatos.studySessionData.outputData.session_results_new_pa_learning = []
-        jatos.studySessionData.outputData.session_results_image_screen = []
-
-        jatos.studySessionData.inputData.curr_session = 0
-        
-        // Component positions
-        jatos.studySessionData.inputData.component_positions = {
-            instructions: 3,
-            session_pa: 4,            
-            break: 5,            
-            data_submission: 6,
-            debriefing: 7,
-            session_pa2: 9,
-            break2: 10,
-            debriefing2: 11,
+        jatos.studySessionData.outputData = {
+            session_results_schema_display: [],
+            session_results_new_pa_learning: [],
+            session_results_image_screen: []     
         }
 
-        jatos.studySessionData.inputData.curr_condition = ''
-
-        // Add the cells
-        jatos.studySessionData.inputData.n_rows = 12
-        jatos.studySessionData.inputData.n_cols = 12
-
-        // Define all the possible colors. Later, map these by randomization or latin square
-        jatos.studySessionData.inputData.condition_colors = {
-            practice: 'purple',
-            schema_c: 'blue',
-            schema_ic: 'green',
-            landmark_schema: 'red',
-            random_locations: 'yellow',            
-            no_schema: 'gray',
-        }
-
-        jatos.studySessionData.inputData.condition_border_patterns = {
-            practice: 'triangles',
-            schema_c: 'circles',
-            schema_ic: 'diamonds',
-            random_locations: 'bullseye_larger',
-            landmark_schema: 'bullsdiamond_larger',
-            no_schema: 'stars_larger'
-        }
-
-        jatos.studySessionData.inputData.condition_ses_counters = {
-            practice: 0,
-            schema_ic: 0,
-            schema_c: 0,
-            landmark_schema: 0,
-            random_locations: 0,
-            no_schema: 0
+        jatos.studySessionData.inputData = {
+            curr_session: 0,
+            component_positions: {
+                instructions: 3,
+                session_pa: 4,            
+                break: 5,            
+                data_submission: 6,
+                debriefing: 7,
+                session_pa2: 9,
+                break2: 10,
+                debriefing2: 11,
+                post_practice: 12
+            },
+            n_rows: 12,
+            n_cols: 12,
+            condition_colors: {
+                practice: 'purple',
+                schema_c: 'blue',
+                schema_ic: 'green',
+                landmark_schema: 'red',
+                random_locations: 'yellow',            
+                no_schema: 'cyan',
+            },
+            condition_border_patterns: {
+                practice: 'triangles',
+                schema_c: 'circles',
+                schema_ic: 'diamonds',
+                random_locations: 'bullseye_larger',
+                landmark_schema: 'bullsdiamond_larger',
+                no_schema: 'stars_larger'
+            },
+            condition_ses_counters: {
+                practice: 0,
+                schema_ic: 0,
+                schema_c: 0,
+                landmark_schema: 0,
+                random_locations: 0,
+                no_schema: 0
+            },
         }
         
         jatos.studySessionData.inputData.arrangement_coords = {
@@ -290,8 +283,6 @@
         let autoConditions = jatos.componentJsonInput.autoConditions
         let debugMode      = jatos.componentJsonInput.debugMode 
 
-        // timeline.push(condition_choice_page);
-
         if (!autoConditions){
 
             var n_ses_page = {
@@ -485,11 +476,11 @@
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 2,
-                schema_c: 3,
-                schema_ic: 3,
-                landmark_schema: 3,
-                random_locations: 3,
-                no_schema: 3,
+                schema_c: 4,
+                schema_ic: 4,
+                landmark_schema: 4,
+                random_locations: 4,
+                no_schema: 4,
             }
 
             jatos.studySessionData.inputData.schema_display_duration = 2000
@@ -497,14 +488,11 @@
             jatos.studySessionData.inputData.feedback_duration = 2000
             jatos.studySessionData.inputData.iti_duration      = 0    
 
-            // jatos.studySessionData.inputData.condition_to_run = 'cb3'
-
             jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
             jatos.studySessionData.inputData.run_schema_display = true
             jatos.studySessionData.inputData.move_board_within_trial = false
             jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
-
 
             // Add the page about counterbalancing conditions
             var condition_options = ['cb1','cb2','cb3','cb4','cb5'];
@@ -609,9 +597,6 @@
                     cond_to_run[order_of_conditions[4]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[4]] 
                 }
                 ////////////////////////////////////////////////////////////////////////////////
-
-                jatos.studySessionData.inputData.condition_coords = {}
-
                 jatos.studySessionData.inputData.condition_coords = {
                     practice: {
                         schema_learning: [
@@ -655,6 +640,7 @@
                 }
                 
                 // Create the trials
+                // debugger
                 jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
 
                 // Make JATOS remember that this session was run

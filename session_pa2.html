@@ -134,7 +134,14 @@
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
                     // Which comp to start
-                    let comp_to_start = jatos.studySessionData.inputData.component_positions.break2
+                    let comp_to_start
+                    
+                    if (jatos.studySessionData.inputData.curr_session == 1){
+                        // Start post practice component
+                        comp_to_start = jatos.studySessionData.inputData.component_positions.post_practice
+                    } else {
+                        comp_to_start = jatos.studySessionData.inputData.component_positions.break2
+                    }
 
 					jatos.submitResultData('[session_pa_start_' + '---' + 
 					JSON.stringify(jatos.studySessionData) +

@@ -1,96 +1,178 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-    <title>Break</title>	
-	<script src="jspsych-6.3.1/jspsych.js" ></script>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+	<title>Break</title>
+	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-html-button-response.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-preload.js'></script>
+	<script src='./extra_functions/board_creator2.js'></script>
 	<script src="jatos.js"></script>
-	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
-	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
-  </head>
+	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
+	</link>
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css">
+	</link>
+</head>
 
-  <body>
-  <script>
+<body>
+	<script>
 
 		//start timeline
-		jatos.onLoad(function() {
-			// debugger
+		jatos.onLoad(function () {
+			
 			let comp_to_start = []
-		
+
 			//make a timeline
-			let timeline =[]; 
+			let timeline = [];
 
 			let instructions_text = []
 
 			let curr_session = jatos.studySessionData.inputData.curr_session
 
-			if (curr_session == jatos.studySessionData.inputData.all_sessions.length){
+			if (curr_session == jatos.studySessionData.inputData.all_sessions.length) {
 
-				instructions_text = 'Thank you. You have finished the experiment. Please complete a short debriefing.'
+				instructions_text = 'Thank you! You have finished the experiment. Please complete a short debriefing.'
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.debriefing2
-			} else if (curr_session == 1){
-
-				// So we just finished the practice session
-				instructions_text = 'Great! These were practice trials on the purple board. You will not see that board or those pictures again. <br> Lets start with the real trials. You will learn location of pictures on 5 new different boards that are colored differently. <br> <strong>On some of these boards, the visible items you will see at the beginning of trials might change locations or be absent completely!</strong> <br> For each of the 5 boards, you will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' sessions, each session with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c*6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br> Click next to start with the first board'
-
-				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
 
 			} else {
 
-				let previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session-1][0].condition
-				let next_condition     = jatos.studySessionData.inputData.all_sessions[curr_session][0].condition
+				let previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session - 1][0].condition
+				let next_condition = jatos.studySessionData.inputData.all_sessions[curr_session][0].condition
 
-				if (previous_condition != next_condition){
+				if (previous_condition != next_condition) {
 					// So we're changing the board
 
-					if (next_condition == 'no_schema'){
-						instructions_text = '<strong>On the next board, there are no visible items.</strong> You will only learn location of the 6 invisible items. <br> Please take a break and move onto the next board.'
-					} else {
-						instructions_text = 'Please take a break. <br> <strong>Next, you will learn a new board with new pictures.</strong>'
+					var curr_trial = jatos.studySessionData.inputData.all_sessions[curr_session][0]
+
+					// Create the board element
+					var grid_border = board_creator2(
+						300,
+						jatos.studySessionData.inputData.n_rows,
+						jatos.studySessionData.inputData.n_cols,
+						false,
+						false,
+						curr_trial
+					)
+
+					// Remove certain styles:
+					grid_border.children[0].style.removeProperty('transform')
+					grid_border.children[0].style.removeProperty('top')
+					grid_border.children[0].style.removeProperty('left')
+					grid_border.children[0].style.position = 'relative'
+					grid_border.children[0].style.margin = 'auto'
+
+					// Create a flexbox with the visible pictures
+					var flex_visible_pics_el = document.createElement('div')
+
+					flex_visible_pics_el.display = 'flex'
+
+					for (iPA = 0; iPA < curr_trial.schema_pa_imgs.length; iPA++) {
+
+						let nPA = document.createElement('img')
+
+						nPA.src = curr_trial.schema_pa_imgs[iPA]
+
+						nPA.style.height = '50px'
+						nPA.style.border = '1px solid black'
+						nPA.style.margin = '0px 2px 0px'
+
+						flex_visible_pics_el.appendChild(nPA)
 					}
+
+					// Create a flexbox with the hidden pictures
+					var flex_hidden_pics_el = document.createElement('div')
+
+					flex_hidden_pics_el.display = 'flex'
+
+					for (iPA = 0; iPA < curr_trial.new_pa_all_imgs.length; iPA++) {
+
+						let nPA = document.createElement('img')
+
+						nPA.src = curr_trial.new_pa_all_imgs[iPA]
+
+						nPA.style.height = '50px'
+						nPA.style.border = '1px solid black'
+						nPA.style.margin = '0px 2px 0px'
+
+						flex_hidden_pics_el.appendChild(nPA)
+					}
+
+					let board_specific_instructions = ''
+
+					if (next_condition == 'schema_c') {
+						board_specific_instructions = 'On this board, all the visible pictures will stay at the same location from one trial to another!'
+					} else if (next_condition == 'schema_ic') {
+						board_specific_instructions = 'IMPORTANT: On this board, the 6 locations where the visible pictures will show up will stay the same. However, which of the visible pictures shows up at which of the 6 locations will change from trial-to-trial! In other words, the visible pictures will keep swapping locations with each other! <br> The hidden pictures that you have to find will always stay in the same locations.'
+					} else if (next_condition == 'random_locations') {
+						board_specific_instructions = 'IMPORTANT: On this board, all 6 of the visible pictures will show up at completely random locations from trial-to-trial! So the 6 locations will keep changing on every trial. However, the hidden pictures that you have to find will remain in the same locations from trial-to-trial.'
+					} else if (next_condition == 'landmark_schema') {
+						board_specific_instructions = 'IMPORTANT: On this board, 4 out of 6 visible pictures will show up at completely random locations from trial-to-trial. 2 out of the 6 visible pictures will always stay at the same location. <br>The hidden pictures that you have to find will remain in the same locations from trial-to-trial.'
+					} else if (next_condition == 'no_schema') {
+						board_specific_instructions = 'IMPORTANT: On this board, there are NO visible pictures. All you have to do is find the hidden pictures.'
+					}
+
+					instructions_text = '<p>You will now learn location of hidden items on a new ' + jatos.studySessionData.inputData.all_sessions[curr_session][0].color + ' board that you can see below</p>' +
+					grid_border.innerHTML +
+						'<p><b>' + board_specific_instructions + '</b></p>' +
+						'<p>These will be the visible pictures you will see at the beginning and end of each trial:</p>' +
+						flex_visible_pics_el.innerHTML + 
+						'<p>These will be the 6 hidden pictures you will have to find!</p>' +
+						flex_hidden_pics_el.innerHTML + 
+						'<p>you will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' sessions, each session with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c*6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br> Click next to start learning!'
+
 				} else {
 					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_colors[previous_condition] + ' board. Once you are ready please move to the next session.'
 				}
-				
+
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
 
 			}
 
 			var instructions = {
-					type: 'instructions',
-					pages : [			
-						'<div class= "header">'+
-							'<h1> Break </h1>'+
-						'</div>'+	
-						'<div class="instruct">'+
-							'<p>' + instructions_text + '</p>' + 
-						'</div>',
-					],						
-					show_clickable_nav: true,
-					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
-				};
+				type: 'instructions',
+				pages: [
+					'<div class= "header">' +
+					'<h1> Break </h1>' +
+					'</div>' +
+					'<div class="instruct">' +
+					'<p>' + instructions_text + '</p>' +
+					'</div>',
+				],
+				show_clickable_nav: true,
+				button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+			};
+
+			// Preload
+			var preload = {
+				type: 'preload',
+				images: jatos.studySessionData.inputData.all_images
+			}
+			timeline.push(preload);
 
 			timeline.push(instructions);
 
 			jsPsych.init({
-				
+
 				timeline: timeline,
 
-				on_finish: function(data) {
+				on_finish: function (data) {
+
+					// Save results
 
 					// Make JATOS remember that this session was run
-                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
-                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
-                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+					jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
+					jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
-					jatos.submitResultData('[break_start_' + '---' + 
-					JSON.stringify(jatos.studySessionData) +
-					'---' + '_break_end]', 
-					function(){jatos.startComponentByPos(comp_to_start)});
+					jatos.submitResultData('[break_start_' + '---' +
+						JSON.stringify(jatos.studySessionData) +
+						'---' + '_break_end]',
+						function () { jatos.startComponentByPos(comp_to_start) });
 
 					// jsPsych.data.displayData();
 				}
@@ -101,4 +183,5 @@
 
 	</script>
 </body>
+
 </html>

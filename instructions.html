@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+    <title>Instructions</title>	
+	<script src="jspsych-6.3.1/jspsych.js" ></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-preload.js'></script>
+	<script src='./extra_functions/board_creator2.js'></script>
+	<script src="jatos.js"></script>
+	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
+  </head>
+
+  <body>
+  <script>
+
+	//start timeline
+	jatos.onLoad(function() {
+		
+		//make a timeline
+		let timeline =[];			 
+		let grid_size = 300
+		// Create the board element for instructions
+		// Create the board
+
+		var curr_trial = jatos.studySessionData.inputData.all_sessions[0][0]
+
+		var grid_border = board_creator2(
+			grid_size,
+			jatos.studySessionData.inputData.n_rows,
+			jatos.studySessionData.inputData.n_cols,
+			true,
+			false,
+			curr_trial
+			)
+
+		// Remove certain styles:
+		grid_border.children[0].style.removeProperty('transform')
+		grid_border.children[0].style.removeProperty('top')
+		grid_border.children[0].style.removeProperty('left')
+		grid_border.children[0].style.position = 'relative'
+		grid_border.children[0].style.margin = 'auto'
+
+
+		// Create a flexbox with the hidden pictures
+		var flex_hidden_pics_el = document.createElement('div')
+
+		flex_hidden_pics_el.display = 'flex'
+		
+		for (iPA=0; iPA<curr_trial.new_pa_all_imgs.length; iPA++){
+
+			let nPA = document.createElement('img')
+
+			nPA.src = curr_trial.new_pa_all_imgs[iPA]
+
+			nPA.style.height = '50px'
+			nPA.style.border = '1px solid black'
+			nPA.style.margin = '0px 2px 0px'
+
+			flex_hidden_pics_el.appendChild(nPA)
+		}
+
+		// Create the exmpty purple board
+		var grid_border_empty = board_creator2(
+			grid_size,
+			jatos.studySessionData.inputData.n_rows,
+			jatos.studySessionData.inputData.n_cols,
+			false,
+			false,
+			curr_trial
+			)
+
+		// Remove certain styles:
+		grid_border_empty.children[0].style.removeProperty('transform')
+		grid_border_empty.children[0].style.removeProperty('top')
+		grid_border_empty.children[0].style.removeProperty('left')
+		grid_border_empty.children[0].style.position = 'relative'
+		grid_border_empty.children[0].style.margin = 'auto'
+
+		// Create the board with visible and 1 hidden item
+		var grid_border_fb = board_creator2(
+			grid_size,
+			jatos.studySessionData.inputData.n_rows,
+			jatos.studySessionData.inputData.n_cols,
+			true,
+			false,
+			curr_trial
+			)
+
+		// Remove certain styles:
+		grid_border_fb.children[0].style.removeProperty('transform')
+		grid_border_fb.children[0].style.removeProperty('top')
+		grid_border_fb.children[0].style.removeProperty('left')
+		grid_border_fb.children[0].style.position = 'relative'
+		grid_border_fb.children[0].style.margin = 'auto'		
+
+		grid_border_fb.children[0].querySelector('#newPA_1').style.visibility = 'visible'
+
+		// Define pages for phase 1
+		let instruction_pages = [			
+			'<div class= "header">'+
+				'<h1> Instructions </h1>'+
+			'</div>'+	
+			'<div class="instruct">'+
+				'<p>Welcome to the experiment!</p>' + 
+				'<p>In this experiment, you will learn locations of pictures that are hidden on virtual boards.</p>' +
+				'<p>For example, the purple board you see below contains 6 visible pictures</p>' + grid_border.innerHTML + 
+				'<p><br>Your task will be to find additional 3 hidden pictures that are located somewhere on this board!</p>' +
+				'<p><b>Hidden pictures:</b></p>' +
+				flex_hidden_pics_el.innerHTML +
+			'</div>',
+			'<div class= "header">'+
+				'<h1> Instructions </h1>'+
+			'</div>'+	
+			'<div class="instruct">'+
+
+				'<p>On each trial, you will see the purple board with all the visible pictures.</p>' + 
+				grid_border.innerHTML + 
+				'<p>Then, you will be told which of the 3 hidden pictures you must locate on the board. For example:</p>' + 
+				'<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:50px;"></img>' +
+				'<p>Following this, you will see the purple board empty, without visible pictures, and you will have to indicate with your mouse click where you think the hidden picture is located</p>' +
+				grid_border_empty.innerHTML + 
+				'<p>Finally, after you make your response, you will get feedback on whether you were correct or not. All the visible pictures will reappear, and the hidden picture will appear at its correct location.</p>' +
+				grid_border_fb.innerHTML +
+				'<p><br>Click next to do a few practice trials with this purple board!</p>' + 
+			'</div>'
+		];
+
+		let instructions = {
+			type: 'instructions',
+			pages : instruction_pages,						
+			show_clickable_nav: true,
+			button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+		};		
+
+		// Preload
+		var preload = {
+			type: 'preload',
+			images: jatos.studySessionData.inputData.all_images
+		}
+		timeline.push(preload);
+
+		timeline.push(instructions);
+
+
+		jsPsych.init({
+			timeline: timeline,
+
+			on_finish: function(data){
+
+				// Make JATOS remember that this session was run
+				jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+				jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+				jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+				// debugger
+				// Record results
+				jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
+
+				let comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
+
+				jatos.submitResultData('[instructions_start---' + 
+				JSON.stringify(jatos.studySessionData) +
+				'---instructions_end]', 
+				function(){jatos.startComponentByPos(comp_to_start)});
+
+			}
+		})
+
+
+	});
+
+
+	</script>
+</body>
+</html>

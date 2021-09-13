@@ -7,6 +7,7 @@
 	<title>Break</title>
 	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
+	<script src='./jspsych-6.3.1/plugins/jspsych-survey-text.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-button-response.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-preload.js'></script>
@@ -23,8 +24,9 @@
 
 		//start timeline
 		jatos.onLoad(function () {
-			
+
 			let comp_to_start = []
+			let ask_questions = true
 
 			//make a timeline
 			let timeline = [];
@@ -38,6 +40,7 @@
 				instructions_text = 'Thank you! You have finished the experiment. Please complete a short debriefing.'
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.debriefing2
+				ask_questions = false
 
 			} else {
 
@@ -76,10 +79,11 @@
 						let nPA = document.createElement('img')
 
 						nPA.src = curr_trial.schema_pa_imgs[iPA]
+						nPA.className = 'breakPA'
 
-						nPA.style.height = '50px'
-						nPA.style.border = '1px solid black'
-						nPA.style.margin = '0px 2px 0px'
+						// nPA.style.height = '60px'
+						// nPA.style.border = '1px solid black'
+						// nPA.style.margin = '0px 2px 0px'
 
 						flex_visible_pics_el.appendChild(nPA)
 					}
@@ -94,10 +98,11 @@
 						let nPA = document.createElement('img')
 
 						nPA.src = curr_trial.new_pa_all_imgs[iPA]
+						nPA.className = 'breakPA'
 
-						nPA.style.height = '50px'
-						nPA.style.border = '1px solid black'
-						nPA.style.margin = '0px 2px 0px'
+						// nPA.style.height = '50px'
+						// nPA.style.border = '1px solid black'
+						// nPA.style.margin = '0px 2px 0px'
 
 						flex_hidden_pics_el.appendChild(nPA)
 					}
@@ -116,36 +121,59 @@
 						board_specific_instructions = 'IMPORTANT: On this board, there are NO visible pictures. All you have to do is find the hidden pictures.'
 					}
 
-					instructions_text = '<p>You will now learn location of hidden items on a new ' + jatos.studySessionData.inputData.all_sessions[curr_session][0].color + ' board that you can see below</p>' +
-					grid_border.innerHTML +
+					instructions_text = '<p>You will now learn locations of hidden items on a new ' + jatos.studySessionData.inputData.all_sessions[curr_session][0].color + ' board that you can see below</p>' +
+						grid_border.innerHTML +
 						'<p><b>' + board_specific_instructions + '</b></p>' +
-						'<p>These will be the visible pictures you will see at the beginning and end of each trial:</p>' +
-						flex_visible_pics_el.innerHTML + 
+						'<p>These will be the 6 visible pictures you will see at the beginning and end of each trial:</p>' +
+						flex_visible_pics_el.innerHTML +
 						'<p>These will be the 6 hidden pictures you will have to find!</p>' +
-						flex_hidden_pics_el.innerHTML + 
-						'<p>you will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' sessions, each session with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c*6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br> Click next to start learning!'
+						flex_hidden_pics_el.innerHTML +
+						'<p>you will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' sessions, each session with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c * 6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br>' +
+						'Before you start, please write down the names of the objects in the pictures above. Then, click "Continue" to begin!'
 
 				} else {
 					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_colors[previous_condition] + ' board. Once you are ready please move to the next session.'
+
+					ask_questions = false
 				}
 
 				comp_to_start = jatos.studySessionData.inputData.component_positions.session_pa2
 
 			}
 
-			var instructions = {
-				type: 'instructions',
-				pages: [
-					'<div class= "header">' +
-					'<h1> Break </h1>' +
-					'</div>' +
-					'<div class="instruct">' +
-					'<p>' + instructions_text + '</p>' +
-					'</div>',
-				],
-				show_clickable_nav: true,
-				button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
-			};
+
+			if (ask_questions) {
+				var instructions = {
+					type: 'survey-text',
+					questions: [
+						{ prompt: 'Visible pictures</b>:', rows: 6, columns: 50, required: true },
+						{ prompt: 'Hidden pictures</b>:', rows: 6, columns: 50, required: true },
+					],
+					preamble: '<div class= "header">' +
+						'<h1> Break </h1>' +
+						'</div>' +
+						'<div class="instruct">' +
+						'<p>' + instructions_text + '</p>' +
+						'</div>',
+					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+					data: { test_part: 'break' }
+				};
+
+			} else {
+				var instructions = {
+					type: 'instructions',
+					pages: [
+						'<div class= "header">' +
+						'<h1> Break </h1>' +
+						'</div>' +
+						'<div class="instruct">' +
+						'<p>' + instructions_text + '</p>' +
+						'</div>',
+					],
+					show_clickable_nav: true,
+					button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+				};
+			}
 
 			// Preload
 			var preload = {

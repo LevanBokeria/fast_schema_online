@@ -43,8 +43,6 @@ ul {
 /* For the text inside the score box, font size must be smaller, to fit within the scorebox. */
 #grid-box {
     display: grid;
-    /* border: 2px solid #444; */
-    /* grid-gap: 2px 2px; */
 }
 
 /* .cells {

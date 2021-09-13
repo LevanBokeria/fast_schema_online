@@ -26,7 +26,8 @@ function board_creator2(board_size_px,
         'grid-template-columns: repeat('+n_cols+', 1fr);' +
         'grid-template-rows: repeat('+n_rows+', 1fr);' +
         // 'border: 10px solid ' + curr_trial.color + ';' + 
-        'background-color: white;' + 
+        'background-color: '+ curr_trial.color +';' + 
+        // 'opacity: 0.4;' +
         'position: absolute;' +
         'top: 50%;' + 
         'left: 50%;' + 
@@ -42,9 +43,9 @@ function board_creator2(board_size_px,
         iCell.className = 'cells'
         iCell.id = 'cell_r_' + (ir+1) + '_c_' + (ic+1)
 
-        iCell.style = 
-          'background-color: '+ curr_trial.color +';' +
-          'opacity: 0.4;'
+        // iCell.style = 
+        //   'background-color: '+ curr_trial.color +';'
+          // 'opacity: 0.4;'
           // 'border-right: 3px solid ' + curr_trial.color + ';' +
           // 'border-bottom: 3px solid ' + curr_trial.color + ';'
 
@@ -55,17 +56,17 @@ function board_creator2(board_size_px,
 
     if (show_schema_pas) {
       var schema_pa_visibility_status = 'visible'
-      var schema_pa_opacity = 1
+      // var schema_pa_opacity = 1
     } else {
       var schema_pa_visibility_status = 'hidden'
-      var schema_pa_opacity = 0.4
+      // var schema_pa_opacity = 0.4
     }
     if (show_new_pas) {
       var new_pa_visibility_status = 'visible'
-      var schema_pa_opacity = 1
+      // var schema_pa_opacity = 1
     } else {
       var new_pa_visibility_status = 'hidden'
-      var new_pa_opacity = 0.4
+      // var new_pa_opacity = 0.4
     }    
       
 
@@ -87,7 +88,7 @@ function board_creator2(board_size_px,
       let nth_child_idx = (i_row-1)*n_cols + i_col
       
       let iCell = grid_box.children[nth_child_idx-1]
-      iCell.style.opacity = schema_pa_opacity
+      // iCell.style.opacity = schema_pa_opacity
 
       iCell.appendChild(iEl)
 
@@ -112,7 +113,7 @@ function board_creator2(board_size_px,
       let nth_child_idx = (i_row-1)*n_cols + i_col
       
       let iCell = grid_box.children[nth_child_idx-1]
-      iCell.style.opacity = new_pa_opacity
+      // iCell.style.opacity = new_pa_opacity
       iCell.appendChild(iEl)
 
     }

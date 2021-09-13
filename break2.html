@@ -121,7 +121,7 @@
 						board_specific_instructions = 'IMPORTANT: On this board, there are NO visible pictures. All you have to do is find the hidden pictures.'
 					}
 
-					instructions_text = '<p>You will now learn locations of hidden items on a new ' + jatos.studySessionData.inputData.all_sessions[curr_session][0].color + ' board that you can see below</p>' +
+					instructions_text = '<p>You will now learn locations of hidden items on a new ' + jatos.studySessionData.inputData.all_sessions[curr_session][0].color_name + ' board that you can see below</p>' +
 						grid_border.innerHTML +
 						'<p><b>' + board_specific_instructions + '</b></p>' +
 						'<p>These will be the 6 visible pictures you will see at the beginning and end of each trial:</p>' +
@@ -132,7 +132,7 @@
 						'Before you start, please write down the names of the objects in the pictures above. Then, click "Continue" to begin!'
 
 				} else {
-					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_colors[previous_condition] + ' board. Once you are ready please move to the next session.'
+					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_color_names[previous_condition] + ' board. Once you are ready please move to the next session.'
 
 					ask_questions = false
 				}

@@ -48,6 +48,7 @@
             n_cols: 12,
             condition_colors: {
                 practice: 'rgb(138, 43, 226)',
+                practice2: 'rgb(219,112,147)',
                 schema_c: 'rgb(0, 100, 255)',
                 schema_ic: '#228B22',
                 landmark_schema: '#B22222',
@@ -56,6 +57,7 @@
             },
             condition_color_names: {
                 practice: 'purple',
+                practice2: 'pink',
                 schema_c: 'blue',
                 schema_ic: 'green',
                 landmark_schema: 'red',
@@ -64,6 +66,7 @@
             },
             condition_border_patterns: {
                 practice: 'triangles',
+                practice2: 'unknown',
                 schema_c: 'circles',
                 schema_ic: 'diamonds',
                 random_locations: 'bullseye_larger',
@@ -72,6 +75,7 @@
             },
             condition_ses_counters: {
                 practice: 0,
+                practice2: 0,
                 schema_ic: 0,
                 schema_c: 0,
                 landmark_schema: 0,
@@ -430,6 +434,7 @@
         } else if (debugMode) {
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
+                practice2: 1,
                 schema_c: 2,
                 schema_ic: 2,
                 landmark_schema: 2,
@@ -439,6 +444,7 @@
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 1,
+                practice2: 1,
                 schema_c: 1,
                 schema_ic: 1,
                 landmark_schema: 1,
@@ -475,6 +481,7 @@
 
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
+                practice2: 1,
                 schema_c: 2,
                 schema_ic: 2,
                 landmark_schema: 2,
@@ -484,6 +491,7 @@
 
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 2,
+                practice2: 2,
                 schema_c: 4,
                 schema_ic: 4,
                 landmark_schema: 4,
@@ -533,6 +541,7 @@
                     // debugger
                     jatos.studySessionData.inputData.n_ses_per_condition = {
                         practice: 1,
+                        practice2: 1,
                         schema_c: results[0].response,
                         schema_ic: results[0].response,
                         landmark_schema: results[0].response,
@@ -542,6 +551,7 @@
 
                     jatos.studySessionData.inputData.n_trials_per_pa = {
                         practice: 2,
+                        practice2: 2,
                         schema_c: results[1].response,
                         schema_ic: results[1].response,
                         landmark_schema: results[1].response,

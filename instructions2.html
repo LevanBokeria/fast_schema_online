@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-	<title>Instructions</title>
+	<title>Instructions 2</title>
 	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
@@ -30,7 +30,7 @@
 			// Create the board element for instructions
 			// Create the board
 
-			var curr_trial = jatos.studySessionData.inputData.all_sessions[0][0]
+			var curr_trial = jatos.studySessionData.inputData.all_sessions[1][0]
 
 			var grid_border = board_creator2(
 				grid_size,
@@ -67,41 +67,25 @@
 				flex_hidden_pics_el.appendChild(nPA)
 			}
 
-			// Create the exmpty purple board
-			var grid_border_empty = board_creator2(
-				grid_size,
-				jatos.studySessionData.inputData.n_rows,
-				jatos.studySessionData.inputData.n_cols,
-				false,
-				false,
-				curr_trial
-			)
+			// Create the board with moved items
 
-			// Remove certain styles:
-			grid_border_empty.children[0].style.removeProperty('transform')
-			grid_border_empty.children[0].style.removeProperty('top')
-			grid_border_empty.children[0].style.removeProperty('left')
-			grid_border_empty.children[0].style.position = 'relative'
-			grid_border_empty.children[0].style.margin = 'auto'
+            var next_trial = jatos.studySessionData.inputData.all_sessions[1][1]
 
-			// Create the board with visible and 1 hidden item
-			var grid_border_fb = board_creator2(
+			var grid_border_moved_items = board_creator2(
 				grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
 				true,
 				false,
-				curr_trial
+				next_trial
 			)
 
 			// Remove certain styles:
-			grid_border_fb.children[0].style.removeProperty('transform')
-			grid_border_fb.children[0].style.removeProperty('top')
-			grid_border_fb.children[0].style.removeProperty('left')
-			grid_border_fb.children[0].style.position = 'relative'
-			grid_border_fb.children[0].style.margin = 'auto'
-
-			grid_border_fb.children[0].querySelector('#newPA_1').style.visibility = 'visible'
+			grid_border_moved_items.children[0].style.removeProperty('transform')
+			grid_border_moved_items.children[0].style.removeProperty('top')
+			grid_border_moved_items.children[0].style.removeProperty('left')
+			grid_border_moved_items.children[0].style.position = 'relative'
+			grid_border_moved_items.children[0].style.margin = 'auto'
 
 			// Define pages for phase 1
 			let instruction_pages = [
@@ -109,46 +93,37 @@
 				'<h1> Instructions </h1>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>Welcome to the experiment!</p>' +
-				'<p>In this experiment, you will learn locations of pictures that are hidden on virtual boards.</p>' +
-				'<p>For example, the purple board you see below contains 6 visible pictures</p>' + grid_border.innerHTML +
-				'<p><br>Your task will be to find additional 3 hidden pictures that are located somewhere on this board!</p>' +
+				'<p>Practice trials with a different board:</p>' +
+				'<p>In the real experiment, you will have to find hidden pictures on 5 different boards.</p>' +
+                '<br>' +
+                '<p>On some of these boards, the visible items will always stay fixed inside the board, like you saw for the purple board.</p>' +
+                '<p><b>However, for some other boards, the visible items might change their locations within the board!</b></p>' +
+                '<p>Some of the visible items might stay fixed, while others might move. Some might swap places with another visible item.</p>',
+
+				'<h1> Instructions </h1>' +
+				'</div>' +
+				'<div class="instruct">' +
+				'<p>For example, on one trial, this pink board will be shown with its visible items like this: </p>' + grid_border.innerHTML +
+				'<p><br>Your task is still to find the hidden items on the board.</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
 				'</div>',
 
 				'<div class= "header">' +
 				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 1:<h2>' +
 				'</div>' +
 				'<div class="instruct">' +
 
-				'<p>At the beginning of each trial, you will see the board on the screen with all the visible pictures.</p>' +
-				'<p>The board will stay on the screen for ' + (jatos.studySessionData.inputData.schema_display_duration / 1000) + ' seconds.</p>' +
-				grid_border.innerHTML,
+				'<p>But on the next trial, the visible items might have moved, like this:</p>' + grid_border_moved_items.innerHTML +
+                '<p>You can see that one of the visible items stayed in the same location, while all the others moved.</p>',
 
 				'<div class= "header">' +
 				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 2:<h2>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>Then, the board will disappear and you will be told which of the 3 hidden pictures you must locate on the board. For example:</p>' +
-				'<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:50px;"></img>',
-				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 3:<h2>' +
-				'</div>' +
-				'<div class="instruct">' +
-				'<p>Following this, you will see the purple board empty, without visible pictures, and you will have to indicate with your mouse click where you think the hidden picture is located</p>' +
-				'<p>You will have ' + (jatos.studySessionData.inputData.response_window_duration/1000) + ' seconds to make your choice.</p>' +
-				grid_border_empty.innerHTML,
-				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 4:<h2>' +
-				'</div>' +				
-				'<p>Finally, after you make your response, you will get feedback on whether you were correct or not. All the visible pictures will reappear, and the hidden picture will appear at its correct location.</p>' +
-				grid_border_fb.innerHTML +
-				'<p><br>Click next to do a few practice trials with this purple board!</p>' +
+				'<p>Remember, your task is always just to find the hidden items, which will never change locations:</p>' +
+                '<br>' +
+				'<p>Click next to do a few practice trials with this pink board!</p>' +
 				'</div>'
 			];
 

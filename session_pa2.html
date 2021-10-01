@@ -20,7 +20,7 @@
     <script>
 
         jatos.onLoad(function() {
-
+            debugger
             // iterate the session
             jatos.studySessionData.inputData.curr_session ++
             let curr_session = jatos.studySessionData.inputData.curr_session
@@ -136,7 +136,7 @@
                     // Which comp to start
                     let comp_to_start
                     
-                    if (jatos.studySessionData.inputData.curr_session == 1){
+                    if (jatos.studySessionData.inputData.curr_session <= 2){
                         // Start post practice component
                         comp_to_start = jatos.studySessionData.inputData.component_positions.post_practice
                     } else {

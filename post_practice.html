@@ -26,11 +26,17 @@
 
 			let instructions_text = []
 
+			let second_button_text = []
+
 			if (jatos.studySessionData.inputData.condition_ses_counters.practice2 == 0){
 
 				// So first part of practice is done
 				instructions_text = '<p>Great! Those were the practice trials with the purple board. If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the purple board.</p>' +
-				'<p>Otherwise, please continue to another practice round with a pink board. On this pink board, the visible pictures might move from trial-to-trial!</p>'
+				'<p>Otherwise, please continue to <b>another practice round with a pink board.</b></p>' +
+				'<p>On this pink board, the visible pictures might move from trial-to-trial!</p>'
+
+				second_button_text = 'Practice round #2'
+
 			} else if (jatos.studySessionData.inputData.condition_ses_counters.practice2 == 1){
 
 				// So we've finished practice part 2 
@@ -38,13 +44,15 @@
 				'<p>Otherwise, please continue to the main experiment!</p>' +
 				'<p><br>In the main experiment, you will learn locations of hidden pictures on 5 different boards, one after another.</p>' + 
 				'<p>Each board will have 6 visible pictures and 6 hidden pictures</p>'
+
+				second_button_text = 'Start the experiment!'
 			}
 			
 			// Give a choice to redo practice trials
 			var instructions = {
 				type: 'html-button-response',
 				stimulus: instructions_text,
-				choices: ['Repeat instructions and practice trials', 'Continue to the experiment!'],
+				choices: ['Repeat instructions and practice trials', second_button_text],
 			};
 
 			timeline.push(instructions);
@@ -54,12 +62,12 @@
 				timeline: timeline,
 
 				on_finish: function(data) {
+					debugger
+					var results = jsPsych.data.get().values()
 
 					// If it was post-practice, then see if they wanna redo practice
 					if (jatos.studySessionData.inputData.curr_session == 1){
 						
-						var results = jsPsych.data.get().values()
-
 						if (results[0].response == 0){
 							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions 
 
@@ -67,10 +75,25 @@
 							jatos.studySessionData.inputData.curr_session = 0
 
 						} else {
-							comp_to_start = jatos.studySessionData.inputData.component_positions.break2
+							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions2
 						}
 
 					}
+
+					// If it was post-practice, then see if they wanna redo practice
+					if (jatos.studySessionData.inputData.curr_session == 2){
+						
+						if (results[0].response == 0){
+							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions2 
+
+							// Reset the session counter
+							jatos.studySessionData.inputData.curr_session = 1
+
+						} else {
+							comp_to_start = jatos.studySessionData.inputData.component_positions.break2
+						}
+
+					}					
 
 					// Make JATOS remember that this session was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;

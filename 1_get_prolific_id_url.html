@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Get Prolific ID</title>
+    <script src="./extra_functions/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="jatos.js"></script>
+</head>
+
+<body style="background-color:#b9c6c7;">
+
+    <div align="center"
+        style="display: flex; flex-direction: column; margin: auto; flex: 1 1 100%; width: 90%; height: 90%;">
+        <div id="prolific_div"
+            style="visibility:hidden; font-family: 'Open Sans', 'Arial', sans-serif; font-size: 150%; line-height: 1.2em;">
+            <br><br><br>
+            <p style="font-family: 'Open Sans', 'Arial', sans-serif; line-height: 1.6em; vertical-align:middle">Please
+                enter your prolific ID (you can copy&amp;paste from the prolific website) and press ENTER: <textarea
+                    id="prolific_id" rows="1" cols="20"
+                    style="vertical-align:middle; font-size: 18px; line-height: 1.5em;"></textarea></p>
+        </div>
+        <div id="error_msg" style="font-family: 'Open Sans', 'Arial', sans-serif; font-size: 150%; line-height: 1.2em;">
+        </div>
+    </div>
+</body>
+
+<script>
+
+    // var mw = 730;
+    // var mh = 740;
+    var mw = 400;
+    var mh = 400; 
+
+    jatos.onLoad(function () {
+
+        // Create a variable to hold all the results from components. For some of the components, the keys will be created at the time
+        jatos.studySessionData.inputData = {}
+        jatos.studySessionData.outputData = {
+            consent_results: [],
+            browser_device_test_results: [],
+            practice: [],
+            exposure: [],
+            pre_exposure: [],
+            post_exposure: [],
+        }
+
+        // Enter PID automatically or manually? Auto for debug
+        let autoPID = jatos.componentJsonInput.autoPID
+
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        // Make JATOS remember that this session was run
+        jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
+        jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+        jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+        // Timer to check if the window is large enough
+        var interval = setInterval(function () {
+
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+
+            if (w < mw || h < mh) {
+                $("#error_msg").html('<p>Your browser window is too small to complete this experiment. ' +
+                    'Please maximize the size of your browser window. If your browser window is already maximized, try entering the fullscreen mode. ' +
+                    'If that does not help either, you will not be able to complete this experiment.</p>' +
+                    '<p>The minimum width is ' + mw + 'px. Your current width is ' + w + 'px.</p>' +
+                    '<p>The minimum height is ' + mh + 'px. Your current height is ' + h + 'px.</p>');
+            } else {
+
+                clearInterval(interval);
+                document.getElementById("error_msg").style.visibility = "hidden";
+
+                jatos.studySessionData.window_width = window.innerWidth
+                jatos.studySessionData.window_height = window.innerHeight
+
+                // Gets the pID from the query line and uses that if it's defined
+                var query_pID = jatos.urlQueryParameters.PROLIFIC_PID;
+
+                if (typeof query_pID != 'undefined') {
+
+                    // So we got it from the URL, save it normally
+                    jatos.studySessionData.prolific_ID = query_pID
+                    jatos.studySessionData.pid_source = 'url'
+
+
+                    jatos.submitResultData("[get_pid_comp_start---" +
+                        JSON.stringify(jatos.studySessionData) +
+                        "---get_pid_comp_end]", function(){jatos.startComponentByPos(8)});
+
+                } else {
+
+                    // Check if autoPID
+                    if (autoPID) {
+                        jatos.studySessionData.prolific_ID = "test"
+                        jatos.studySessionData.pid_source = 'auto'
+
+                        jatos.submitResultData("[get_pid_comp_start---" +
+                            JSON.stringify(jatos.studySessionData) +
+                            "---get_pid_comp_end]", function(){jatos.startComponentByPos(8)});
+
+                    } else {
+
+                        // Ask with a box for an input
+                        document.getElementById("error_msg").style.visibility = "hidden";
+                        document.getElementById("prolific_div").style.visibility = "visible";
+
+                        $("#prolific_id").keypress(function (e) {
+                            if (e.which == 13) {
+                                e.preventDefault();
+                                jatos.studySessionData.prolific_ID = $("#prolific_id").val();
+
+                                jatos.submitResultData("[get_pid_comp_start---" +
+                                    JSON.stringify(jatos.studySessionData) +
+                                    "---get_pid_comp_end]", function(){jatos.startComponentByPos(8)});
+
+
+                            }
+                        });
+                    }
+                }
+
+            }
+        }, 100);
+    });
+</script>

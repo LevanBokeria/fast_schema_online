@@ -25,16 +25,14 @@
             var general_questions_page = {
                 type: 'survey-text',
                 questions: [
+                    {prompt: 'Were the instructions clear for all stages of the experiment? If not, how could we clarify them?', rows: 3, columns: 100},                   
                     {prompt: 'Did you notice that on the blue board, the visible pictures stayed at the same locations on every trial?', rows: 3, columns: 100}, 
                     {prompt: 'Did you notice that on the green board, the visible pictures swapped locations with each other on every trial?', rows: 3, columns: 100}, 
                     {prompt: 'Did you notice that on the red board, 2 of the 6 visible pictures stayed at the same locations, while 4 others moved randomly trial-to-trial?', rows: 3, columns: 100}, 
                     {prompt: 'Did you notice that on the yellow board, the visible pictures all moved randomly trial-to-trial?', rows: 3, columns: 100}, 
                     {prompt: 'When learning the location of hidden pictures, did you have any strategy? Did that differ for different boards?', rows: 3, columns: 100},
-                    {prompt: 'When learning the location of hidden pictures, did you feel like you used the visible pictures to help remember locations of hidden pictures?', rows: 3, columns: 100},                    
-                    {prompt: 'Was it harder/easier to learn the locations of hidden pictures that were close to a border of a board?', rows: 3, columns: 100},
-                    {prompt: 'Was it harder/easier to learn the locations of hidden pictures that were close to the center of a board?', rows: 3, columns: 100},
-                    {prompt: 'Should we shorten/lengthen either the (i) duration you see the visible pictures at the start of a trial, (ii) response window, (iii) feedback duration?', rows: 3, columns: 100},
-                    {prompt: 'Any other feedback? Any way to improve?', rows: 3, columns: 100}
+                    {prompt: 'When learning locations of hidden pictures, did the visible pictures help or hinder you? Did that depend on which board you were learning on?', rows: 3, columns: 100},  
+                    {prompt: 'Any other feedback on how we could improve the experiment?', rows: 3, columns: 100}
                     ],
                 button_label: 'Finish',
                 preamble: '<p style="font-size: 30px;"><b>Please answer the following questions:</b></p>',

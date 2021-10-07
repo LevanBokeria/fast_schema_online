@@ -75,7 +75,7 @@ function trial_creator2(all_conditions) {
                                     }
 
                                     if (cond_sat == true) {
-                                        console.log(iDist)
+                                        // console.log(iDist)
                                         // debugger
                                     }
 

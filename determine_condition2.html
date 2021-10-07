@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Determine condition2</title>
-        <script src='jatos.js'></script>
-        <script src='./jspsych-6.3.1/jspsych.js'></script>        
-        <script src='./extra_functions/lodash.js'></script>
-        <script src='./extra_functions/jspsych-playground2.js'></script>
-        <script src='./extra_functions/trial_creator2.js'></script>
-        <script src='./extra_functions/math.js'></script>
-        <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
-        <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
-        <script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
-        <script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
-        <script src='./jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js'></script>
-        <script src="./extra_functions/board_creator2.js"></script>
-        <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'></link>
-        <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'></link>
-    </head>
-    <body></body>
-    <script>
 
-    jatos.onLoad(function() {
-        
+<head>
+    <title>Determine condition2</title>
+    <script src='jatos.js'></script>
+    <script src='./jspsych-6.3.1/jspsych.js'></script>
+    <script src='./extra_functions/lodash.js'></script>
+    <script src='./extra_functions/jspsych-playground2.js'></script>
+    <script src='./extra_functions/trial_creator2.js'></script>
+    <script src='./extra_functions/math.js'></script>
+    <script src='./extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
+    <script src="./jspsych-6.3.1/plugins/jspsych-serial-reaction-time-mouse.js"></script>
+    <script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
+    <script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
+    <script src='./jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js'></script>
+    <script src="./extra_functions/board_creator2.js"></script>
+    <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'>
+    </link>
+    <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'>
+    </link>
+</head>
+
+<body></body>
+<script>
+
+    jatos.onLoad(function () {
+
         // Define all the conditions here ///////////////////////////////////////////////////////////
         var timeline = []
+
+        jatos.studySessionData.batchSessionUpdated = []
+        var condition_chosen = []
+        var order_of_conditions = []
+        var cond_to_run = {}
 
         jatos.studySessionData.outputData = {
             session_results_schema_display: [],
             session_results_new_pa_learning: [],
-            session_results_image_screen: []     
+            session_results_image_screen: []
         }
 
         jatos.studySessionData.inputData = {
             curr_session: 0,
             component_positions: {
                 instructions: 3,
-                session_pa: 4,            
-                break: 5,            
+                session_pa: 4,
+                break: 5,
                 data_submission: 6,
                 debriefing: 7,
                 session_pa2: 9,
@@ -53,7 +62,7 @@
                 schema_c: 'rgb(0, 100, 255)',
                 schema_ic: '#228B22',
                 landmark_schema: '#B22222',
-                random_locations: '#DAA520',            
+                random_locations: '#DAA520',
                 no_schema: '#40E0D0',
             },
             condition_color_names: {
@@ -62,7 +71,7 @@
                 schema_c: 'blue',
                 schema_ic: 'green',
                 landmark_schema: 'red',
-                random_locations: 'yellow',            
+                random_locations: 'yellow',
                 no_schema: 'cyan',
             },
             condition_border_patterns: {
@@ -84,359 +93,235 @@
                 no_schema: 0
             },
         }
-        
+
         jatos.studySessionData.inputData.arrangement_coords = {
             arr_pair_1: {
                 arr_pair_1_1: [
-                            [6,3],
-                            [9,4],
-                            [2,5],
-                            [7,7],
-                            [10,10],
-                            [5,11],
-                        ],
+                    [6, 3],
+                    [9, 4],
+                    [2, 5],
+                    [7, 7],
+                    [10, 10],
+                    [5, 11],
+                ],
                 arr_pair_1_2: [
-                            [6,4],
-                            [4,6],
-                            [10,7],
-                            [8,8],
-                            [3,9],
-                            [7,11]
-                    ],
+                    [6, 4],
+                    [4, 6],
+                    [10, 7],
+                    [8, 8],
+                    [3, 9],
+                    [7, 11]
+                ],
             },
             arr_pair_2: {
                 arr_pair_2_1: [
-                            [7,2],
-                            [10,3],
-                            [2,4],
-                            [6,6],
-                            [4,9],
-                            [9,10],                        
-                        ],
+                    [7, 2],
+                    [10, 3],
+                    [2, 4],
+                    [6, 6],
+                    [4, 9],
+                    [9, 10],
+                ],
                 arr_pair_2_2: [
-                            [8,4],
-                            [5,5],
-                            [10,6],
-                            [2,7],
-                            [9,9],
-                            [6,10],                        
-                        ],  
+                    [8, 4],
+                    [5, 5],
+                    [10, 6],
+                    [2, 7],
+                    [9, 9],
+                    [6, 10],
+                ],
             },
             arr_pair_3: {
                 arr_pair_3_1: [
-                            [3,3],
-                            [9,4],
-                            [5,6],
-                            [2,8],
-                            [11,8],
-                            [7,10],                        
-                        ],
+                    [3, 3],
+                    [9, 4],
+                    [5, 6],
+                    [2, 8],
+                    [11, 8],
+                    [7, 10],
+                ],
                 arr_pair_3_2: [
-                            [5,2],
-                            [6,5],
-                            [3,6],
-                            [8,7],
-                            [7,9],
-                            [4,10],                        
-                        ], 
+                    [5, 2],
+                    [6, 5],
+                    [3, 6],
+                    [8, 7],
+                    [7, 9],
+                    [4, 10],
+                ],
             },
             arr_pair_4: {
                 arr_pair_4_1: [
-                            [9,2],
-                            [4,3],
-                            [7,5],
-                            [2,6],
-                            [5,9],
-                            [10,10],                        
-                        ],
+                    [9, 2],
+                    [4, 3],
+                    [7, 5],
+                    [2, 6],
+                    [5, 9],
+                    [10, 10],
+                ],
                 arr_pair_4_2: [
-                            [4,4],
-                            [10,5],
-                            [6,6],
-                            [8,7],
-                            [2,9],
-                            [7,10],                        
-                        ], 
+                    [4, 4],
+                    [10, 5],
+                    [6, 6],
+                    [8, 7],
+                    [2, 9],
+                    [7, 10],
+                ],
             },
             arr_pair_5: {
                 arr_pair_5_1: [
-                            [5,3],
-                            [2,4],
-                            [8,5],
-                            [11,8],
-                            [6,9],
-                            [3,10],                        
-                        ],
+                    [5, 3],
+                    [2, 4],
+                    [8, 5],
+                    [11, 8],
+                    [6, 9],
+                    [3, 10],
+                ],
                 arr_pair_5_2: [
-                            [9,3],
-                            [5,4],
-                            [11,5],
-                            [7,6],
-                            [4,7],
-                            [9,10],                        
-                        ], 
-            },                           
+                    [9, 3],
+                    [5, 4],
+                    [11, 5],
+                    [7, 6],
+                    [4, 7],
+                    [9, 10],
+                ],
+            },
         }
 
         jatos.studySessionData.inputData.all_images = [
-        'img/targets/BOSS/downsized/8ball.jpg',
-        'img/targets/BOSS/downsized/accordion01.jpg',
-        'img/targets/BOSS/downsized/aceofdiamond.jpg',
-        'img/targets/BOSS/downsized/acorn.jpg',
-        'img/targets/BOSS/downsized/acousticguitar02.jpg',
-        'img/targets/BOSS/downsized/addressplate.jpg',
-        'img/targets/BOSS/downsized/africanelephant.jpg',
-        'img/targets/BOSS/downsized/aloe01.jpg',
-        'img/targets/BOSS/downsized/americangoldfinch.jpg',
-        'img/targets/BOSS/downsized/anchor.jpg',
-        'img/targets/BOSS/downsized/ant.jpg',
-        'img/targets/BOSS/downsized/antlers.jpg',
-        'img/targets/BOSS/downsized/armchair02.jpg',
-        'img/targets/BOSS/downsized/artichoke01b.jpg',
-        'img/targets/BOSS/downsized/badmintonracket.jpg',
-        'img/targets/BOSS/downsized/ballofstring.jpg',
-        'img/targets/BOSS/downsized/barbecuelighter.jpg',
-        'img/targets/BOSS/downsized/barnowl.jpg',
-        'img/targets/BOSS/downsized/barrel01.jpg',
-        'img/targets/BOSS/downsized/baseballglove.jpg',
-        'img/targets/BOSS/downsized/basketball01.jpg',
-        'img/targets/BOSS/downsized/bassethound.jpg',
-        'img/targets/BOSS/downsized/battleaxe.jpg',
-        'img/targets/BOSS/downsized/beachpaddle01a.jpg',
-        'img/targets/BOSS/downsized/beachumbrella01.jpg',
-        'img/targets/BOSS/downsized/bed.jpg',
-        'img/targets/BOSS/downsized/beerbottle.jpg',
-        'img/targets/BOSS/downsized/belltower01.jpg',
-        'img/targets/BOSS/downsized/bench01.jpg',
-        'img/targets/BOSS/downsized/bicycle.jpg',
-        'img/targets/BOSS/downsized/bikepump01.jpg',
-        'img/targets/BOSS/downsized/birdhouse.jpg',
-        'img/targets/BOSS/downsized/birdnest.jpg',
-        'img/targets/BOSS/downsized/blackbear.jpg',
-        'img/targets/BOSS/downsized/bluecheese.jpg',
-        'img/targets/BOSS/downsized/bolt01a.jpg',
-        'img/targets/BOSS/downsized/bookshelf.jpg',
-        'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
-        'img/targets/BOSS/downsized/bow.jpg',
-        'img/targets/BOSS/downsized/bowlingball.jpg',
-        'img/targets/BOSS/downsized/bowlingpin.jpg',
-        'img/targets/BOSS/downsized/bowtie.jpg',
-        'img/targets/BOSS/downsized/boxingglove01.jpg',
-        'img/targets/BOSS/downsized/boxtruck.jpg',
-        'img/targets/BOSS/downsized/broadsword.jpg',
-        'img/targets/BOSS/downsized/buffaloskull.jpg',
-        'img/targets/BOSS/downsized/bulldozer.jpg',
-        'img/targets/BOSS/downsized/bullet.jpg',
-        'img/targets/BOSS/downsized/bulletbelt.jpg',
-        'img/targets/BOSS/downsized/bun.jpg',
-        'img/targets/BOSS/downsized/butterfly.jpg',
-        'img/targets/BOSS/downsized/cactus.jpg',
-        'img/targets/BOSS/downsized/callbell.jpg',
-        'img/targets/BOSS/downsized/campfire.jpg',
-        'img/targets/BOSS/downsized/candelabra.jpg',
-        'img/targets/BOSS/downsized/candycane01a.jpg',
-        'img/targets/BOSS/downsized/car.jpg',
-        'img/targets/BOSS/downsized/caribou02.jpg',
-        'img/targets/BOSS/downsized/carsidemirror01.jpg',
-        'img/targets/BOSS/downsized/cartonofeggs.jpg',
-        'img/targets/BOSS/downsized/casabamelon.jpg',
-        'img/targets/BOSS/downsized/castle.jpg',
-        'img/targets/BOSS/downsized/cat.jpg',
-        'img/targets/BOSS/downsized/centurionhelmet.jpg',
-        'img/targets/BOSS/downsized/chainsaw.jpg',
-        'img/targets/BOSS/downsized/chair.jpg',
-        'img/targets/BOSS/downsized/chameleon.jpg',
-        'img/targets/BOSS/downsized/chandelier.jpg',
-        'img/targets/BOSS/downsized/cheetah.jpg',
-        'img/targets/BOSS/downsized/cherrytomato01.jpg',
-        'img/targets/BOSS/downsized/chessknight03a.jpg',
-        'img/targets/BOSS/downsized/chimney.jpg',
-        'img/targets/BOSS/downsized/chipmunk.jpg',
-        'img/targets/BOSS/downsized/christmastree.jpg',
-        'img/targets/BOSS/downsized/cinderblock.jpg',
-        'img/targets/BOSS/downsized/clover.jpg',
-        'img/targets/BOSS/downsized/clownfish.jpg',
-        'img/targets/BOSS/downsized/coffeemaker.jpg',
-        'img/targets/BOSS/downsized/cookingpot.jpg',
-        'img/targets/BOSS/downsized/corn02.jpg',
-        'img/targets/BOSS/downsized/cornet.jpg',
+            'img/targets/BOSS/downsized/8ball.jpg',
+            'img/targets/BOSS/downsized/accordion01.jpg',
+            'img/targets/BOSS/downsized/aceofdiamond.jpg',
+            'img/targets/BOSS/downsized/acorn.jpg',
+            'img/targets/BOSS/downsized/acousticguitar02.jpg',
+            'img/targets/BOSS/downsized/addressplate.jpg',
+            'img/targets/BOSS/downsized/africanelephant.jpg',
+            'img/targets/BOSS/downsized/aloe01.jpg',
+            'img/targets/BOSS/downsized/americangoldfinch.jpg',
+            'img/targets/BOSS/downsized/anchor.jpg',
+            'img/targets/BOSS/downsized/ant.jpg',
+            'img/targets/BOSS/downsized/antlers.jpg',
+            'img/targets/BOSS/downsized/armchair02.jpg',
+            'img/targets/BOSS/downsized/artichoke01b.jpg',
+            'img/targets/BOSS/downsized/badmintonracket.jpg',
+            'img/targets/BOSS/downsized/ballofstring.jpg',
+            'img/targets/BOSS/downsized/barbecuelighter.jpg',
+            'img/targets/BOSS/downsized/barnowl.jpg',
+            'img/targets/BOSS/downsized/barrel01.jpg',
+            'img/targets/BOSS/downsized/baseballglove.jpg',
+            'img/targets/BOSS/downsized/basketball01.jpg',
+            'img/targets/BOSS/downsized/bassethound.jpg',
+            'img/targets/BOSS/downsized/battleaxe.jpg',
+            'img/targets/BOSS/downsized/beachpaddle01a.jpg',
+            'img/targets/BOSS/downsized/beachumbrella01.jpg',
+            'img/targets/BOSS/downsized/bed.jpg',
+            'img/targets/BOSS/downsized/beerbottle.jpg',
+            'img/targets/BOSS/downsized/belltower01.jpg',
+            'img/targets/BOSS/downsized/bench01.jpg',
+            'img/targets/BOSS/downsized/bicycle.jpg',
+            'img/targets/BOSS/downsized/bikepump01.jpg',
+            'img/targets/BOSS/downsized/birdhouse.jpg',
+            'img/targets/BOSS/downsized/birdnest.jpg',
+            'img/targets/BOSS/downsized/blackbear.jpg',
+            'img/targets/BOSS/downsized/bluecheese.jpg',
+            'img/targets/BOSS/downsized/bolt01a.jpg',
+            'img/targets/BOSS/downsized/bookshelf.jpg',
+            'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
+            'img/targets/BOSS/downsized/bow.jpg',
+            'img/targets/BOSS/downsized/bowlingball.jpg',
+            'img/targets/BOSS/downsized/bowlingpin.jpg',
+            'img/targets/BOSS/downsized/bowtie.jpg',
+            'img/targets/BOSS/downsized/boxingglove01.jpg',
+            'img/targets/BOSS/downsized/boxtruck.jpg',
+            'img/targets/BOSS/downsized/broadsword.jpg',
+            'img/targets/BOSS/downsized/buffaloskull.jpg',
+            'img/targets/BOSS/downsized/bulldozer.jpg',
+            'img/targets/BOSS/downsized/bullet.jpg',
+            'img/targets/BOSS/downsized/bulletbelt.jpg',
+            'img/targets/BOSS/downsized/bun.jpg',
+            'img/targets/BOSS/downsized/butterfly.jpg',
+            'img/targets/BOSS/downsized/cactus.jpg',
+            'img/targets/BOSS/downsized/callbell.jpg',
+            'img/targets/BOSS/downsized/campfire.jpg',
+            'img/targets/BOSS/downsized/candelabra.jpg',
+            'img/targets/BOSS/downsized/candycane01a.jpg',
+            'img/targets/BOSS/downsized/car.jpg',
+            'img/targets/BOSS/downsized/caribou02.jpg',
+            'img/targets/BOSS/downsized/carsidemirror01.jpg',
+            'img/targets/BOSS/downsized/cartonofeggs.jpg',
+            'img/targets/BOSS/downsized/casabamelon.jpg',
+            'img/targets/BOSS/downsized/castle.jpg',
+            'img/targets/BOSS/downsized/cat.jpg',
+            'img/targets/BOSS/downsized/centurionhelmet.jpg',
+            'img/targets/BOSS/downsized/chainsaw.jpg',
+            'img/targets/BOSS/downsized/chair.jpg',
+            'img/targets/BOSS/downsized/chameleon.jpg',
+            'img/targets/BOSS/downsized/chandelier.jpg',
+            'img/targets/BOSS/downsized/cheetah.jpg',
+            'img/targets/BOSS/downsized/cherrytomato01.jpg',
+            'img/targets/BOSS/downsized/chessknight03a.jpg',
+            'img/targets/BOSS/downsized/chimney.jpg',
+            'img/targets/BOSS/downsized/chipmunk.jpg',
+            'img/targets/BOSS/downsized/christmastree.jpg',
+            'img/targets/BOSS/downsized/cinderblock.jpg',
+            'img/targets/BOSS/downsized/clover.jpg',
+            'img/targets/BOSS/downsized/clownfish.jpg',
+            'img/targets/BOSS/downsized/coffeemaker.jpg',
+            'img/targets/BOSS/downsized/cookingpot.jpg',
+            'img/targets/BOSS/downsized/corn02.jpg',
+            'img/targets/BOSS/downsized/cornet.jpg',
         ]
 
         // Shuffle all images for every participant
-        jatos.studySessionData.inputData.all_images = jsPsych.randomization.repeat(jatos.studySessionData.inputData.all_images,1)
+        jatos.studySessionData.inputData.all_images = jsPsych.randomization.repeat(jatos.studySessionData.inputData.all_images, 1)
 
         jatos.studySessionData.inputData.stimuli = {
             practice: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(0,6),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(6,9)
+                schema_learning: jatos.studySessionData.inputData.all_images.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(6, 9)
             },
             practice2: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(63,69),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(69,72)
-            },            
+                schema_learning: jatos.studySessionData.inputData.all_images.slice(63, 69),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(69, 72)
+            },
             landmark_schema: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(9,15),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(15,21),
+                schema_learning: jatos.studySessionData.inputData.all_images.slice(9, 15),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(15, 21),
             },
             schema_ic: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(21,27),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(27,33),
-            },            
+                schema_learning: jatos.studySessionData.inputData.all_images.slice(21, 27),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(27, 33),
+            },
             schema_c: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(33,39),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(39,45),
+                schema_learning: jatos.studySessionData.inputData.all_images.slice(33, 39),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(39, 45),
             },
             random_locations: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(45,51),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(51,57),
+                schema_learning: jatos.studySessionData.inputData.all_images.slice(45, 51),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(51, 57),
             },
 
             no_schema: {
                 schema_learning: [],
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(57,63),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(57, 63),
             }
-        }            
+        }
+
+        // Add the page about counterbalancing conditions
+        var condition_options = ['cb1', 'cb2', 'cb3', 'cb4', 'cb5'];
+
+        var condition_choice_page = {
+            type: 'survey-multi-choice',
+            questions: [
+                { prompt: "Please choose", name: 'condition', options: condition_options, required: true },
+            ],
+        };
 
         let autoConditions = jatos.componentJsonInput.autoConditions
-        let debugMode      = jatos.componentJsonInput.debugMode 
+        let debugMode = jatos.componentJsonInput.debugMode
+        
+        debugger
 
-        if (!autoConditions){
-
-            var n_ses_page = {
-                type: 'html-slider-response',
-                stimulus: '<p>Number of sessions for each of the 5 conditions</p>',
-                labels: ['1','2','3','4','5','6'],
-                min: 1,
-                max: 6,
-                step: 1,
-                slider_start: 2,
-                prompt: "<p>Choose the number of sessions </p>"
-            }
-
-            var n_trials_per_pa = {
-                type: 'html-slider-response',
-                stimulus: '<p>Number of trials per PA</p>',
-                labels: ['2','3','4','5','6','7','8','9','10','11','12','13','14','15'],
-                min: 2,
-                max: 15,
-                step: 1,
-                slider_start: 4,
-                prompt: "<p>Choose the number trials per PA </p>"
-            };			
-
-            var schema_display_duration_page = {
-                type: 'html-slider-response',
-                stimulus: '<p>How long to show the schema PAs before the trial?</p>',
-                // labels: ['500','750','1000', '1250','1500', '1750','2000', '2250','2500', '2750','3000', '3250','3500', '3750','4000'],
-                labels: ['500','1000','1500','2000','2500','3000','3500','4000','4500','5000','5500','6000'],
-                min: 500,
-                max: 6000,
-                step: 250,
-                slider_start: 1500,
-                prompt: "<p>Choose how long the schema items get displayed ahead of trial</p>"
-            };
-
-            var response_window_duration_page = {
-                type: 'html-slider-response',
-                stimulus: '<p>Response Window duration</p>',
-                // labels: ['500','750','1000', '1250','1500', '1750','2000', '2250','2500', '2750','3000', '3250','3500', '3750','4000'],
-                labels: ['500','1000','1500','2000','2500','3000','3500','4000','4500','5000','5500','6000'],
-                min: 500,
-                max: 6000,
-                step: 250,
-                slider_start: 3000,
-                prompt: "<p>Choose the duration of response window for each trial</p>"
-            };
-
-            var feedback_duration_page = {
-                type: 'html-slider-response',
-                stimulus: '<p>Feedback duration</p>',
-                // labels: ['0','100','200','300','400','500','600','700','800','900','1000'],
-                labels: ['250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
-                min: 250,
-                max: 3000,
-                step: 250,
-                slider_start: 1500,
-                prompt: "<p>Choose the duration for the feedback</p>"
-            };		
-            
-            var iti_duration_page = {
-                type: 'html-slider-response',
-                stimulus: '<p>ITI duration</p>',
-                // labels: ['100','200','300','400','500','600','700','800','900','1000'],
-                labels: ['0','250','500','750','1000','1250','1500','1750','2000','2250','2500','2750','3000'],
-                min: 0,
-                max: 3000,
-                step: 250,
-                slider_start: 0,
-                prompt: "<p>Choose the duration for ITI</p>"
-            };			
-
-            var show_schema_pa_at_feedback_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "At feedback, should the schema-PAs be displayed alongside the new PA that is being learned?", name: 'answer', options: ['yes','no'], required:false}, 
-                ],
-            }; 
-
-            var hide_mouse_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "When the schema PAs are being displayed, should we hide the mouse?", name: 'answer', options: ['yes','no'], required:false}, 
-                ],
-            };      
-
-            var run_schema_display_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Do you want to see schema-PAs at the beginning of each trial?", name: 'answer', options: ['yes','no'], required:false}, 
-                ],
-            };
-            
-            var move_board_within_trial_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Do you want the board to move within the trial?", name: 'answer', options: ['yes','no'], required:false}, 
-                ],
-            };    
-
-            var show_schema_pa_during_new_pa_response_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Do you want to see schema PAs while responding to new PA?", name: 'answer', options: ['yes','no'], required:false}, 
-                ],
-            };                     
-
-            var condition_choices = ['schema_c','schema_ic','landmark_schema','random_locations','no_schema']
-
-            var order_of_conditions_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Choose condition for session 1:", name: 'answer1', options: condition_choices, required:true, horizontal:true}, 
-                    {prompt: "Choose condition for session 2:", name: 'answer2', options: condition_choices, required:true, horizontal:true}, 
-                    {prompt: "Choose condition for session 3:", name: 'answer3', options: condition_choices, required:true, horizontal:true}, 
-                    {prompt: "Choose condition for session 4:", name: 'answer4', options: condition_choices, required:true, horizontal:true}, 
-                    {prompt: "Choose condition for session 5:", name: 'answer5', options: condition_choices, required:true, horizontal:true},                                                             
-                ],
-            };     
-
-
-            timeline.push(n_ses_page)
-            // timeline.push(n_schema_c_ses_page);
-            // timeline.push(n_schema_ic_ses_page);
-            timeline.push(n_trials_per_pa);
-            timeline.push(schema_display_duration_page);
-            timeline.push(response_window_duration_page);
-            timeline.push(feedback_duration_page);
-            timeline.push(iti_duration_page);
-            timeline.push(show_schema_pa_at_feedback_page);
-            timeline.push(hide_mouse_page)
-            timeline.push(run_schema_display_page)
-            timeline.push(move_board_within_trial_page)
-            timeline.push(show_schema_pa_during_new_pa_response_page)
-            timeline.push(order_of_conditions_page)
-
-        } else if (debugMode) {
+        if (debugMode) {
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
                 practice2: 1,
@@ -460,7 +345,7 @@
             jatos.studySessionData.inputData.schema_display_duration = 200
             jatos.studySessionData.inputData.response_window_duration = 200
             jatos.studySessionData.inputData.feedback_duration = 200
-            jatos.studySessionData.inputData.iti_duration      = 0    
+            jatos.studySessionData.inputData.iti_duration = 0
 
             // jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
@@ -471,16 +356,7 @@
             jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
 
 
-            // Add the page about counterbalancing conditions
-            var condition_options = ['cb1','cb2','cb3','cb4','cb5'];
-
-            var condition_choice_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Please choose", name: 'condition', options: condition_options, required:true}, 
-                ],
-            };  
-
+            // Also manually choose counterbalancing
             timeline.push(condition_choice_page)
         } else {
 
@@ -507,7 +383,7 @@
             jatos.studySessionData.inputData.schema_display_duration = 2000
             jatos.studySessionData.inputData.response_window_duration = 3000
             jatos.studySessionData.inputData.feedback_duration = 2000
-            jatos.studySessionData.inputData.iti_duration      = 0    
+            jatos.studySessionData.inputData.iti_duration = 0
 
             jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
@@ -515,185 +391,158 @@
             jatos.studySessionData.inputData.move_board_within_trial = false
             jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
 
-            // Add the page about counterbalancing conditions
-            var condition_options = ['cb1','cb2','cb3','cb4','cb5'];
+        }
 
-            var condition_choice_page = {
-                type: 'survey-multi-choice',
-                questions: [
-                    {prompt: "Please choose", name: 'condition', options: condition_options, required:true}, 
-                ],
-            };  
+        debugger
+        if (autoConditions) {
 
+            // So get the batch info, find the smallest group, and choose that
+            let batchData = jatos.batchSession.getAll();
+
+            // Find smallest
+            var minCond = batchData.counterbalancing.indexOf(Math.min(...batchData.counterbalancing))
+
+            // Update it.
+            batchData.counterbalancing[minCond]++
+
+            // Set the batch data
+            jatos.batchSession.setAll(batchData)
+
+            condition_chosen = 'cb' + minCond
+
+            debugger
+            createConditions();
+
+            // Create the trials
+            jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
+
+            // Make JATOS remember that this session was run
+            jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
+            jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+            jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+            jatos.submitResultData("[conditions_start---" +
+                JSON.stringify(jatos.studySessionData) + "---conditions_end]", function () { jatos.startComponentByPos(3) });
+
+
+        } else {
+
+            // So we will manually choose the counterbalancing condition
             timeline.push(condition_choice_page)
+            jsPsych.init({
 
+                timeline: timeline,
+
+                on_finish: function (data) {
+                    var results = jsPsych.data.get().values();
+                    debugger
+                    condition_chosen = results[0].response.condition
+
+                    createConditions();
+
+                    // Create the trials
+                    jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
+
+                    // Make JATOS remember that this session was run
+                    jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+                    jatos.submitResultData("[conditions_start---" +
+                        JSON.stringify(jatos.studySessionData) + "---conditions_end]", function () { jatos.startComponentByPos(3) });
+
+                } // on finish
+            });     // jsPsych.init 
         }
 
         // How long to show the prompt image
         jatos.studySessionData.inputData.image_pres_duration = 500
 
-		jsPsych.init({
-			
-			timeline: timeline,
+        function createConditions() {
+            // Which counterbalancing was chosen?
+            if (condition_chosen == 'cb1') {
+                order_of_conditions = ['schema_c', 'schema_ic', 'landmark_schema', 'random_locations', 'no_schema']
+            } else if (condition_chosen == 'cb2') {
+                order_of_conditions = ['schema_ic', 'landmark_schema', 'random_locations', 'no_schema', 'schema_c']
+            } else if (condition_chosen == 'cb3') {
+                order_of_conditions = ['landmark_schema', 'random_locations', 'no_schema', 'schema_c', 'schema_ic']
+            } else if (condition_chosen == 'cb4') {
+                order_of_conditions = ['random_locations', 'no_schema', 'schema_c', 'schema_ic', 'landmark_schema']
+            } else if (condition_chosen == 'cb5') {
+                order_of_conditions = ['no_schema', 'schema_c', 'schema_ic', 'landmark_schema', 'random_locations']
+            }
 
-			on_finish: function(data) {
-
-				// Record results
-				var results = jsPsych.data.get().values();
-
-                if (!autoConditions){
-                    // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
-                    // debugger
-                    jatos.studySessionData.inputData.n_ses_per_condition = {
-                        practice: 1,
-                        practice2: 1,
-                        schema_c: results[0].response,
-                        schema_ic: results[0].response,
-                        landmark_schema: results[0].response,
-                        random_locations: results[0].response,
-                        no_schema: results[0].response,
-                    }
-
-                    jatos.studySessionData.inputData.n_trials_per_pa = {
-                        practice: 2,
-                        practice2: 2,
-                        schema_c: results[1].response,
-                        schema_ic: results[1].response,
-                        landmark_schema: results[1].response,
-                        random_locations: results[1].response,
-                        no_schema: results[1].response,
-                    }
-
-                    jatos.studySessionData.inputData.schema_display_duration = results[2].response
-                    jatos.studySessionData.inputData.response_window_duration = results[3].response
-                    jatos.studySessionData.inputData.feedback_duration = results[4].response
-                    jatos.studySessionData.inputData.iti_duration      = results[5].response 
-
-                    results[6].response.answer == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true : jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = false
+            cond_to_run.practice = jatos.studySessionData.inputData.stimuli.practice
+            cond_to_run.practice2 = jatos.studySessionData.inputData.stimuli.practice2
+            cond_to_run[order_of_conditions[0]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[0]]
+            cond_to_run[order_of_conditions[1]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[1]]
+            cond_to_run[order_of_conditions[2]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[2]]
+            cond_to_run[order_of_conditions[3]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[3]]
+            cond_to_run[order_of_conditions[4]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[4]]
 
 
-                    results[7].response.answer == 'yes' ? jatos.studySessionData.inputData.hide_mouse = true : jatos.studySessionData.inputData.hide_mouse = false
-                    
-                    results[8].response.answer == 'yes' ? jatos.studySessionData.inputData.run_schema_display = true : jatos.studySessionData.inputData.run_schema_display = false
+            ////////////////////////////////////////////////////////////////////////////////
+            jatos.studySessionData.inputData.condition_coords = {
+                practice: {
+                    schema_learning: [
+                        [5, 2],
+                        [10, 5],
+                        [7, 6],
+                        [3, 8],
+                        [11, 10],
+                        [4, 11]
+                    ],
+                    new_pa_learning: [
+                        [9, 3],
+                        [2, 5],
+                        [4, 10],
+                    ]
+                },
+                practice2: {
+                    schema_learning: [
+                        [4, 2],
+                        [11, 3],
+                        [9, 6],
+                        [6, 7],
+                        [3, 8],
+                        [10, 9]
+                    ],
+                    new_pa_learning: [
+                        [8, 3],
+                        [5, 6],
+                        [9, 10],
+                    ]
+                },
+                schema_c: {
+                    schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1,
+                    new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2,
+                },
 
-                    results[9].response.answer == 'yes' ? jatos.studySessionData.inputData.move_board_within_trial = true : jatos.studySessionData.inputData.move_board_within_trial = false                    
+                schema_ic: {
+                    schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1,
+                    new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2,
+                },
 
-                    results[10].response.answer == 'yes' ? jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = true : jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
+                random_locations: {
+                    schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
+                    new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
+                },
 
-                    // Which counterbalancing was chosen?
-                    // jatos.studySessionData.inputData.condition_to_run = results[0].response.condition
+                landmark_schema: {
+                    schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1,
+                    new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2,
+                },
 
-                    // Whats the order of conditions?
-                    var cond_to_run = {}
+                no_schema: {
+                    schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
+                    new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
+                },
+            }
 
-                    cond_to_run[results[11].response.answer1] = jatos.studySessionData.inputData.stimuli[results[11].response.answer1]
-                    cond_to_run[results[11].response.answer2] = jatos.studySessionData.inputData.stimuli[results[11].response.answer2]
-                    cond_to_run[results[11].response.answer3] = jatos.studySessionData.inputData.stimuli[results[11].response.answer3]
-                    cond_to_run[results[11].response.answer4] = jatos.studySessionData.inputData.stimuli[results[11].response.answer4]
-                    cond_to_run[results[11].response.answer5] = jatos.studySessionData.inputData.stimuli[results[11].response.answer5]                                                            
-                    // cond_to_run = jatos.studySessionData.inputData.stimuli
-                } else {
-                    // debugger
-                    var cond_to_run = {}
-
-                    // Which counterbalancing was chosen?
-
-                    var order_of_conditions = []
-
-                    if (results[0].response.condition == 'cb1'){
-                        order_of_conditions = ['schema_c','schema_ic','landmark_schema','random_locations','no_schema']
-                    } else if (results[0].response.condition == 'cb2'){
-                        order_of_conditions = ['schema_ic','landmark_schema','random_locations','no_schema','schema_c']
-                    } else if (results[0].response.condition == 'cb3'){
-                        order_of_conditions = ['landmark_schema','random_locations','no_schema','schema_c','schema_ic']
-                    } else if (results[0].response.condition == 'cb4'){
-                        order_of_conditions = ['random_locations','no_schema','schema_c','schema_ic','landmark_schema']
-                    } else if (results[0].response.condition == 'cb5'){
-                        order_of_conditions = ['no_schema','schema_c','schema_ic','landmark_schema','random_locations']
-                    } 
-
-                    cond_to_run.practice  = jatos.studySessionData.inputData.stimuli.practice
-                    cond_to_run.practice2 = jatos.studySessionData.inputData.stimuli.practice2
-                    cond_to_run[order_of_conditions[0]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[0]]
-                    cond_to_run[order_of_conditions[1]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[1]]
-                    cond_to_run[order_of_conditions[2]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[2]]
-                    cond_to_run[order_of_conditions[3]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[3]]
-                    cond_to_run[order_of_conditions[4]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[4]] 
-                }
-                ////////////////////////////////////////////////////////////////////////////////
-                jatos.studySessionData.inputData.condition_coords = {
-                    practice: {
-                        schema_learning: [
-                            [5,2],
-                            [10,5],
-                            [7,6],
-                            [3,8],
-                            [11,10],
-                            [4,11]
-                        ],
-                        new_pa_learning: [
-                            [9,3],
-                            [2,5],
-                            [4,10],
-                        ]
-                    },
-                    practice2: {
-                        schema_learning: [
-                            [4,2],
-                            [11,3],
-                            [9,6],
-                            [6,7],
-                            [3,8],
-                            [10,9]
-                        ],
-                        new_pa_learning: [
-                            [8,3],
-                            [5,6],
-                            [9,10],
-                        ]
-                    },                    
-                    schema_c: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2,
-                    },
-
-                    schema_ic: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1,
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2,
-                    },
-
-                    random_locations: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1, 
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                    },
-
-                    landmark_schema: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1, 
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2,
-                    },
-
-                    no_schema: {
-                        schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1, 
-                        new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                    },                    
-                }
-                
-                // Create the trials
-                // debugger
-                jatos.studySessionData.inputData.all_sessions = trial_creator2(cond_to_run)
-
-                // Make JATOS remember that this session was run
-                jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
-                jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
-                jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-
-                jatos.submitResultData("[conditions_start---" + 
-                JSON.stringify(jatos.studySessionData) + "---conditions_end]", function(){jatos.startComponentByPos(3)});
-
-			} // on finish
-		});     // jsPsych.init   
+        } // function createConditions
 
     }); // jatos on load
 
-    </script>
+</script>
+
 </html>

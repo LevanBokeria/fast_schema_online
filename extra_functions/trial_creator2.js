@@ -13,7 +13,8 @@ function trial_creator2(all_conditions) {
         let n_trials_per_pa = jatos.studySessionData.inputData.n_trials_per_pa[iCond]
 
         let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[iCond]
-
+        // console.log(iCond)
+        // debugger
         var schema_learning_coords = jatos.studySessionData.inputData.condition_coords[iCond].schema_learning
 
         for (iSes = 0; iSes < istage_n_ses; iSes++) {

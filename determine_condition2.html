@@ -253,10 +253,10 @@
                 'img/targets/BOSS/high_familiarity_downsized/cond4/083_travelmug.jpg',
                 'img/targets/BOSS/high_familiarity_downsized/cond4/097_squirrel.jpg',
                 'img/targets/BOSS/high_familiarity_downsized/cond4/103_bikewheel.jpg',
-                'img/targets/BOSS/high_familiarity_downsized/cond5/095_pintofbeer.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/095_pintofbeer.jpg',
                 'img/targets/BOSS/high_familiarity_downsized/cond4/104_honeybee.jpg'],
             cond5: ['img/targets/BOSS/high_familiarity_downsized/cond5/080_shoppingcart.jpg',
-                'img/targets/BOSS/high_familiarity_downsized/cond4/099_tree.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/099_tree.jpg',
                 'img/targets/BOSS/high_familiarity_downsized/cond5/084_foosballtable.jpg',
                 'img/targets/BOSS/high_familiarity_downsized/cond5/086_bus.jpg',
                 'img/targets/BOSS/high_familiarity_downsized/cond5/091_icecube02.jpg',
@@ -402,7 +402,7 @@
             // Set the batch data
             jatos.batchSession.setAll(batchData)
 
-            condition_chosen = 'cb' + minCond
+            condition_chosen = 'cb' + (minCond+1)
 
             // debugger
             createConditions();
@@ -453,6 +453,7 @@
         jatos.studySessionData.inputData.image_pres_duration = 500
 
         function createConditions() {
+            // debugger
             // Which counterbalancing was chosen?
             if (condition_chosen == 'cb1') {
                 order_of_conditions = ['schema_c', 'schema_ic', 'landmark_schema', 'random_locations', 'no_schema']

@@ -18,7 +18,7 @@
 
 		//start timeline
 		jatos.onLoad(function() {
-			
+			debugger
 			let comp_to_start = []
 		
 			//make a timeline
@@ -37,7 +37,7 @@
 
 				second_button_text = 'Practice round #2'
 
-			} else if (jatos.studySessionData.inputData.condition_ses_counters.practice2 == 1){
+			} else if (jatos.studySessionData.inputData.condition_ses_counters.practice2 != 0){
 
 				// So we've finished practice part 2 
 				instructions_text = '<p>Great! If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the pink board.</p>' +
@@ -62,7 +62,7 @@
 				timeline: timeline,
 
 				on_finish: function(data) {
-					debugger
+					// debugger
 					var results = jsPsych.data.get().values()
 
 					// If it was post-practice, then see if they wanna redo practice

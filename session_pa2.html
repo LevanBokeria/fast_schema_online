@@ -20,7 +20,7 @@
     <script>
 
         jatos.onLoad(function() {
-            debugger
+            // debugger
             // iterate the session
             jatos.studySessionData.inputData.curr_session ++
             let curr_session = jatos.studySessionData.inputData.curr_session
@@ -76,7 +76,15 @@
             }
 
             // debugger
-            var imgs_to_preload = jatos.studySessionData.inputData.all_images
+            var imgs_to_preload = [
+					...jatos.studySessionData.inputData.all_images.practice,
+					...jatos.studySessionData.inputData.all_images.practice2,
+					...jatos.studySessionData.inputData.all_images.cond1,
+					...jatos.studySessionData.inputData.all_images.cond2,
+					...jatos.studySessionData.inputData.all_images.cond3,
+					...jatos.studySessionData.inputData.all_images.cond4,
+					...jatos.studySessionData.inputData.all_images.cond5,
+				]
             imgs_to_preload.push('img/border_images/circles.png')
             imgs_to_preload.push('img/border_images/diamonds.png')
             imgs_to_preload.push('img/border_images/triangles.png')
@@ -135,7 +143,7 @@
 
                     // Which comp to start
                     let comp_to_start
-                    
+                    debugger
                     if (jatos.studySessionData.inputData.curr_session <= 2){
                         // Start post practice component
                         comp_to_start = jatos.studySessionData.inputData.component_positions.post_practice

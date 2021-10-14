@@ -209,7 +209,7 @@ function trial_creator2(all_conditions) {
 
             } // iPA
 
-            if (iCond == 'practice') {
+            if (iCond == 'practice' | iCond == 'practice2') {
                 session_trials = jsPsych.randomization.shuffle(session_trials)
             } else {
                 session_trials = jsPsych.randomization.shuffleNoRepeats(session_trials, function (a, b) { return a.new_pa_img === b.new_pa_img })

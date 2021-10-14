@@ -20,7 +20,7 @@
 
 <body>
 	<script>
-
+		// debugger
 		//start timeline
 		jatos.onLoad(function () {
 			
@@ -113,7 +113,7 @@
 				false,
 				curr_trial
 			)
-			debugger
+			// debugger
 			// Remove certain styles:
 			grid_border_fb.children[0].style.removeProperty('transform')
 			grid_border_fb.children[0].style.removeProperty('top')
@@ -220,7 +220,7 @@
                 '<br>' +
                 '<p>On some of these boards, the visible items will always stay fixed inside the board, like you saw for the purple board.</p>' +
                 '<p><b>However, for some other boards, the visible items might change their locations!</b></p>' +
-                '<p>Some of the visible items might stay fixed, while others might move. Some might swap places with another visible item.</p>' +
+                '<p>Some of the visible items might stay fixed, while others might move. Some might swap places with another visible items.</p>' +
 				'<p>Click "Next" to see an example!</p>',
 
 				'<h1> Practice part 2 </h1>' +
@@ -241,7 +241,7 @@
 
 				'<p>But on the next trial, the visible items might have moved, like this:</p>' + grid_border_moved_items.innerHTML +
 				'<p><br>You can see that <b>two</b> of the visible items stayed in the same location, while all the others moved.</p>' +
-				'<p>Your task is still to find the same hidden items on the board. These will never change their location.</p>' +
+				'<p>Your task is still to find the same hidden items on the board. These will never change their locations.</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
 				'<p><br><b>Example trial 2:</b></p>' +
@@ -269,7 +269,15 @@
 			// Preload
 			var preload = {
 				type: 'preload',
-				images: jatos.studySessionData.inputData.all_images
+				images: [
+					...jatos.studySessionData.inputData.all_images.practice,
+					...jatos.studySessionData.inputData.all_images.practice2,
+					...jatos.studySessionData.inputData.all_images.cond1,
+					...jatos.studySessionData.inputData.all_images.cond2,
+					...jatos.studySessionData.inputData.all_images.cond3,
+					...jatos.studySessionData.inputData.all_images.cond4,
+					...jatos.studySessionData.inputData.all_images.cond5,
+				]
 			}
 			timeline.push(preload);
 

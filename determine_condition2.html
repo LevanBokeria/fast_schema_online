@@ -57,22 +57,22 @@
             n_rows: 12,
             n_cols: 12,
             condition_colors: {
-                practice: 'rgb(138, 43, 226)',
+                practice: '#40E0D0',
                 practice2: 'rgb(219,112,147)',
                 schema_c: 'rgb(0, 100, 255)',
                 schema_ic: '#228B22',
                 landmark_schema: '#B22222',
                 random_locations: '#DAA520',
-                no_schema: '#40E0D0',
+                no_schema: 'rgb(138, 43, 226)',
             },
             condition_color_names: {
-                practice: 'purple',
+                practice: 'cyan',
                 practice2: 'pink',
                 schema_c: 'blue',
                 schema_ic: 'green',
                 landmark_schema: 'red',
                 random_locations: 'yellow',
-                no_schema: 'cyan',
+                no_schema: 'purple',
             },
             condition_border_patterns: {
                 practice: 'triangles',
@@ -186,123 +186,117 @@
                 ],
             },
         }
+        // debugger
 
-        jatos.studySessionData.inputData.all_images = [
-            'img/targets/BOSS/downsized/8ball.jpg',
-            'img/targets/BOSS/downsized/accordion01.jpg',
-            'img/targets/BOSS/downsized/aceofdiamond.jpg',
-            'img/targets/BOSS/downsized/acorn.jpg',
-            'img/targets/BOSS/downsized/acousticguitar02.jpg',
-            'img/targets/BOSS/downsized/addressplate.jpg',
-            'img/targets/BOSS/downsized/africanelephant.jpg',
-            'img/targets/BOSS/downsized/aloe01.jpg',
-            'img/targets/BOSS/downsized/americangoldfinch.jpg',
-            'img/targets/BOSS/downsized/anchor.jpg',
-            'img/targets/BOSS/downsized/ant.jpg',
-            'img/targets/BOSS/downsized/antlers.jpg',
-            'img/targets/BOSS/downsized/armchair02.jpg',
-            'img/targets/BOSS/downsized/artichoke01b.jpg',
-            'img/targets/BOSS/downsized/badmintonracket.jpg',
-            'img/targets/BOSS/downsized/ballofstring.jpg',
-            'img/targets/BOSS/downsized/barbecuelighter.jpg',
-            'img/targets/BOSS/downsized/barnowl.jpg',
-            'img/targets/BOSS/downsized/barrel01.jpg',
-            'img/targets/BOSS/downsized/baseballglove.jpg',
-            'img/targets/BOSS/downsized/basketball01.jpg',
-            'img/targets/BOSS/downsized/bassethound.jpg',
-            'img/targets/BOSS/downsized/battleaxe.jpg',
-            'img/targets/BOSS/downsized/beachpaddle01a.jpg',
-            'img/targets/BOSS/downsized/beachumbrella01.jpg',
-            'img/targets/BOSS/downsized/bed.jpg',
-            'img/targets/BOSS/downsized/beerbottle.jpg',
-            'img/targets/BOSS/downsized/belltower01.jpg',
-            'img/targets/BOSS/downsized/bench01.jpg',
-            'img/targets/BOSS/downsized/bicycle.jpg',
-            'img/targets/BOSS/downsized/bikepump01.jpg',
-            'img/targets/BOSS/downsized/birdhouse.jpg',
-            'img/targets/BOSS/downsized/birdnest.jpg',
-            'img/targets/BOSS/downsized/blackbear.jpg',
-            'img/targets/BOSS/downsized/bluecheese.jpg',
-            'img/targets/BOSS/downsized/bolt01a.jpg',
-            'img/targets/BOSS/downsized/bookshelf.jpg',
-            'img/targets/BOSS/downsized/bottleofwhitewine.jpg',
-            'img/targets/BOSS/downsized/bow.jpg',
-            'img/targets/BOSS/downsized/bowlingball.jpg',
-            'img/targets/BOSS/downsized/bowlingpin.jpg',
-            'img/targets/BOSS/downsized/bowtie.jpg',
-            'img/targets/BOSS/downsized/boxingglove01.jpg',
-            'img/targets/BOSS/downsized/boxtruck.jpg',
-            'img/targets/BOSS/downsized/broadsword.jpg',
-            'img/targets/BOSS/downsized/buffaloskull.jpg',
-            'img/targets/BOSS/downsized/bulldozer.jpg',
-            'img/targets/BOSS/downsized/bullet.jpg',
-            'img/targets/BOSS/downsized/bulletbelt.jpg',
-            'img/targets/BOSS/downsized/bun.jpg',
-            'img/targets/BOSS/downsized/butterfly.jpg',
-            'img/targets/BOSS/downsized/cactus.jpg',
-            'img/targets/BOSS/downsized/callbell.jpg',
-            'img/targets/BOSS/downsized/campfire.jpg',
-            'img/targets/BOSS/downsized/candelabra.jpg',
-            'img/targets/BOSS/downsized/candycane01a.jpg',
-            'img/targets/BOSS/downsized/car.jpg',
-            'img/targets/BOSS/downsized/caribou02.jpg',
-            'img/targets/BOSS/downsized/carsidemirror01.jpg',
-            'img/targets/BOSS/downsized/cartonofeggs.jpg',
-            'img/targets/BOSS/downsized/casabamelon.jpg',
-            'img/targets/BOSS/downsized/castle.jpg',
-            'img/targets/BOSS/downsized/cat.jpg',
-            'img/targets/BOSS/downsized/centurionhelmet.jpg',
-            'img/targets/BOSS/downsized/chainsaw.jpg',
-            'img/targets/BOSS/downsized/chair.jpg',
-            'img/targets/BOSS/downsized/chameleon.jpg',
-            'img/targets/BOSS/downsized/chandelier.jpg',
-            'img/targets/BOSS/downsized/cheetah.jpg',
-            'img/targets/BOSS/downsized/cherrytomato01.jpg',
-            'img/targets/BOSS/downsized/chessknight03a.jpg',
-            'img/targets/BOSS/downsized/chimney.jpg',
-            'img/targets/BOSS/downsized/chipmunk.jpg',
-            'img/targets/BOSS/downsized/christmastree.jpg',
-            'img/targets/BOSS/downsized/cinderblock.jpg',
-            'img/targets/BOSS/downsized/clover.jpg',
-            'img/targets/BOSS/downsized/clownfish.jpg',
-            'img/targets/BOSS/downsized/coffeemaker.jpg',
-            'img/targets/BOSS/downsized/cookingpot.jpg',
-            'img/targets/BOSS/downsized/corn02.jpg',
-            'img/targets/BOSS/downsized/cornet.jpg',
-        ]
-
-        // Shuffle all images for every participant
-        jatos.studySessionData.inputData.all_images = jsPsych.randomization.repeat(jatos.studySessionData.inputData.all_images, 1)
+        jatos.studySessionData.inputData.all_images = {
+            practice: ['img/targets/BOSS/high_familiarity_downsized/practice/002_frenchfries.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/003_toilet.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/004_candycane01a.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/005_desktopcomputer.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/006_fridge.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/007_key07.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/008_mug05.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/009_oven.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice/010_exitsign.jpg'],
+            practice2: ['img/targets/BOSS/high_familiarity_downsized/practice2/011_mattress.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/013_bicycle.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/014_lightswitch01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/015_zipper.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/017_barbecue03.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/018_bowlofchips.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/019_cartonofeggs.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/020_corn02.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/practice2/021_couch02.jpg'],
+            cond1: ['img/targets/BOSS/high_familiarity_downsized/cond1/022_cupcake.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/024_escalator.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/026_waterfountain02.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/027_bed.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/029_basketball01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/031_electricoutlet.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/033_macaroni01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/035_showerhead01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/036_table01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/046_redonion.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/052_steeringwheel.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond1/054_bookshelf.jpg'],
+            cond2: ['img/targets/BOSS/high_familiarity_downsized/cond2/030_bathtub.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/032_flipflop01b.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/037_doorhandle.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/038_aceofdiamond.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/041_carsidemirror01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/042_curtain.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/043_foldingchair.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/047_saltshaker03a.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/048_schoolbus.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/051_worldmap.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/053_television.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond2/057_donut.jpg'],
+            cond3: ['img/targets/BOSS/high_familiarity_downsized/cond3/025_sink.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/056_cloud.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/058_englishcucumber.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/062_picnictable.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/064_trafficlight.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/065_cherrytomato01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/066_atm.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/067_christmastree.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/068_cow.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/069_drumset.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/071_fluorescentlightbulb.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond3/096_rockingchair.jpg'],
+            cond4: ['img/targets/BOSS/high_familiarity_downsized/cond4/072_gift01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/073_jackolantern.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/075_kiwi03.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/077_payphone.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/079_rose.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/081_shovel01.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/082_tortillachip.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/083_travelmug.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/097_squirrel.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/103_bikewheel.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/095_pintofbeer.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/104_honeybee.jpg'],
+            cond5: ['img/targets/BOSS/high_familiarity_downsized/cond5/080_shoppingcart.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond4/099_tree.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/084_foosballtable.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/086_bus.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/091_icecube02.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/092_ladybug03.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/093_microwave.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/102_rubikcube.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/112_treadmill.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/113_pooltable.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/115_beerbottle.jpg',
+                'img/targets/BOSS/high_familiarity_downsized/cond5/122_hose.jpg']
+        }
 
         jatos.studySessionData.inputData.stimuli = {
             practice: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(0, 6),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(6, 9)
+                schema_learning: jatos.studySessionData.inputData.all_images.practice.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.practice.slice(6, 9)
             },
             practice2: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(63, 69),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(69, 72)
+                schema_learning: jatos.studySessionData.inputData.all_images.practice2.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.practice2.slice(6, 9)
             },
             landmark_schema: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(9, 15),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(15, 21),
+                schema_learning: jatos.studySessionData.inputData.all_images.cond1.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.cond1.slice(6, 12),
             },
             schema_ic: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(21, 27),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(27, 33),
+                schema_learning: jatos.studySessionData.inputData.all_images.cond2.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.cond2.slice(6, 12),
             },
             schema_c: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(33, 39),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(39, 45),
+                schema_learning: jatos.studySessionData.inputData.all_images.cond3.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.cond3.slice(6, 12),
             },
             random_locations: {
-                schema_learning: jatos.studySessionData.inputData.all_images.slice(45, 51),
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(51, 57),
+                schema_learning: jatos.studySessionData.inputData.all_images.cond4.slice(0, 6),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.cond4.slice(6, 12),
             },
-
             no_schema: {
                 schema_learning: [],
-                new_pa_learning: jatos.studySessionData.inputData.all_images.slice(57, 63),
+                new_pa_learning: jatos.studySessionData.inputData.all_images.cond5.slice(6, 12),
             }
         }
 
@@ -318,8 +312,8 @@
 
         let autoConditions = jatos.componentJsonInput.autoConditions
         let debugMode = jatos.componentJsonInput.debugMode
-        
-        debugger
+
+        // debugger
 
         if (debugMode) {
             jatos.studySessionData.inputData.n_ses_per_condition = {
@@ -393,7 +387,7 @@
 
         }
 
-        debugger
+        // debugger
         if (autoConditions) {
 
             // So get the batch info, find the smallest group, and choose that
@@ -410,7 +404,7 @@
 
             condition_chosen = 'cb' + minCond
 
-            debugger
+            // debugger
             createConditions();
 
             // Create the trials

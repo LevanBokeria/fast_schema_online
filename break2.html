@@ -159,9 +159,9 @@
 			// What questions to ask:
 			var questions_to_ask = []
 			if (next_condition != 'no_schema'){
-				questions_to_ask.push({ prompt: 'Visible pictures</b>:', rows: 6, columns: 50, required: true })
+				questions_to_ask.push({ prompt: 'Write the names of the visible pictures:', rows: 6, columns: 50, required: true })
 			}
-			questions_to_ask.push({ prompt: 'Hidden pictures</b>:', rows: 6, columns: 50, required: true })
+			questions_to_ask.push({ prompt: 'Write the names of the hidden pictures:', rows: 6, columns: 50, required: true })
 
 			if (ask_questions) {
 				var instructions = {
@@ -196,7 +196,15 @@
 			// Preload
 			var preload = {
 				type: 'preload',
-				images: jatos.studySessionData.inputData.all_images
+				images: [
+					...jatos.studySessionData.inputData.all_images.practice,
+					...jatos.studySessionData.inputData.all_images.practice2,
+					...jatos.studySessionData.inputData.all_images.cond1,
+					...jatos.studySessionData.inputData.all_images.cond2,
+					...jatos.studySessionData.inputData.all_images.cond3,
+					...jatos.studySessionData.inputData.all_images.cond4,
+					...jatos.studySessionData.inputData.all_images.cond5,
+				]
 			}
 			timeline.push(preload);
 

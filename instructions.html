@@ -20,7 +20,7 @@
 
 <body>
 	<script>
-
+		
 		//start timeline
 		jatos.onLoad(function () {
 			// debugger
@@ -148,7 +148,7 @@
 				'<div class="instruct">' +
 				'<p>Welcome to the experiment!</p>' +
 				'<p>In this experiment, you will learn locations of pictures that are hidden on virtual boards.</p>' +
-				'<p>For example, the purple board you see below contains 6 visible pictures</p>' + grid_border.innerHTML +
+				'<p>For example, the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board you see below contains 6 visible pictures</p>' + grid_border.innerHTML +
 				'<p><br>Your task will be to find additional 3 hidden pictures that are located somewhere on this board!</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
@@ -184,14 +184,14 @@
 				'<h1> Instructions </h1>' +
 				'<h2> Trial structure. Step 4:<h2>' +
 				'</div>' +
-				'<p>After you make your response, you will get feedback</p>' +
+				'<p>After you make your response, you will get feedback.</p>' +
 				'<p>All the visible pictures will reappear</p>' +
 				'<p>The hidden picture will appear at its correct location.</p>' +
 				grid_border_fb.innerHTML,
 				'<div class= "header">' +
 				'<h1> Instructions </h1>' +
 				'</div>' +
-				'<p>Below you can see all four stages of the trial one after another</p>' +
+				'<p>Below you can see all four stages of the trial one after another:</p>' +
 				grid_trial_stages_el.outerHTML +
 				'<p><br>Click next to do a few practice trials with this purple board!</p>' +
 				'</div>'
@@ -207,7 +207,15 @@
 			// Preload
 			var preload = {
 				type: 'preload',
-				images: jatos.studySessionData.inputData.all_images
+				images: [
+					...jatos.studySessionData.inputData.all_images.practice,
+					...jatos.studySessionData.inputData.all_images.practice2,
+					...jatos.studySessionData.inputData.all_images.cond1,
+					...jatos.studySessionData.inputData.all_images.cond2,
+					...jatos.studySessionData.inputData.all_images.cond3,
+					...jatos.studySessionData.inputData.all_images.cond4,
+					...jatos.studySessionData.inputData.all_images.cond5,
+				]
 			}
 			timeline.push(preload);
 

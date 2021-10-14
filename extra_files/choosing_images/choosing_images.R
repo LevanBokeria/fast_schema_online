@@ -14,40 +14,31 @@ pacman::p_load(pacman,
                Hmisc,
                psycho)
 
-df <- import('./pone.0010773.s001.xls')
+rm(list = ls())
 
-df <- df[1:480,]
-
-# Filter out Non living
-df_nl <-
-        df %>%
-        filter(`Living/non-living` == 'NL') %>%
-        rename(modal_name = `Modal name`)
-
-df_nl$modal_name_clean <- 
-        sapply(df_nl$modal_name, FUN = function(x){
-                if (grepl('\\*',x)){
-                        return(str_trunc(x,nchar(x)-2,'right',ellipsis = ''))
-                } else {
-                        return(x)
-                }
-        })
-
+df <- import('./local_version.xlsx')
 
 # Take only unique modal names
-df_nl_unique <- 
-        df_nl %>%
-        distinct(modal_name_clean, .keep_all = TRUE)
+df_unique_modal <- 
+        df %>%
+        distinct(`Modal name`, .keep_all = TRUE)
+
+# Filter out body parts
+df_unique_modal <- 
+        df_unique_modal %>%
+        filter(`Modal category` != 'Bodypart')
 
 # Sort by familiarity
-df_nl_unique <-
-        df_nl_unique %>%
-        arrange(desc(Familiarity))
+df_unique_modal_sorted <-
+        df_unique_modal %>%
+        arrange(desc(`Familiarity Mean`))
 
+df_high_fam <- 
+        df_unique_modal_sorted %>%
+        filter(`Familiarity Mean` >= 4)
 
-# Copy 100 of them to a separate folder
+# Copy anything with familiarity > 4
+df_high_fam %>%
+        write_csv('./high_familiarity_images.csv')
 
-
-
-# Write as a CSV file
-write_csv(df_nl_unique,'./names.csv')
+## Copy these to a separate folder --------------------------------------------

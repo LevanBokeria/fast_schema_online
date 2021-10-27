@@ -215,8 +215,10 @@
 				timeline: timeline,
 
 				on_finish: function (data) {
-
+					// debugger
 					// Save results
+					var results = jsPsych.data.get().values()
+					jatos.studySessionData.outputData.break_results.push(results)
 
 					// Make JATOS remember that this session was run
 					jatos.studySessionData.latestFinishedComponentId = jatos.componentId;

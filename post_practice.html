@@ -100,9 +100,9 @@
                     jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
-					jatos.submitResultData('[break_start_' + '---' + 
+					jatos.submitResultData('[post_practice_start_' + '---' + 
 					JSON.stringify(jatos.studySessionData) +
-					'---' + '_break_end]', 
+					'---' + '_post_practice_end]', 
 					function(){jatos.startComponentByPos(comp_to_start)});
 
 					// jsPsych.data.displayData();

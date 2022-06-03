@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-	<title>Instructions</title>
+	<title>Instructions 2</title>
 	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
@@ -20,17 +20,17 @@
 
 <body>
 	<script>
-		
+		// debugger
 		//start timeline
 		jatos.onLoad(function () {
-			// debugger
+			
 			//make a timeline
 			let timeline = [];
-			let grid_size = 400
+			let grid_size = 300
 			// Create the board element for instructions
 			// Create the board
 
-			var curr_trial = jatos.studySessionData.inputData.all_sessions[0][0]
+			var curr_trial = jatos.studySessionData.inputData.all_sessions[1][0]
 
 			var grid_border = board_creator2(
 				grid_size,
@@ -47,7 +47,6 @@
 			grid_border.children[0].style.removeProperty('left')
 			grid_border.children[0].style.position = 'relative'
 			grid_border.children[0].style.margin = 'auto'
-
 
 			// Create a flexbox with the hidden pictures
 			var flex_hidden_pics_el = document.createElement('div')
@@ -67,9 +66,28 @@
 				flex_hidden_pics_el.appendChild(nPA)
 			}
 
-			// Create the exmpty purple board
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			// Create a flexbox to put the stages of the trial
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			var grid_trial_1_stages_el = document.createElement('div')
+
+			grid_trial_1_stages_el.style =
+				'display: grid;' +
+				'grid-template-columns: 2fr 1fr 2fr 2fr;' +
+				'grid-template-rows: auto;' +
+				'position: relative;'
+
+			let small_grid_size = '150px'
+
+			var grid_border_small = grid_border.cloneNode(true)
+			grid_border_small.children[0].style.height = small_grid_size
+			grid_border_small.children[0].style.width = small_grid_size
+
+			// Create the empty purple board
 			var grid_border_empty = board_creator2(
-				grid_size,
+				small_grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
 				false,
@@ -83,117 +101,161 @@
 			grid_border_empty.children[0].style.removeProperty('left')
 			grid_border_empty.children[0].style.position = 'relative'
 			grid_border_empty.children[0].style.margin = 'auto'
+			grid_border_empty.children[0].style.height = small_grid_size
+			grid_border_empty.children[0].style.width = small_grid_size
 
 			// Create the board with visible and 1 hidden item
 			var grid_border_fb = board_creator2(
-				grid_size,
+				small_grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
 				true,
 				false,
 				curr_trial
 			)
-
+			// debugger
 			// Remove certain styles:
 			grid_border_fb.children[0].style.removeProperty('transform')
 			grid_border_fb.children[0].style.removeProperty('top')
 			grid_border_fb.children[0].style.removeProperty('left')
 			grid_border_fb.children[0].style.position = 'relative'
 			grid_border_fb.children[0].style.margin = 'auto'
+			grid_border_fb.children[0].style.height = small_grid_size
+			grid_border_fb.children[0].style.width = small_grid_size
 
 			grid_border_fb.children[0].querySelector('#newPA_1').style.visibility = 'visible'
 
+			grid_trial_1_stages_el.innerHTML += '<div>Step 1:</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Step 2:</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Step 3:</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Step 4:</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Board + visible items</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Hidden item to find</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Make your response</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Feedback</div>'
+			grid_trial_1_stages_el.innerHTML += grid_border_small.innerHTML
+			grid_trial_1_stages_el.innerHTML += '<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
+			grid_trial_1_stages_el.innerHTML += grid_border_empty.innerHTML
+			grid_trial_1_stages_el.innerHTML += grid_border_fb.innerHTML
 
+			// Create the board with moved items
+            var next_trial = jatos.studySessionData.inputData.all_sessions[1][1]
+
+			var grid_border_moved_items = board_creator2(
+				grid_size,
+				jatos.studySessionData.inputData.n_rows,
+				jatos.studySessionData.inputData.n_cols,
+				true,
+				false,
+				next_trial
+			)
+
+			// Remove certain styles:
+			grid_border_moved_items.children[0].style.removeProperty('transform')
+			grid_border_moved_items.children[0].style.removeProperty('top')
+			grid_border_moved_items.children[0].style.removeProperty('left')
+			grid_border_moved_items.children[0].style.position = 'relative'
+			grid_border_moved_items.children[0].style.margin = 'auto'
+
+
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Create a flexbox to put the stages of the trial
-			var grid_trial_stages_el = document.createElement('div')
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////
+			var grid_trial_2_stages_el = document.createElement('div')
 
-			grid_trial_stages_el.style =
+			grid_trial_2_stages_el.style =
 				'display: grid;' +
 				'grid-template-columns: 2fr 1fr 2fr 2fr;' +
 				'grid-template-rows: auto;' +
 				'position: relative;'
 
-			let small_grid_size = '180px'
+			var grid_border_small_moved_items = grid_border_moved_items.cloneNode(true)
+			grid_border_small_moved_items.children[0].style.height = small_grid_size
+			grid_border_small_moved_items.children[0].style.width = small_grid_size
 
-			var grid_border_small = grid_border.cloneNode(true)
-			grid_border_small.children[0].style.height = small_grid_size
-			grid_border_small.children[0].style.width = small_grid_size
+			// Create the board with visible and 1 hidden item
+			var grid_border_fb_moved_items = board_creator2(
+				small_grid_size,
+				jatos.studySessionData.inputData.n_rows,
+				jatos.studySessionData.inputData.n_cols,
+				true,
+				false,
+				next_trial
+			)
+			
+			// Remove certain styles:
+			grid_border_fb_moved_items.children[0].style.removeProperty('transform')
+			grid_border_fb_moved_items.children[0].style.removeProperty('top')
+			grid_border_fb_moved_items.children[0].style.removeProperty('left')
+			grid_border_fb_moved_items.children[0].style.position = 'relative'
+			grid_border_fb_moved_items.children[0].style.margin = 'auto'
+			grid_border_fb_moved_items.children[0].style.height = small_grid_size
+			grid_border_fb_moved_items.children[0].style.width = small_grid_size
 
-			var grid_border_empty_small = grid_border_empty.cloneNode(true)
-			grid_border_empty_small.children[0].style.height = small_grid_size
-			grid_border_empty_small.children[0].style.width = small_grid_size
+			grid_border_fb_moved_items.children[0].querySelector('#newPA_1').style.visibility = 'visible'
 
-			var grid_border_fb_small = grid_border_fb.cloneNode(true)
-			grid_border_fb_small.children[0].style.height = small_grid_size
-			grid_border_fb_small.children[0].style.width = small_grid_size
+			grid_trial_2_stages_el.innerHTML += '<div>Step 1:</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Step 2:</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Step 3:</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Step 4:</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Board + visible items</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Hidden item to find</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Make your response</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Feedback</div>'
+			grid_trial_2_stages_el.innerHTML += grid_border_small_moved_items.innerHTML
+			grid_trial_2_stages_el.innerHTML += '<img src="' + next_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
+			grid_trial_2_stages_el.innerHTML += grid_border_empty.innerHTML
+			grid_trial_2_stages_el.innerHTML += grid_border_fb_moved_items.innerHTML
 
-			grid_trial_stages_el.innerHTML += '<div>Step 1:</div>'
-			grid_trial_stages_el.innerHTML += '<div>Step 2:</div>'
-			grid_trial_stages_el.innerHTML += '<div>Step 3:</div>'
-			grid_trial_stages_el.innerHTML += '<div>Step 4:</div>'
-			grid_trial_stages_el.innerHTML += '<div>Board + visible items</div>'
-			grid_trial_stages_el.innerHTML += '<div>Hidden item to find</div>'
-			grid_trial_stages_el.innerHTML += '<div>Make your response</div>'
-			grid_trial_stages_el.innerHTML += '<div>Feedback</div>'
-			grid_trial_stages_el.innerHTML += grid_border_small.innerHTML
-			grid_trial_stages_el.innerHTML += '<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
-			grid_trial_stages_el.innerHTML += grid_border_empty_small.innerHTML
-			grid_trial_stages_el.innerHTML += grid_border_fb_small.innerHTML
 
 			// Define pages for phase 1
 			let instruction_pages = [
 				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
+				'<h1> Practice part 2 </h1>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>Welcome to the experiment!</p>' +
-				'<p>In this experiment, you will learn locations of pictures that are hidden on virtual boards.</p>' +
-				'<p>For example, the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board you see below contains 6 visible pictures</p>' + grid_border.innerHTML +
-				'<p><br>Your task will be to find additional 3 hidden pictures that are located somewhere on this board!</p>' +
+				'<p>In the real experiment, you will have to find hidden pictures on 5 differently colored boards.</p>' +
+                '<br>' +
+                '<p>On some of these boards, the visible items will always stay fixed inside the board, like you saw for the purple board.</p>' +
+                '<p><b>However, for some other boards, the visible items might change their locations!</b></p>' +
+                '<p>Some of the visible items might stay fixed, while others might move. Some might swap places with another visible items.</p>' +
+				'<p>Click "Next" to see an example!</p>',
+
+				'<h1> Practice part 2 </h1>' +
+				'</div>' +
+				'<div class="instruct">' +
+				'<p>For example, on one trial, this pink board will be shown with its visible items like this: </p>' + grid_border.innerHTML +
+				'<p><br>Your task is still to find the hidden items on the board.</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
+				'<p><br><b>Example trial 1:</b></p>' +
+				grid_trial_1_stages_el.outerHTML + 
 				'</div>',
 
 				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 1:<h2>' +
+				'<h1> Practice part 2 </h1>' +
 				'</div>' +
 				'<div class="instruct">' +
 
-				'<p>At the beginning of each trial, you will see the board on the screen with all the visible pictures.</p>' +
-				'<p>The board will stay on the screen for ' + (jatos.studySessionData.inputData.schema_display_duration / 1000) + ' seconds.</p>' +
-				grid_border.innerHTML,
+				'<p>But on the next trial, the visible items might have moved, like this:</p>' + grid_border_moved_items.innerHTML +
+				'<p><br>You can see that <b>two</b> of the visible items stayed in the same location, while all the others moved.</p>' +
+				'<p>Your task is still to find the same hidden items on the board. These will never change their locations.</p>' +
+				'<p><b>Hidden pictures:</b></p>' +
+				flex_hidden_pics_el.innerHTML +
+				'<p><br><b>Example trial 2:</b></p>' +
+				grid_trial_2_stages_el.outerHTML + 
+				'</div>',
 
 				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 2:<h2>' +
+				'<h1> Practice part 2 </h1>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>Then, the board will disappear and you will be told which of the 3 hidden pictures you must locate on the board.</p>' +
-				'<p>For example:</p>' +
-				'<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; display:inline-block;"></img>',
-				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 3:<h2>' +
-				'</div>' +
-				'<div class="instruct">' +
-				'<p>Following this, you will see the purple board empty, without visible pictures, and you will have to indicate with your mouse click where you think the hidden picture is located.</p>' +
-				'<p>You will have ' + (jatos.studySessionData.inputData.response_window_duration / 1000) + ' seconds to make your choice.</p>' +
-				grid_border_empty.innerHTML,
-				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'<h2> Trial structure. Step 4:<h2>' +
-				'</div>' +
-				'<p>After you make your response, you will get feedback.</p>' +
-				'<p>All the visible pictures will reappear</p>' +
-				'<p>The hidden picture will appear at its correct location.</p>' +
-				grid_border_fb.innerHTML,
-				'<div class= "header">' +
-				'<h1> Instructions </h1>' +
-				'</div>' +
-				'<p>Below you can see all four stages of the trial one after another:</p>' +
-				grid_trial_stages_el.outerHTML +
-				'<p><br>Click next to do a few practice trials with this purple board!</p>' +
+				'<p>Remember, during the real experiment, you might get a board where some or all the visible items switch locations, or where the visible items swap places with each other!</p>' +
+				'<p><br>And remember, your task is always just to find the hidden items, which will never change locations!</p>' +
+                '<br>' +
+				'<p>Click next to do a few practice trials with this pink board where 2 of the visible items stay fixed while others move!</p>' +
 				'</div>'
 			];
 
@@ -228,8 +290,8 @@
 				on_finish: function (data) {
 
 					// Make JATOS remember that this session was run
-					jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
-					jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+					jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+					jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 					// debugger
 					// Record results

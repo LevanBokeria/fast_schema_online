@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
+	<title>Consent</title>
+	<script src="jspsych-6.3.1/jspsych.js"></script>
+	<script src="jspsych-6.3.1/plugins/jspsych-instructions.js"></script>
+	<script src="jatos.js"></script>
+	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
+	</link>
+	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css">
+	</link>
+
+	<!-- Specific style for the header -->
+	<style>
+		.header {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			background-color: #8f8d8d;
+			color: white;
+			text-align: center;
+			cursor: default;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		//'use strict';
+
+		//make a timeline
+		var timeline = [];
+
+		//make a welcome message
+		var welcome = {
+			type: 'instructions',
+			pages: ['<div class= "header">' +
+				'<h1> Welcome.</h1>' +
+				'<p> Please read through the following pages of information.</p>' +
+				'</div>' +
+
+				'<div class="instruct"> <br>' +
+				'<p><br><br><br><br><br>You should complete this study in one sitting. ' +
+				'This study is about finding hidden pictures on virtual boards! It will last about 40-50 minutes.</p>' +
+				'<p>The study is broken up into several sections. You will be paid a set amount for each of these sections:</p>' +
+				'<li> Initial instructions and practice sessions: takes ~10 minutes. Payment: 1£ </li>' +
+				'<li> Finding hidden pictures on each of the 5 boards: each takes ~6 minutes, with payment for each at 0.6£. Total payment for all 5 boards: £3. </li>' +
+				'<li> Debriefing survey: takes ~5 minutes. Payment: 0.5£ 1£</li>' +
+				'<p> Total payment for completing the full experiment: 4.5£ </p>' +
+				'<p>Please note that attention and quality checks will be performed. You might not get compensated if you show consistent lack of attention and good faith effort to complete the experiment. ' +
+				'<p><b>You cannot use a tablet or a mobile device to complete this study. Please use the Chrome browser.</b></p>' +
+				'<br><hr></div>' +
+
+				'<p><br><em><span style="color: black;"> To navigate these pages, use the mouse to click the "More information" button below.</span></em></p>'],
+			show_clickable_nav: true,
+			button_label_next: '<span style="color: black";> <strong> More information </stong></span>'
+		};
+		timeline.push(welcome);
+
+
+		//information, consent and ethics -->
+		var information1 = {
+			type: "instructions",
+			pages: ["<div class= 'header'>" +
+				"<h2> Information 1 of 3 </h2>" +
+				"</div>" +
+				"<div class='instruct'> <br><br>" +
+				"<p><br><u><b>About this study:</b></u><br> <br> <br> You will have to find some hidden pictures on a 2-dimensional boards.</p>" +
+				"<p><br>You will be given instructions and practice trials  before starting the real items.</p>" +
+				"<p><br> Before starting, we will test your browser to ensure that this experiment will work properly for you. </p>" +
+				"<br><br><br><hr></div>" +
+				"<p><em><span style='color: black;'> Click 'More information' to continue.</span></em></p>"],
+			show_clickable_nav: true,
+			button_label_next: "<span style='color: black';> <strong> More information </stong></span>"
+		};
+		timeline.push(information1);
+
+
+		var information2 = {
+			type: "instructions",
+			pages: ["<div class= 'header'>" +
+				"<h2> Information 2 of 3 </h2>" +
+				"</div>" +
+				"<div class='instruct'> <br>" +
+				"<p><br><br><u> What happens to your data.</u><br><br> Anonymised electronic research data will be stored on the hosting site’s servers that are compliant with EU data protection and security policies, and data transfer will be encrypted.</p>" +
+				"<p><br>We will not have access to personally-identifiable information (PID) such as name or IP address; we will have access only to anonymous demographic information (for example, age and gender).</p>" +
+				"<p><br>In addition to your anonymised responses during the study, we collect information about the device, " +
+				"operating system and web browser that you’re using. <br> <br>This will not include any information that would identify you.</p>" +
+				"<p><br><u>We use cookies.</u><br><br>This study uses cookies - small packets of information sent by our server and stored by your web browser. Some of these will be deleted automatically when you finish the experiment, others will remain even after you finish the experiment and close your browser. These persistent cookies can be removed manually using your browser settings. Cookies are necessary in order for the experiment to run properly and will not contain any sensitive or personal information. By taking part you agree to the use of cookies. For more information please see <a href='https://studies.mrc-cbu.cam.ac.uk/privacy.html' target='_blank'>https://studies.mrc-cbu.cam.ac.uk/privacy.html</a></p>" +
+				"<hr></div>"],
+			show_clickable_nav: true,
+			button_label_next: "<span style='color: black';> <strong> More information </stong></span>"
+
+		};
+		timeline.push(information2);
+
+		var information3 = {
+			type: "instructions",
+			pages: ["<div class= 'header'>" +
+				"<h2> Information 3 of 3 </h2>" +
+				"</div>" +
+				"<div class='instruct'> <br>" +
+				"<p><br><br><u> What happens to your data continued: </u> <br><br>Cambridge University is the sponsor for this study based in the United Kingdom.<br> We will be using information from you in order to undertake this study and will act as the data controller for this. Your rights to access, change or move your information are limited," +
+				" as we need to manage your information in specific ways in order for the research to be reliable and accurate. If you withdraw from the study, we will keep the information about you that we have already obtained.</p>" +
+				"<p>To safeguard your rights, we will use the minimum personally-identifiable information possible. You can find out more about how we use your information at <a href='https://www.medschl.cam.ac.uk/research/privacy-notice-how-we-use-your-research-data/' target='_blank'>https://www.medschl.cam.ac.uk/research/privacy-notice-how-we-use-your-research-data/</a></p>" +
+				"<p><br><em>Researcher:<br>Levan Bokeria, MSc<br>Message via Prolific or levan.bokeria@mrc-cbu.cam.ac.uk </em></p>" +
+				"<p><br>This research is conducted by Medical Research Council, Cognition and Brain Sciences Unit, University of Cambridge and has received a favourable ethical approval from the Cambridge Psychological Research Ethics Committee</i></p>" +
+				"<hr></div>"],
+
+			show_clickable_nav: true,
+			button_label_next: "<span style='color: black';> <strong> More information </stong></span>"
+		};
+		timeline.push(information3);
+
+		var informed_consent = {
+			type: "instructions",
+			pages: ["<div class= 'header'>" +
+				"<h1> Consent</h1>" +
+				"</div>" +
+				"<ul>" +
+				"<br><br><li> I have read and understood the study information provided to me on the previous pages. </li>" +
+				"<br><br><li> I understand that my participation is voluntary and that I am free to withdraw at any time, without giving a reason, without my medical care or legal rights being affected. </li>" +
+				"<br><br><li> I understand that my data may be made available anonymously to other researchers, both inside and outside of the MRC Cognition and Brain Sciences Unit. </li>" +
+				"<br><br><li> By clicking 'take part', I agree that I have read and confirm the above statements, and I agree to take part in this study.</li>" +
+				"</ul>" +
+				"<br><br><br><hr>" +
+				"<p><em><span style='color: black';>Click 'Take Part' to consent and continue with the study. On the next page, we will test your browser and then provide instructions for the task. <br>If you no longer wish to take part, close your internet tab/browser window.</span></em></p>"],
+			show_clickable_nav: true,
+			button_label_next: "<span style='color: blue';> <strong> Take Part</stong></span>"
+		};
+		timeline.push(informed_consent);
+
+
+		//start timeline
+		jatos.onLoad(function () {
+
+			jsPsych.init({
+				timeline: timeline,
+				on_finish: function (data) {
+
+					// Make JATOS remember that this session was run
+					jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+					jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
+					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
+
+					jatos.studySessionData.outputData.consent_results = jsPsych.data.get().values();;
+
+					jatos.submitResultData("[consent_start---" +
+						JSON.stringify(jatos.studySessionData) +
+						"---consent_end]", jatos.startNextComponent);
+				}
+			});
+
+		});
+
+	</script>
+</body>
+
+</html>

@@ -42,7 +42,7 @@ function trial_creator2(all_conditions) {
                     // Shuffle the coordinates of the schema PAs if its IC condition
                     if (iCond == 'schema_ic') {
                         schema_learning_coords = jsPsych.randomization.shuffle(schema_learning_coords)
-                    } else if (iCond == 'random_locations') {
+                    } else if (iCond == 'random_loc') {
                         // debugger
                         // Then, create a random location of 6 PAs
 
@@ -98,13 +98,13 @@ function trial_creator2(all_conditions) {
 
                         } // iLoc
 
-                    } else if (iCond == 'landmark_schema' | iCond == 'practice2') {
+                    } else if (iCond == 'schema_l' | iCond == 'practice2') {
 
                         // debugger
-                        // Take the two locations that have new PAs as neighbords, and fix those
-                        if (iCond == 'landmark_schema') {
+                        // Take the two locations that have new PAs as near-PAs, and fix those
+                        if (iCond == 'schema_l') {
                             
-                            var idx_of_landmarks = [0, 2] // this is hand coded, 2nd and 6th rows in the coordinates of schema_learning PAs, have new_pa_learning PAs as neighbors
+                            var idx_of_landmarks = [0, 2] // this is hand coded, 2nd and 6th rows in the coordinates of schema_learning PAs, have new_pa_learning PAs as near-PAs
 
                         } else if (iCond == 'practice2') {
 

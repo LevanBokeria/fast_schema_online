@@ -38,22 +38,22 @@
             session_results_schema_display: [],
             session_results_new_pa_learning: [],
             session_results_image_screen: [],
-            break_results: []
+            break_results: [],
+            instructions_results: []
         }
 
         jatos.studySessionData.inputData = {
             curr_session: 0,
             component_positions: {
-                instructions: 3,
-                session_pa: 4,
-                break: 5,
-                data_submission: 6,
-                debriefing: 7,
-                session_pa2: 9,
-                break2: 10,
-                debriefing2: 11,
-                post_practice: 12,
-                instructions2: 13,
+                consent: 2,
+                browser_checks: 3,
+                data_submission: 4,                
+                instructions: 5,
+                post_practice: 6,
+                block_pa: 7,
+                break: 8,
+                debriefing: 9,
+                data_submission: 10
             },
             n_rows: 12,
             n_cols: 12,
@@ -62,8 +62,8 @@
                 practice2: 'rgb(219,112,147)',
                 schema_c: 'rgb(0, 100, 255)',
                 schema_ic: '#228B22',
-                landmark_schema: '#B22222',
-                random_locations: '#DAA520',
+                schema_l: '#B22222',
+                random_loc: '#DAA520',
                 no_schema: 'rgb(138, 43, 226)',
             },
             condition_color_names: {
@@ -71,26 +71,17 @@
                 practice2: 'pink',
                 schema_c: 'blue',
                 schema_ic: 'green',
-                landmark_schema: 'red',
-                random_locations: 'yellow',
+                schema_l: 'red',
+                random_loc: 'yellow',
                 no_schema: 'purple',
-            },
-            condition_border_patterns: {
-                practice: 'triangles',
-                practice2: 'unknown',
-                schema_c: 'circles',
-                schema_ic: 'diamonds',
-                random_locations: 'bullseye_larger',
-                landmark_schema: 'bullsdiamond_larger',
-                no_schema: 'stars_larger'
             },
             condition_ses_counters: {
                 practice: 0,
                 practice2: 0,
-                schema_ic: 0,
                 schema_c: 0,
-                landmark_schema: 0,
-                random_locations: 0,
+                schema_ic: 0,                
+                schema_l: 0,
+                random_loc: 0,
                 no_schema: 0
             },
         }
@@ -281,7 +272,7 @@
         };
 
         let autoConditions = jatos.componentJsonInput.autoConditions
-        let debugMode = jatos.componentJsonInput.debugMode
+        let debugMode      = jatos.componentJsonInput.debugMode
 
         // debugger
 
@@ -291,8 +282,8 @@
                 practice2: 1,
                 schema_c: 2,
                 schema_ic: 2,
-                landmark_schema: 2,
-                random_locations: 2,
+                schema_l: 2,
+                random_loc: 2,
                 no_schema: 2,
             }
 
@@ -301,8 +292,8 @@
                 practice2: 1,
                 schema_c: 1,
                 schema_ic: 1,
-                landmark_schema: 1,
-                random_locations: 1,
+                schema_l: 1,
+                random_loc: 1,
                 no_schema: 1,
             }
 
@@ -329,8 +320,8 @@
                 practice2: 1,
                 schema_c: 2,
                 schema_ic: 2,
-                landmark_schema: 2,
-                random_locations: 2,
+                schema_l: 2,
+                random_loc: 2,
                 no_schema: 2,
             }
 
@@ -339,8 +330,8 @@
                 practice2: 2,
                 schema_c: 4,
                 schema_ic: 4,
-                landmark_schema: 4,
-                random_locations: 4,
+                schema_l: 4,
+                random_loc: 4,
                 no_schema: 4,
             }
 
@@ -426,15 +417,15 @@
             // debugger
             // Which counterbalancing was chosen?
             if (condition_chosen == 'cb1') {
-                order_of_conditions = ['schema_c', 'schema_ic', 'landmark_schema', 'random_locations', 'no_schema']
+                order_of_conditions = ['schema_c', 'schema_ic', 'schema_l', 'random_loc', 'no_schema']
             } else if (condition_chosen == 'cb2') {
-                order_of_conditions = ['schema_ic', 'landmark_schema', 'random_locations', 'no_schema', 'schema_c']
+                order_of_conditions = ['schema_ic', 'schema_l', 'random_loc', 'no_schema', 'schema_c']
             } else if (condition_chosen == 'cb3') {
-                order_of_conditions = ['landmark_schema', 'random_locations', 'no_schema', 'schema_c', 'schema_ic']
+                order_of_conditions = ['schema_l', 'random_loc', 'no_schema', 'schema_c', 'schema_ic']
             } else if (condition_chosen == 'cb4') {
-                order_of_conditions = ['random_locations', 'no_schema', 'schema_c', 'schema_ic', 'landmark_schema']
+                order_of_conditions = ['random_loc', 'no_schema', 'schema_c', 'schema_ic', 'schema_l']
             } else if (condition_chosen == 'cb5') {
-                order_of_conditions = ['no_schema', 'schema_c', 'schema_ic', 'landmark_schema', 'random_locations']
+                order_of_conditions = ['no_schema', 'schema_c', 'schema_ic', 'schema_l', 'random_loc']
             }
 
             // Create the stimuli for each condition
@@ -511,12 +502,12 @@
                     new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2,
                 },
 
-                random_locations: {
+                random_loc: {
                     schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
                     new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
                 },
 
-                landmark_schema: {
+                schema_l: {
                     schema_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1,
                     new_pa_learning: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2,
                 },

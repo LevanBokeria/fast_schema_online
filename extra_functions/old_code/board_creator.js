@@ -81,7 +81,7 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,curre
       // Add the old PAs and make them visible
       var schema_img_array = jatos.studySessionData.inputData.stimuli[condition]['schema_learning']
 
-      // If its schema IC, the img coordinates of old PAs should be from the last session. Define a variable for that
+      // If its schema IC, the img coordinates of old PAs should be from the last block. Define a variable for that
       var last_schema_learning_ses = jatos.studySessionData.inputData.n_ses_per_condition.schema_learning
 
       var schema_img_board_coords = jatos.studySessionData.inputData.condition_coords[condition]['schema_learning']['ses' + last_schema_learning_ses]

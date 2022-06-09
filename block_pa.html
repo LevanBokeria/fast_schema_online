@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sessions2</title>
+        <title>blocks2</title>
         <script src='jatos.js'></script>
         <script src='./jspsych-6.3.1/jspsych.js'></script>        
         <script src='./extra_functions/lodash.js'></script>
@@ -21,15 +21,15 @@
 
         jatos.onLoad(function() {
             // debugger
-            // iterate the session
-            jatos.studySessionData.inputData.curr_session ++
-            let curr_session = jatos.studySessionData.inputData.curr_session
+            // iterate the block
+            jatos.studySessionData.inputData.curr_block ++
+            let curr_block = jatos.studySessionData.inputData.curr_block
 
-            let trials_for_this_session = jatos.studySessionData.inputData.all_sessions[curr_session-1]
+            let trials_for_this_block = jatos.studySessionData.inputData.all_blocks[curr_block-1]
 
-            let curr_condition = trials_for_this_session[0].condition
+            let curr_condition = trials_for_this_block[0].condition
 
-            // Update the session counter for this condition
+            // Update the block counter for this condition
             jatos.studySessionData.inputData.condition_ses_counters[curr_condition] ++
 
             var schema_display = {
@@ -107,15 +107,15 @@
             subtimeline.push(image_display)
             subtimeline.push(new_pa_learning)
 
-             var session_procedure = {
+             var block_procedure = {
                 timeline: subtimeline,
-                timeline_variables: trials_for_this_session,
+                timeline_variables: trials_for_this_block,
             }
             
             var timeline = []
 
             timeline.push(preload_trial)
-            timeline.push(session_procedure)
+            timeline.push(block_procedure)
 
             jsPsych.init({
                 timeline: timeline,                    
@@ -124,19 +124,19 @@
                 on_finish: function(data) {
 
                     // Save the data
-                    var session_results = jsPsych.data.get().values()
+                    var block_results = jsPsych.data.get().values()
 
                     // Separate out image presentation from responding
                     
-                    jatos.studySessionData.outputData.session_results_image_screen.push(...session_results.filter(el => el.trial_stage == 'image_display'))
+                    jatos.studySessionData.outputData.block_results_image_screen.push(...block_results.filter(el => el.trial_stage == 'image_display'))
 
                     if (jatos.studySessionData.inputData.run_schema_display){
-                        jatos.studySessionData.outputData.session_results_schema_display.push(...session_results.filter(el => el.trial_stage == 'schema_display'))
+                        jatos.studySessionData.outputData.block_results_schema_display.push(...block_results.filter(el => el.trial_stage == 'schema_display'))
                     }
 
-                    jatos.studySessionData.outputData.session_results_new_pa_learning.push(...session_results.filter(el => el.trial_stage == 'new_pa_learning'))
+                    jatos.studySessionData.outputData.block_results_new_pa_learning.push(...block_results.filter(el => el.trial_stage == 'new_pa_learning'))
 
-					// Make JATOS remember that this session was run
+					// Make JATOS remember that this block was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
                     jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
@@ -144,7 +144,7 @@
                     // Which comp to start
                     let comp_to_start
                     // debugger
-                    if (jatos.studySessionData.inputData.curr_session <= 2){
+                    if (jatos.studySessionData.inputData.curr_block <= 2){
                         // Start post practice component
                         comp_to_start = jatos.studySessionData.inputData.component_positions.post_practice
                     } else {

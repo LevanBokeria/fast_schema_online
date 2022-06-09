@@ -34,9 +34,9 @@
 			let instructions_text = []
 			let page_title = []
 
-			let curr_session = jatos.studySessionData.inputData.curr_session
+			let curr_block = jatos.studySessionData.inputData.curr_block
 
-			if (curr_session == jatos.studySessionData.inputData.all_sessions.length) {
+			if (curr_block == jatos.studySessionData.inputData.all_blocks.length) {
 
 				instructions_text = 'Thank you! You have finished the experiment. Please complete a short debriefing.'
 
@@ -47,13 +47,13 @@
 
 			} else {
 
-				var previous_condition = jatos.studySessionData.inputData.all_sessions[curr_session - 1][0].condition
-				var next_condition = jatos.studySessionData.inputData.all_sessions[curr_session][0].condition
+				var previous_condition = jatos.studySessionData.inputData.all_blocks[curr_block - 1][0].condition
+				var next_condition = jatos.studySessionData.inputData.all_blocks[curr_block][0].condition
 
 				if (previous_condition != next_condition) {
 					// So we're changing the board
 
-					var curr_trial = jatos.studySessionData.inputData.all_sessions[curr_session][0]
+					var curr_trial = jatos.studySessionData.inputData.all_blocks[curr_block][0]
 
 					// Create the board element
 					var grid_border = board_creator(
@@ -124,7 +124,7 @@
 					// 	board_specific_instructions = 'IMPORTANT: On this board, there are NO visible pictures. All you have to do is find the hidden pictures.'
 					// }
 
-					instructions_text = '<p>You will now learn locations of hidden items on a new ' + jatos.studySessionData.inputData.all_sessions[curr_session][0].color_name + ' board that you can see below</p>' +
+					instructions_text = '<p>You will now learn locations of hidden items on a new ' + jatos.studySessionData.inputData.all_blocks[curr_block][0].color_name + ' board that you can see below</p>' +
 						grid_border.innerHTML
 					// '<p><b>' + board_specific_instructions + '</b></p>' +
 
@@ -139,12 +139,12 @@
 
 					instructions_text += '<p><br>These will be the 6 hidden pictures you will have to find:</p>' +
 						flex_hidden_pics_el.innerHTML +
-						'<p>You will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' sessions, each session with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c * 6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br>' +
+						'<p>You will do ' + jatos.studySessionData.inputData.n_ses_per_condition.schema_c + ' blocks, each block with ' + (jatos.studySessionData.inputData.n_trials_per_pa.schema_c * 6) + ' trials (' + jatos.studySessionData.inputData.n_trials_per_pa.schema_c + ' trials per hidden picture). <br><br>' +
 						'Before you start, please write down the names of the objects in the pictures above. If you do not know the name, take a guess. <br><br> Then, click "Continue" to begin!'
 
 					page_title = 'Starting a new board:'
 				} else {
-					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_color_names[previous_condition] + ' board. Once you are ready please move to the next session.'
+					instructions_text = 'Please take a break. You will continue learning the locations of the same images on this ' + jatos.studySessionData.inputData.condition_color_names[previous_condition] + ' board. Once you are ready please move to the next block.'
 
 					page_title = 'Break'
 
@@ -220,7 +220,7 @@
 					var results = jsPsych.data.get().values()
 					jatos.studySessionData.outputData.break_results.push(results)
 
-					// Make JATOS remember that this session was run
+					// Make JATOS remember that this block was run
 					jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
 					jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;

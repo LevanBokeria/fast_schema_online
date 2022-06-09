@@ -35,15 +35,15 @@
         var cond_to_run = {}
 
         jatos.studySessionData.outputData = {
-            session_results_schema_display: [],
-            session_results_new_pa_learning: [],
-            session_results_image_screen: [],
+            block_results_schema_display: [],
+            block_results_new_pa_learning: [],
+            block_results_image_screen: [],
             break_results: [],
             instructions_results: []
         }
 
         jatos.studySessionData.inputData = {
-            curr_session: 0,
+            curr_block: 0,
             component_positions: {
                 consent: 2,
                 browser_checks: 3,
@@ -369,9 +369,9 @@
             createConditions();
 
             // Create the trials
-            jatos.studySessionData.inputData.all_sessions = trial_creator(cond_to_run)
+            jatos.studySessionData.inputData.all_blocks = trial_creator(cond_to_run)
 
-            // Make JATOS remember that this session was run
+            // Make JATOS remember that this block was run
             jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
             jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
             jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
@@ -397,9 +397,9 @@
                     createConditions();
 
                     // Create the trials
-                    jatos.studySessionData.inputData.all_sessions = trial_creator(cond_to_run)
+                    jatos.studySessionData.inputData.all_blocks = trial_creator(cond_to_run)
 
-                    // Make JATOS remember that this session was run
+                    // Make JATOS remember that this block was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
                     jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;

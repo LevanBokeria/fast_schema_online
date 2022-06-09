@@ -81,7 +81,7 @@ jsPsych.plugins["playground2"] = (function() {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Trial counter',
         default: null,
-        description: 'Which trial is this within this session?'
+        description: 'Which trial is this within this block?'
       },
       hide_cursor: {
         type: jsPsych.plugins.parameterType.BOOL,
@@ -113,7 +113,7 @@ jsPsych.plugins["playground2"] = (function() {
     }
     
     // Get all the info from this trial here as a local variable
-    var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session-1][trial.trial_counter]
+    var curr_trial = jatos.studySessionData.inputData.all_blocks[jatos.studySessionData.inputData.curr_block-1][trial.trial_counter]
 
     // Create the wrapper arena for box to move in
     wrapper_arena = document.createElement('div')
@@ -269,7 +269,7 @@ jsPsych.plugins["playground2"] = (function() {
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
-      trial_data.session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
+      trial_data.block = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
       trial_data.new_pa_img = curr_trial.new_pa_img
       trial_data.corr_row = curr_trial.new_pa_img_coords[0]
       trial_data.corr_col = curr_trial.new_pa_img_coords[1]

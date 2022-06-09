@@ -19,7 +19,7 @@ function trial_creator(all_conditions) {
 
         for (iSes = 0; iSes < istage_n_ses; iSes++) {
 
-            var session_trials = []
+            var block_trials = []
 
             for (iPA = 0; iPA < iCondStages.hidden_pas.length; iPA++) {
 
@@ -124,7 +124,7 @@ function trial_creator(all_conditions) {
                         var check_against = [...landmark_rcs]
 
                         // Then, create a random location of 6 landmarks
-                        debugger
+                        // debugger
                         // From the allowed_rc Remove the row/cols that are the landmaks 
                         // allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[0]), 1)
                         // allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[1]), 1)
@@ -205,50 +205,50 @@ function trial_creator(all_conditions) {
                         condition: iCond,
                         color: jatos.studySessionData.inputData.condition_colors[iCond],
                         color_name: jatos.studySessionData.inputData.condition_color_names[iCond],
-                        session: iSes,
+                        block: iSes,
                     }
 
-                    session_trials.push(trial)
+                    block_trials.push(trial)
 
                 } // iRep
 
             } // iPA
 
             if (iCond == 'practice' | iCond == 'practice2') {
-                session_trials = jsPsych.randomization.shuffle(session_trials)
+                block_trials = jsPsych.randomization.shuffle(block_trials)
             } else {
-                session_trials = jsPsych.randomization.shuffleNoRepeats(session_trials, function (a, b) { return a.new_pa_img === b.new_pa_img })
+                block_trials = jsPsych.randomization.shuffleNoRepeats(block_trials, function (a, b) { return a.new_pa_img === b.new_pa_img })
             }
             // Add a key about the trial counter and random offset 
-            for (iT = 0; iT < session_trials.length; iT++) {
+            for (iT = 0; iT < block_trials.length; iT++) {
 
                 // Trial counter prompt
-                session_trials[iT]['trial_counter_prompt'] = '<p>Trial ' + (iT + 1) + '/' + session_trials.length + '</p>'
+                block_trials[iT]['trial_counter_prompt'] = '<p>Trial ' + (iT + 1) + '/' + block_trials.length + '</p>'
 
                 // Trial counter itself
-                session_trials[iT]['trial_counter'] = iT
+                block_trials[iT]['trial_counter'] = iT
 
                 // top and left offsets
-                session_trials[iT]['top_offset-schema-display'] = Math.floor(Math.random() * 160)
-                session_trials[iT]['left_offset-schema-display'] = Math.floor(Math.random() * 160)
+                block_trials[iT]['top_offset-schema-display'] = Math.floor(Math.random() * 160)
+                block_trials[iT]['left_offset-schema-display'] = Math.floor(Math.random() * 160)
 
                 if (jatos.studySessionData.inputData.move_board_within_trial) {
-                    session_trials[iT]['top_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
-                    session_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
+                    block_trials[iT]['top_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
+                    block_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
                 } else {
-                    session_trials[iT]['top_offset-new-pa-learning'] = session_trials[iT]['top_offset-schema-display']
-                    session_trials[iT]['left_offset-new-pa-learning'] = session_trials[iT]['left_offset-schema-display']
+                    block_trials[iT]['top_offset-new-pa-learning'] = block_trials[iT]['top_offset-schema-display']
+                    block_trials[iT]['left_offset-new-pa-learning'] = block_trials[iT]['left_offset-schema-display']
                 }
                 // top and left offsets
-                // session_trials[iT]['top_offset-schema-display'] = 0
-                // session_trials[iT]['left_offset-schema-display'] = 0
+                // block_trials[iT]['top_offset-schema-display'] = 0
+                // block_trials[iT]['left_offset-schema-display'] = 0
 
-                // session_trials[iT]['top_offset-new-pa-learning'] = 0
-                // session_trials[iT]['left_offset-new-pa-learning'] = 0
+                // block_trials[iT]['top_offset-new-pa-learning'] = 0
+                // block_trials[iT]['left_offset-new-pa-learning'] = 0
 
             }
             // debugger
-            all_trials.push(session_trials)
+            all_trials.push(block_trials)
         }
     });
     // debugger

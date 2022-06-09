@@ -30,7 +30,7 @@
 			// Create the board element for instructions
 			// Create the board
 
-			var curr_trial = jatos.studySessionData.inputData.all_sessions[1][0]
+			var curr_trial = jatos.studySessionData.inputData.all_blocks[1][0]
 
 			var grid_border = board_creator(
 				grid_size,
@@ -139,7 +139,7 @@
 			grid_trial_1_stages_el.innerHTML += grid_border_fb.innerHTML
 
 			// Create the board with moved items
-            var next_trial = jatos.studySessionData.inputData.all_sessions[1][1]
+            var next_trial = jatos.studySessionData.inputData.all_blocks[1][1]
 
 			var grid_border_moved_items = board_creator(
 				grid_size,
@@ -289,11 +289,11 @@
 
 				on_finish: function (data) {
 
-					// Make JATOS remember that this session was run
+					// Make JATOS remember that this block was run
 					jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
 					jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-					// debugger
+					debugger
 					// Record results
 					jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
 

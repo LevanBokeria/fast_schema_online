@@ -4,7 +4,7 @@ This repository contains code for running the online experiment for the schema b
 
 ## extra_files:
 
-Contains some miscellaneous files, draft scripts during development, copies of batch session data, etc.
+Contains some miscellaneous files, draft scripts during development, copies of batch block data, etc.
 
 ## extra_functions:
 

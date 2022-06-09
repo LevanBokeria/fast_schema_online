@@ -55,7 +55,7 @@
         jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
         jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
         jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-
+        
         // Timer to check if the window is large enough
         var interval = setInterval(function () {
 
@@ -88,7 +88,7 @@
 
                     jatos.submitResultData("[get_pid_comp_start---" +
                         JSON.stringify(jatos.studySessionData) +
-                        "---get_pid_comp_end]", function(){jatos.startComponentByPos(8)});
+                        "---get_pid_comp_end]", jatos.startNextComponent);
 
                 } else {
 
@@ -99,7 +99,7 @@
 
                         jatos.submitResultData("[get_pid_comp_start---" +
                             JSON.stringify(jatos.studySessionData) +
-                            "---get_pid_comp_end]", function(){jatos.startComponentByPos(8)});
+                            "---get_pid_comp_end]", jatos.startNextComponent);
 
                     } else {
 
@@ -114,7 +114,7 @@
 
                                 jatos.submitResultData("[get_pid_comp_start---" +
                                     JSON.stringify(jatos.studySessionData) +
-                                    "---get_pid_comp_end]", function(){jatos.startComponentByPos(8)});
+                                    "---get_pid_comp_end]", jatos.startNextComponent);
 
 
                             }

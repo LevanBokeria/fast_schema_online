@@ -10,7 +10,7 @@
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-survey-multi-choice.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-preload.js'></script>
-	<script src='./extra_functions/board_creator2.js'></script>
+	<script src='./extra_functions/board_creator.js'></script>
 	<script src="jatos.js"></script>
 	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
 	</link>
@@ -32,7 +32,7 @@
 
 			var curr_trial = jatos.studySessionData.inputData.all_sessions[1][0]
 
-			var grid_border = board_creator2(
+			var grid_border = board_creator(
 				grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
@@ -86,7 +86,7 @@
 			grid_border_small.children[0].style.width = small_grid_size
 
 			// Create the empty purple board
-			var grid_border_empty = board_creator2(
+			var grid_border_empty = board_creator(
 				small_grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
@@ -105,7 +105,7 @@
 			grid_border_empty.children[0].style.width = small_grid_size
 
 			// Create the board with visible and 1 hidden item
-			var grid_border_fb = board_creator2(
+			var grid_border_fb = board_creator(
 				small_grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
@@ -141,7 +141,7 @@
 			// Create the board with moved items
             var next_trial = jatos.studySessionData.inputData.all_sessions[1][1]
 
-			var grid_border_moved_items = board_creator2(
+			var grid_border_moved_items = board_creator(
 				grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,
@@ -176,7 +176,7 @@
 			grid_border_small_moved_items.children[0].style.width = small_grid_size
 
 			// Create the board with visible and 1 hidden item
-			var grid_border_fb_moved_items = board_creator2(
+			var grid_border_fb_moved_items = board_creator(
 				small_grid_size,
 				jatos.studySessionData.inputData.n_rows,
 				jatos.studySessionData.inputData.n_cols,

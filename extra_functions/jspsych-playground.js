@@ -8,55 +8,19 @@
  *
  **/
 
-jsPsych.plugins["playground"] = (function() {
+jsPsych.plugins["playground2"] = (function() {
 
   var plugin = {};
 
   plugin.info = {
-    name: 'playground',
+    name: 'playground2',
     description: '',
     parameters: {
-      stimulus: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Stimulus',
-        default: undefined,
-        description: 'The image to be displayed'
-      },
-      stimulus_idx: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Stimulus index',
-        default: null,
-        description: 'Index of the paired-associate'
-      },      
-      stimulus_height: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Image height',
-        default: null,
-        description: 'Set the image height in pixels'
-      },
-      stimulus_width: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Image width',
-        default: null,
-        description: 'Set the image width in pixels'
-      },
-      maintain_aspect_ratio: {
-        type: jsPsych.plugins.parameterType.BOOL,
-        pretty_name: 'Maintain aspect ratio',
-        default: true,
-        description: 'Maintain the aspect ratio after setting width or height'
-      },
       condition: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Experimental Condition',
         default: null,
         description: 'Name of the schema condition for this trial'
-      },  
-      stage: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Experimental Stage',
-        default: null,
-        description: 'Schema learning or New PA learning'
       },       
       coords: {
         type: jsPsych.plugins.parameterType.INT,
@@ -77,12 +41,54 @@ jsPsych.plugins["playground"] = (function() {
         default: null,
         description: 'X offset of the board to randomize its position'
       },                  
-      show_stimulus: {
+      show_schema_pas: {
         type: jsPsych.plugins.parameterType.BOOL,
-        pretty_name: 'Show prompt stimulus',
+        pretty_name: 'Show schema PAs',
         default: false,
-        description: 'This will decide whether the prompt item is shown or now.'
-      }       
+        description: 'This will decide whether all the schema PAs are shown from the beginning.'
+      },      
+      show_new_pas: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Show new PAs',
+        default: false,
+        description: 'This will decide whether all the new PAs are shown from the beginning.'
+      },            
+      allow_response: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Allow participant to respond',
+        default: true,
+        description: 'Record mouse click or not. If only showing the schema-PAs then dont record'
+      },   
+      show_feedback: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Show feedback or not',
+        default: true,
+        description: 'Show feedback or not'
+      },  
+      show_schema_pas_at_feedback: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Show schema PAs at feedback',
+        default: false,
+        description: 'This will decide whether all the schema PAs are shown at the feedback stage.'
+      },                     
+      trial_duration: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Trial duration',
+        default: null,
+        description: 'The maximum duration to wait for a response or untill moving on.'
+      },
+      trial_counter: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Trial counter',
+        default: null,
+        description: 'Which trial is this within this session?'
+      },
+      hide_cursor: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'hide cursor?',
+        default: false,
+        description: 'If its schema-PA display stage, hide the cursor.'
+      },           
     }
   }
 
@@ -99,9 +105,15 @@ jsPsych.plugins["playground"] = (function() {
     }
     // debugger
 
-    // if its schema learning, then define a string like 'ses1' 'ses2' etc, to access img coords. Else if its new pa learning, then define a string 'new_pa'
-    let curr_session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition][trial.stage]
-    let img_array    = jatos.studySessionData.inputData.stimuli[trial.condition][trial.stage]
+    // Hide the cursos?
+    if (trial.hide_cursor){
+      document.querySelector('.jspsych-content-wrapper').classList.add('noCursor')
+    } else {
+      document.querySelector('.jspsych-content-wrapper').classList.remove('noCursor')
+    }
+    
+    // Get all the info from this trial here as a local variable
+    var curr_trial = jatos.studySessionData.inputData.all_sessions[jatos.studySessionData.inputData.curr_session-1][trial.trial_counter]
 
     // Create the wrapper arena for box to move in
     wrapper_arena = document.createElement('div')
@@ -109,20 +121,14 @@ jsPsych.plugins["playground"] = (function() {
     wrapper_arena.style.height = '700px'
     wrapper_arena.style.width = '700px'
     wrapper_arena.style.border = '1px solid black'
-    // debugger
+    
     // Create the board
     grid_border = board_creator(500,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
-      jatos.studySessionData.inputData.condition_colors[trial.condition],
-      jatos.studySessionData.inputData.condition_border_patterns[trial.condition],
-      false,
-      img_array,
-      jatos.studySessionData.inputData.condition_coords[trial.condition][trial.stage]['ses' + curr_session],
-      trial.stage,
-      trial.condition)
-
-    //Add mouseclick listener MUST EDIT
+      trial.show_schema_pas,
+      trial.show_new_pas,
+      curr_trial)
 
     // Randomly modify grid position
     grid_border.style.position = 'relative'
@@ -131,31 +137,17 @@ jsPsych.plugins["playground"] = (function() {
 
     var all_cells = grid_border.querySelectorAll('.cells')
 
-    for (iC=0; iC<all_cells.length; iC++){
-      // console.log(iC)
-      all_cells[iC].addEventListener('click',getResponse)
+    
+    if (trial.allow_response){
+      for (iC=0; iC<all_cells.length; iC++){
+        // console.log(iC)
+        all_cells[iC].addEventListener('click',getResponse)
+      }
     }
 
     wrapper_arena.appendChild(grid_border)
     display_element.appendChild(wrapper_arena)
 
-    // debugger
-		
-    //show prompt_question with the trial counter
-    // let iTrial = jsPsych.data.get().values().length + 1
-    // display_element.insertAdjacentHTML('beforeend', ' Trial ' + iTrial);
-
-    if (trial.show_stimulus){
-      //show stimulus
-      let stimulus_element = document.createElement('img')
-      stimulus_element.className = 'prompt_stimulus'
-      stimulus_element.style.width = trial.stimulus_width
-      stimulus_element.src = trial.stimulus
-      stimulus_element.style.display = 'block'
-      stimulus_element.style.margin = 'auto'
-
-      display_element.appendChild(stimulus_element);    
-    }
     // Add an empty feedback element
     let feedback_el = document.createElement('P')
     feedback_el.innerText = 'null'
@@ -168,9 +160,15 @@ jsPsych.plugins["playground"] = (function() {
 
     startTime = performance.now();
 
-    // if(trial.trial_duration !== null){
-      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, jatos.studySessionData.inputData.trial_duration);
-    // }
+    if (trial.allow_response) {
+
+      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, trial.trial_duration);
+
+    } else {
+    
+      jsPsych.pluginAPI.setTimeout(function(){endTrial()}, trial.trial_duration);
+
+    }
 
     function getResponse(e){
       info = {}
@@ -182,7 +180,7 @@ jsPsych.plugins["playground"] = (function() {
       info.mouse_clientY = e.clientY
 
       // Get the dimensions and location of the target item
-      var pa_dim_loc = document.querySelector('#PA_'+trial.stimulus_idx).getBoundingClientRect()
+      var pa_dim_loc = document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).getBoundingClientRect()
       info.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
       info.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2
 
@@ -191,7 +189,7 @@ jsPsych.plugins["playground"] = (function() {
       info.row = parseInt(curr_row_col[2],10)
       info.col = parseInt(curr_row_col[4],10)
 
-      if (info.row == trial.coords[0] & info.col == trial.coords[1]){
+      if (info.row == curr_trial.new_pa_img_coords[0] & info.col == curr_trial.new_pa_img_coords[1]){
         info.correct = true
       } else {
         info.correct = false
@@ -207,8 +205,6 @@ jsPsych.plugins["playground"] = (function() {
     }
 
     function doFeedback(correct, timeout) {
-      // console.log('doFB called!')
-      // debugger
 
       // Remove all the event listeners from all the cells.
       document.querySelectorAll('.cells').forEach(function(el){
@@ -235,32 +231,30 @@ jsPsych.plugins["playground"] = (function() {
       }
 
       // Show the true feedback!
-      document.querySelector('#PA_'+trial.stimulus_idx).style.visibility = 'visible'
-      document.querySelector('#PA_'+trial.stimulus_idx).parentElement.style.opacity = 1
+      document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).style.visibility = 'visible'
+      document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).parentElement.style.opacity = 1
 
-      // Also show the schema items?
-
-      if (trial.stage == 'schema_learning' | trial.stage == 'practice'){
-
-        // Just make all the PAs show up
-        document.querySelectorAll('.PA').forEach(item => item.style.visibility = 'visible')
-        document.querySelectorAll('.PA').forEach(item => item.parentElement.style.opacity = 1)
-
-      } else if (trial.stage == 'new_pa_learning'){
-
-        // Just make all the PAs show up
-        document.querySelectorAll('.oPA').forEach(item => item.style.visibility = 'visible')
-        document.querySelectorAll('.oPA').forEach(item => item.parentElement.style.opacity = 1)        
+      // If wanted, also show the schema PAs
+      if (trial.show_schema_pas_at_feedback){
+        
+        document.querySelectorAll("[id^='schemaPA']").forEach(item => item.style.visibility = 'visible')
+        document.querySelectorAll("[id^='schemaPA']").forEach(item => item.parentElement.style.opacity = 1)
 
       }
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
-      jsPsych.pluginAPI.setTimeout(function() {
+      // If we're showing feedback, then make a timeout function
+      if (trial.show_feedback){
+        jsPsych.pluginAPI.setTimeout(function() {
+          endTrial();
+        }, 
+        jatos.studySessionData.inputData.feedback_duration);
+      } else {
         endTrial();
-      }, jatos.studySessionData.inputData.feedback_duration);
-    
+      }
+
     }
 
     function endTrial() {
@@ -275,13 +269,13 @@ jsPsych.plugins["playground"] = (function() {
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
-      trial_data.stage = trial.stage
       trial_data.session = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
-      trial_data.stimulus = trial.stimulus
-      trial_data.corr_row = trial.coords[0]
-      trial_data.corr_col = trial.coords[1]
+      trial_data.new_pa_img = curr_trial.new_pa_img
+      trial_data.corr_row = curr_trial.new_pa_img_coords[0]
+      trial_data.corr_col = curr_trial.new_pa_img_coords[1]
       trial_data.top_offset = trial.top_offset
       trial_data.left_offset = trial.left_offset
+      trial_data.trial_stage = trial.data.trial_stage
 
       // clear the display
       display_element.innerHTML = '';

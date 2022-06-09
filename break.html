@@ -11,7 +11,7 @@
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-button-response.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-preload.js'></script>
-	<script src='./extra_functions/board_creator2.js'></script>
+	<script src='./extra_functions/board_creator.js'></script>
 	<script src="jatos.js"></script>
 	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css">
 	</link>
@@ -56,7 +56,7 @@
 					var curr_trial = jatos.studySessionData.inputData.all_sessions[curr_session][0]
 
 					// Create the board element
-					var grid_border = board_creator2(
+					var grid_border = board_creator(
 						300,
 						jatos.studySessionData.inputData.n_rows,
 						jatos.studySessionData.inputData.n_cols,

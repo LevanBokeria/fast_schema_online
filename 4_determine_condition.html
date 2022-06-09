@@ -377,7 +377,8 @@
             jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
             jatos.submitResultData("[conditions_start---" +
-                JSON.stringify(jatos.studySessionData) + "---conditions_end]", function () { jatos.startComponentByPos(3) });
+                JSON.stringify(jatos.studySessionData) + "---conditions_end]", 
+                function () {jatos.studySessionData.inputData.component_positions.instructions});
 
 
         } else {
@@ -399,12 +400,13 @@
                     jatos.studySessionData.inputData.all_sessions = trial_creator(cond_to_run)
 
                     // Make JATOS remember that this session was run
-                    jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
-                    jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+                    jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+                    jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
                     jatos.submitResultData("[conditions_start---" +
-                        JSON.stringify(jatos.studySessionData) + "---conditions_end]", function () { jatos.startComponentByPos(3) });
+                        JSON.stringify(jatos.studySessionData) + "---conditions_end]",
+                        function (){ jatos.startComponentByPos(jatos.studySessionData.inputData.component_positions.instructions) });
 
                 } // on finish
             });     // jsPsych.init 

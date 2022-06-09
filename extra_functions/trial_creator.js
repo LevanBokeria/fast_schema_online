@@ -200,7 +200,6 @@ function trial_creator(all_conditions) {
                         condition: iCond,
                         color: jatos.studySessionData.inputData.condition_colors[iCond],
                         color_name: jatos.studySessionData.inputData.condition_color_names[iCond],
-                        border_pattern: jatos.studySessionData.inputData.condition_border_patterns[iCond],
                         session: iSes,
                     }
 

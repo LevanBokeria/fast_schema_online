@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Determine condition2</title>
+    <title>Determine condition</title>
     <script src='jatos.js'></script>
     <script src='./jspsych-6.3.1/jspsych.js'></script>
     <script src='./extra_functions/lodash.js'></script>
@@ -365,7 +365,7 @@
 
             condition_chosen = 'cb' + (minCond + 1)
 
-            debugger
+            // debugger
             createConditions();
 
             // Create the trials
@@ -452,8 +452,8 @@
             // For the no_schema condition, juts remove the visible_pas PAs
             jatos.studySessionData.inputData.stimuli.no_schema.visible_pas = []
 
-
-            cond_to_run.practice = jatos.studySessionData.inputData.stimuli.practice
+            // debugger
+            cond_to_run.practice  = jatos.studySessionData.inputData.stimuli.practice
             cond_to_run.practice2 = jatos.studySessionData.inputData.stimuli.practice2
             cond_to_run[order_of_conditions[0]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[0]]
             cond_to_run[order_of_conditions[1]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[1]]

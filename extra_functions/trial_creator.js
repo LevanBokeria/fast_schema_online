@@ -124,10 +124,15 @@ function trial_creator(all_conditions) {
                         var check_against = [...landmark_rcs]
 
                         // Then, create a random location of 6 landmarks
-
+                        debugger
                         // From the allowed_rc Remove the row/cols that are the landmaks 
-                        allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[0]), 1)
-                        allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[1]), 1)
+                        // allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[0]), 1)
+                        // allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[1]), 1)
+                        // Code above didn't work!!!!!! Lets redo this correctly
+                        allowed_rc = allowed_rc.filter(item => !_.isEqual(item, landmark_rcs[0]))
+                        allowed_rc = allowed_rc.filter(item => !_.isEqual(item, landmark_rcs[1]))
+
+
 
                         for (iLoc = 0; iLoc <= 5; iLoc++) {
 

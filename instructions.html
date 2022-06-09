@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-	<title>Instructions 2</title>
+	<title>Instructions</title>
 	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
@@ -20,10 +20,10 @@
 
 <body>
 	<script>
-		// debugger
+		
 		//start timeline
 		jatos.onLoad(function () {
-			
+			debugger
 			//make a timeline
 			let timeline = [];
 			let grid_size = 300
@@ -297,7 +297,7 @@
 					// Record results
 					jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
 
-					let comp_to_start = jatos.studySessionData.inputData.component_positions.block_pa2
+					let comp_to_start = jatos.studySessionData.inputData.component_positions.block_pa
 
 					jatos.submitResultData('[instructions_start---' +
 						JSON.stringify(jatos.studySessionData) +

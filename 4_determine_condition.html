@@ -378,7 +378,7 @@
 
             jatos.submitResultData("[conditions_start---" +
                 JSON.stringify(jatos.studySessionData) + "---conditions_end]", 
-                function () {jatos.studySessionData.inputData.component_positions.instructions});
+                function () {jatos.startComponentByPos(jatos.studySessionData.inputData.component_positions.instructions)});
 
 
         } else {

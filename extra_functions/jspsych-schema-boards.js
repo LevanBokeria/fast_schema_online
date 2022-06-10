@@ -253,6 +253,9 @@ jsPsych.plugins["schema_boards"] = (function() {
 
       debugger
  
+      // Save the response parameters
+      var trial_data = response;
+
       // Record information about the screen size, viewport size, element positions, etc.
       trial_data.display_information = {
         wrapper_arena_position: document.querySelector('#wrapper_arena').getBoundingClientRect(),
@@ -266,9 +269,6 @@ jsPsych.plugins["schema_boards"] = (function() {
         window_outerWidth: window.outerWidth,        
       }
 
-      // gather the data to store for the trial
-      var trial_data = response;
-
       // Get the dimensions and location of the target item
       var pa_dim_loc = document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).getBoundingClientRect()
       trial_data.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
@@ -276,8 +276,10 @@ jsPsych.plugins["schema_boards"] = (function() {
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
+      trial_data.arrangement = curr_trial.hidden_pa_img_coords2.arrangement
       trial_data.block = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
       trial_data.hidden_pa_img = curr_trial.hidden_pa_img
+      trial_data.hidden_pa_img_type = curr_trial.hidden_pa_img_coords2.subtype
       trial_data.corr_row = curr_trial.hidden_pa_img_coords2.row
       trial_data.corr_col = curr_trial.hidden_pa_img_coords2.column
       trial_data.top_offset = trial.top_offset

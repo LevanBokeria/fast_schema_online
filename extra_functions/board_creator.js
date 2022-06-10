@@ -5,9 +5,9 @@ function board_creator(board_size_px,
     show_hidden_pas,
     curr_trial){ 
 
-    // Border image to use
-    let border_image_path = 'img/border_images/' + curr_trial.border_pattern + '.png'
 
+    debugger
+    
     // Create the grid 
     grid_border = document.createElement('div')
     grid_border.id = 'grid_border'
@@ -74,8 +74,8 @@ function board_creator(board_size_px,
     for (iImg = 0; iImg < curr_trial.visible_pa_imgs.length; iImg++){
 
       // Which row and col?
-      let i_row = curr_trial.visible_pa_img_coords[iImg][0]
-      let i_col = curr_trial.visible_pa_img_coords[iImg][1]
+      let i_row = curr_trial.visible_pa_img_coords2[iImg].row
+      let i_col = curr_trial.visible_pa_img_coords2[iImg].column
 
       iEl = document.createElement('img')
 
@@ -99,8 +99,8 @@ function board_creator(board_size_px,
     for (iImg = 0; iImg < curr_trial.hidden_pa_all_imgs.length; iImg++){
 
       // Which row and col?
-      let i_row = curr_trial.hidden_pa_all_img_coords[iImg][0]
-      let i_col = curr_trial.hidden_pa_all_img_coords[iImg][1]
+      let i_row = curr_trial.hidden_pa_all_img_coords2[iImg].row
+      let i_col = curr_trial.hidden_pa_all_img_coords2[iImg].column
 
       iEl = document.createElement('img')
 

@@ -8,7 +8,7 @@ function trial_creator(all_conditions) {
     Object.keys(all_conditions).forEach(function (iCond, index) {
         // iCond = 'no_schema'
 
-        console.log('Condition: ', iCond)
+        //console.log('Condition: ', iCond)
 
         let iCondStages = all_conditions[iCond]
 
@@ -29,18 +29,18 @@ function trial_creator(all_conditions) {
 
         for (iBlock = 0; iBlock < istage_n_ses; iBlock++) {
             
-            console.log('session: ',iBlock)
+            //console.log('session: ',iBlock)
 
             var block_trials = []
 
             for (iPA = 0; iPA < iCondStages.hidden_pas.length; iPA++) {
 
-                console.log('PA: ',iPA)
+                //console.log('PA: ',iPA)
 
                 for (iRep = 0; iRep < n_trials_per_pa; iRep++) {
                     // debugger
                     
-                    console.log('Repetition: ',iRep)
+                    //console.log('Repetition: ',iRep)
 
                     // Which rows and cols are allowed?
                     let allowed_rows = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
@@ -168,7 +168,7 @@ function trial_creator(all_conditions) {
                         var visible_pas_coords2 = []
 
                     } // which condition
-                    debugger
+                    // debugger
 
                     var trial = {
                         hidden_pa_img: iCondStages.hidden_pas[iPA],
@@ -177,7 +177,7 @@ function trial_creator(all_conditions) {
                         hidden_pa_img_coods2: hidden_pas_coords[iPA],
                         hidden_pa_all_imgs: iCondStages.hidden_pas,
                         hidden_pa_all_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas,
-                        hidden_pa_all_img_coords: hidden_pas_coords,
+                        hidden_pa_all_img_coords2: hidden_pas_coords,
                         visible_pa_imgs: iCondStages.visible_pas,
                         visible_pa_img_coords: visible_pas_coords,
                         visible_pa_img_coords2: visible_pas_coords2,
@@ -185,6 +185,17 @@ function trial_creator(all_conditions) {
                         color: jatos.studySessionData.inputData.condition_colors[iCond],
                         color_name: jatos.studySessionData.inputData.condition_color_names[iCond],
                         block: iBlock,
+                        top_offset_visible_pa_display: Math.floor(Math.random() * 160),
+                        left_offset_visible_pa_display: Math.floor(Math.random() * 160)
+
+                    }
+
+                    if (jatos.studySessionData.inputData.move_board_within_trial) {
+                        trial['top_offset_hidden_pa_learning'] = Math.floor(Math.random() * 160)
+                        trial['left_offset_hidden_pa_learning'] = Math.floor(Math.random() * 160)
+                    } else {
+                        trial['top_offset_hidden_pa_learning'] = trial['top_offset_visible_pa_display']
+                        trial['left_offset_hidden_pa_learning'] = trial['left_offset_visible_pa_display']
                     }
 
                     block_trials.push(trial)
@@ -196,9 +207,13 @@ function trial_creator(all_conditions) {
             if (iCond == 'practice' | iCond == 'practice2') {
                 block_trials = jsPsych.randomization.shuffle(block_trials)
             } else {
+
+                // Make sure trials aren't back to back for the same image
                 block_trials = jsPsych.randomization.shuffleNoRepeats(block_trials, function (a, b) { return a.hidden_pa_img === b.hidden_pa_img })
             }
+
             // Add a key about the trial counter and random offset 
+            // This isn't done in the above loop, because for some conditions the block_trials get shuffled!
             for (iT = 0; iT < block_trials.length; iT++) {
 
                 // Trial counter prompt
@@ -207,28 +222,10 @@ function trial_creator(all_conditions) {
                 // Trial counter itself
                 block_trials[iT]['trial_counter'] = iT
 
-                // top and left offsets
-                block_trials[iT]['top_offset-schema-display'] = Math.floor(Math.random() * 160)
-                block_trials[iT]['left_offset-schema-display'] = Math.floor(Math.random() * 160)
-
-                if (jatos.studySessionData.inputData.move_board_within_trial) {
-                    block_trials[iT]['top_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
-                    block_trials[iT]['left_offset-new-pa-learning'] = Math.floor(Math.random() * 160)
-                } else {
-                    block_trials[iT]['top_offset-new-pa-learning'] = block_trials[iT]['top_offset-schema-display']
-                    block_trials[iT]['left_offset-new-pa-learning'] = block_trials[iT]['left_offset-schema-display']
-                }
-                // top and left offsets
-                // block_trials[iT]['top_offset-schema-display'] = 0
-                // block_trials[iT]['left_offset-schema-display'] = 0
-
-                // block_trials[iT]['top_offset-new-pa-learning'] = 0
-                // block_trials[iT]['left_offset-new-pa-learning'] = 0
-
             }
             // debugger
             all_trials.push(block_trials)
-        }
+        } // iBlock
     });
     // debugger
 

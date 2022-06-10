@@ -32,19 +32,19 @@
             // Update the block counter for this condition
             jatos.studySessionData.inputData.condition_ses_counters[curr_condition] ++
 
-            var schema_display = {
+            var visible_pa_display = {
                 type: 'playground2',
                 condition: jsPsych.timelineVariable('condition'),
-                top_offset: jsPsych.timelineVariable('top_offset-schema-display'),
-                left_offset: jsPsych.timelineVariable('left_offset-schema-display'),
-                show_visible_pas: jatos.studySessionData.inputData.run_schema_display,
+                top_offset: jsPsych.timelineVariable('top_offset_visible_pa_display'),
+                left_offset: jsPsych.timelineVariable('left_offset_visible_pa_display'),
+                show_visible_pas: jatos.studySessionData.inputData.run_visible_pa_display,
                 show_hidden_pas: false,
                 allow_response: false,
                 show_feedback: false,
-                trial_duration: jatos.studySessionData.inputData.schema_display_duration,
+                trial_duration: jatos.studySessionData.inputData.visible_pa_display_duration,
                 trial_counter: jsPsych.timelineVariable('trial_counter'),
                 hide_cursor: jatos.studySessionData.inputData.hide_mouse,
-                data: { trial_stage: 'schema_display' }
+                data: { trial_stage: 'visible_pa_display' }
             }
 
             var image_display = {
@@ -60,8 +60,8 @@
             var hidden_pa_learning = {
                 type: 'playground2',
                 condition: jsPsych.timelineVariable('condition'),
-                top_offset: jsPsych.timelineVariable('top_offset-new-pa-learning'),
-                left_offset: jsPsych.timelineVariable('left_offset-new-pa-learning'),
+                top_offset: jsPsych.timelineVariable('top_offset_hidden_pa_learning'),
+                left_offset: jsPsych.timelineVariable('left_offset_hidden_pa_learning'),
                 show_visible_pas: jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response,
                 show_hidden_pas: false,
                 allow_response: true,
@@ -100,8 +100,8 @@
 
             var subtimeline = []
 
-            if (jatos.studySessionData.inputData.run_schema_display){
-                subtimeline.push(schema_display)
+            if (jatos.studySessionData.inputData.run_visible_pa_display){
+                subtimeline.push(visible_pa_display)
             }
 
             subtimeline.push(image_display)
@@ -130,8 +130,8 @@
                     
                     jatos.studySessionData.outputData.block_results_image_screen.push(...block_results.filter(el => el.trial_stage == 'image_display'))
 
-                    if (jatos.studySessionData.inputData.run_schema_display){
-                        jatos.studySessionData.outputData.block_results_schema_display.push(...block_results.filter(el => el.trial_stage == 'schema_display'))
+                    if (jatos.studySessionData.inputData.run_visible_pa_display){
+                        jatos.studySessionData.outputData.block_results_visible_pa_display.push(...block_results.filter(el => el.trial_stage == 'visible_pa_display'))
                     }
 
                     jatos.studySessionData.outputData.block_results_hidden_pa_learning.push(...block_results.filter(el => el.trial_stage == 'hidden_pa_learning'))

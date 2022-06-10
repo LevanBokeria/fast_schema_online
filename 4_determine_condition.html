@@ -36,7 +36,7 @@
         var condition_to_images = {}
 
         jatos.studySessionData.outputData = {
-            block_results_schema_display: [],
+            block_results_visible_pa_display: [],
             block_results_hidden_pa_learning: [],
             block_results_image_screen: [],
             break_results: [],
@@ -301,7 +301,7 @@
                 no_schema: 1,
             }
 
-            jatos.studySessionData.inputData.schema_display_duration = 200
+            jatos.studySessionData.inputData.visible_pa_display_duration = 200
             jatos.studySessionData.inputData.response_window_duration = 200
             jatos.studySessionData.inputData.feedback_duration = 200
             jatos.studySessionData.inputData.iti_duration = 0
@@ -310,7 +310,7 @@
 
             jatos.studySessionData.inputData.show_visible_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
-            jatos.studySessionData.inputData.run_schema_display = true
+            jatos.studySessionData.inputData.run_visible_pa_display = true
             jatos.studySessionData.inputData.move_board_within_trial = false
             jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response = false
 
@@ -339,14 +339,14 @@
                 no_schema: 4,
             }
 
-            jatos.studySessionData.inputData.schema_display_duration = 2000
+            jatos.studySessionData.inputData.visible_pa_display_duration = 2000
             jatos.studySessionData.inputData.response_window_duration = 3000
             jatos.studySessionData.inputData.feedback_duration = 2000
             jatos.studySessionData.inputData.iti_duration = 0
 
             jatos.studySessionData.inputData.show_visible_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
-            jatos.studySessionData.inputData.run_schema_display = true
+            jatos.studySessionData.inputData.run_visible_pa_display = true
             jatos.studySessionData.inputData.move_board_within_trial = false
             jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response = false
 
@@ -369,7 +369,7 @@
 
             condition_chosen = 'cb' + (minCond + 1)
 
-            // debugger
+            debugger
             createConditions();
 
             // Create the trials

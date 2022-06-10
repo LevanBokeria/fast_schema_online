@@ -1,8 +1,8 @@
 function board_creator(board_size_px,
     n_rows,
     n_cols,
-    show_schema_pas,
-    show_new_pas,
+    show_visible_pas,
+    show_hidden_pas,
     curr_trial){ 
 
     // Border image to use
@@ -54,41 +54,41 @@ function board_creator(board_size_px,
       }
     }
 
-    if (show_schema_pas) {
-      var schema_pa_visibility_status = 'visible'
-      // var schema_pa_opacity = 1
+    if (show_visible_pas) {
+      var visible_pa_visibility_status = 'visible'
+      // var visible_pa_opacity = 1
     } else {
-      var schema_pa_visibility_status = 'hidden'
-      // var schema_pa_opacity = 0.4
+      var visible_pa_visibility_status = 'hidden'
+      // var visible_pa_opacity = 0.4
     }
-    if (show_new_pas) {
-      var new_pa_visibility_status = 'visible'
-      // var schema_pa_opacity = 1
+    if (show_hidden_pas) {
+      var hidden_pa_visibility_status = 'visible'
+      // var visible_pa_opacity = 1
     } else {
-      var new_pa_visibility_status = 'hidden'
-      // var new_pa_opacity = 0.4
+      var hidden_pa_visibility_status = 'hidden'
+      // var hidden_pa_opacity = 0.4
     }    
       
 
     // Add the schema-PAs
-    for (iImg = 0; iImg < curr_trial.schema_pa_imgs.length; iImg++){
+    for (iImg = 0; iImg < curr_trial.visible_pa_imgs.length; iImg++){
 
       // Which row and col?
-      let i_row = curr_trial.schema_pa_img_coords[iImg][0]
-      let i_col = curr_trial.schema_pa_img_coords[iImg][1]
+      let i_row = curr_trial.visible_pa_img_coords[iImg][0]
+      let i_col = curr_trial.visible_pa_img_coords[iImg][1]
 
       iEl = document.createElement('img')
 
       iEl.className = 'PA'
       iEl.id = 'schemaPA_' + (iImg+1)
-      iEl.src = curr_trial.schema_pa_imgs[iImg]
+      iEl.src = curr_trial.visible_pa_imgs[iImg]
       iEl.style = 
-      'visibility: ' + schema_pa_visibility_status + ';'
+      'visibility: ' + visible_pa_visibility_status + ';'
 
       let nth_child_idx = (i_row-1)*n_cols + i_col
       
       let iCell = grid_box.children[nth_child_idx-1]
-      // iCell.style.opacity = schema_pa_opacity
+      // iCell.style.opacity = visible_pa_opacity
 
       iCell.appendChild(iEl)
 
@@ -96,24 +96,24 @@ function board_creator(board_size_px,
 
 
     // Add the new PAs
-    for (iImg = 0; iImg < curr_trial.new_pa_all_imgs.length; iImg++){
+    for (iImg = 0; iImg < curr_trial.hidden_pa_all_imgs.length; iImg++){
 
       // Which row and col?
-      let i_row = curr_trial.new_pa_all_img_coords[iImg][0]
-      let i_col = curr_trial.new_pa_all_img_coords[iImg][1]
+      let i_row = curr_trial.hidden_pa_all_img_coords[iImg][0]
+      let i_col = curr_trial.hidden_pa_all_img_coords[iImg][1]
 
       iEl = document.createElement('img')
 
       iEl.className = 'PA'
       iEl.id = 'newPA_' + (iImg+1)
-      iEl.src = curr_trial.new_pa_all_imgs[iImg]
+      iEl.src = curr_trial.hidden_pa_all_imgs[iImg]
       iEl.style = 
-      'visibility: ' + new_pa_visibility_status + ';'
+      'visibility: ' + hidden_pa_visibility_status + ';'
 
       let nth_child_idx = (i_row-1)*n_cols + i_col
       
       let iCell = grid_box.children[nth_child_idx-1]
-      // iCell.style.opacity = new_pa_opacity
+      // iCell.style.opacity = hidden_pa_opacity
       iCell.appendChild(iEl)
 
     }

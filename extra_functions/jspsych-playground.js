@@ -41,13 +41,13 @@ jsPsych.plugins["playground2"] = (function() {
         default: null,
         description: 'X offset of the board to randomize its position'
       },                  
-      show_schema_pas: {
+      show_visible_pas: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show schema PAs',
         default: false,
         description: 'This will decide whether all the schema PAs are shown from the beginning.'
       },      
-      show_new_pas: {
+      show_hidden_pas: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show new PAs',
         default: false,
@@ -65,7 +65,7 @@ jsPsych.plugins["playground2"] = (function() {
         default: true,
         description: 'Show feedback or not'
       },  
-      show_schema_pas_at_feedback: {
+      show_visible_pas_at_feedback: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show schema PAs at feedback',
         default: false,
@@ -126,8 +126,8 @@ jsPsych.plugins["playground2"] = (function() {
     grid_border = board_creator(500,
       jatos.studySessionData.inputData.n_rows,
       jatos.studySessionData.inputData.n_cols,
-      trial.show_schema_pas,
-      trial.show_new_pas,
+      trial.show_visible_pas,
+      trial.show_hidden_pas,
       curr_trial)
 
     // Randomly modify grid position
@@ -180,7 +180,7 @@ jsPsych.plugins["playground2"] = (function() {
       info.mouse_clientY = e.clientY
 
       // Get the dimensions and location of the target item
-      var pa_dim_loc = document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).getBoundingClientRect()
+      var pa_dim_loc = document.querySelector('#newPA_'+(curr_trial.hidden_pa_img_idx+1)).getBoundingClientRect()
       info.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
       info.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2
 
@@ -189,7 +189,7 @@ jsPsych.plugins["playground2"] = (function() {
       info.row = parseInt(curr_row_col[2],10)
       info.col = parseInt(curr_row_col[4],10)
 
-      if (info.row == curr_trial.new_pa_img_coords[0] & info.col == curr_trial.new_pa_img_coords[1]){
+      if (info.row == curr_trial.hidden_pa_img_coords[0] & info.col == curr_trial.hidden_pa_img_coords[1]){
         info.correct = true
       } else {
         info.correct = false
@@ -231,11 +231,11 @@ jsPsych.plugins["playground2"] = (function() {
       }
 
       // Show the true feedback!
-      document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).style.visibility = 'visible'
-      document.querySelector('#newPA_'+(curr_trial.new_pa_img_idx+1)).parentElement.style.opacity = 1
+      document.querySelector('#newPA_'+(curr_trial.hidden_pa_img_idx+1)).style.visibility = 'visible'
+      document.querySelector('#newPA_'+(curr_trial.hidden_pa_img_idx+1)).parentElement.style.opacity = 1
 
       // If wanted, also show the schema PAs
-      if (trial.show_schema_pas_at_feedback){
+      if (trial.show_visible_pas_at_feedback){
         
         document.querySelectorAll("[id^='schemaPA']").forEach(item => item.style.visibility = 'visible')
         document.querySelectorAll("[id^='schemaPA']").forEach(item => item.parentElement.style.opacity = 1)
@@ -270,9 +270,9 @@ jsPsych.plugins["playground2"] = (function() {
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
       trial_data.block = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
-      trial_data.new_pa_img = curr_trial.new_pa_img
-      trial_data.corr_row = curr_trial.new_pa_img_coords[0]
-      trial_data.corr_col = curr_trial.new_pa_img_coords[1]
+      trial_data.hidden_pa_img = curr_trial.hidden_pa_img
+      trial_data.corr_row = curr_trial.hidden_pa_img_coords[0]
+      trial_data.corr_col = curr_trial.hidden_pa_img_coords[1]
       trial_data.top_offset = trial.top_offset
       trial_data.left_offset = trial.left_offset
       trial_data.trial_stage = trial.data.trial_stage

@@ -8,147 +8,106 @@ function trial_creator(all_conditions) {
     Object.keys(all_conditions).forEach(function (iCond, index) {
         // iCond = 'no_schema'
 
+        console.log('Condition: ', iCond)
+
         let iCondStages = all_conditions[iCond]
 
         let n_trials_per_pa = jatos.studySessionData.inputData.n_trials_per_pa[iCond]
 
         let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[iCond]
-        // console.log(iCond)
-        // debugger
+        
         var visible_pas_coords = jatos.studySessionData.inputData.condition_coords[iCond].visible_pas
 
-        for (iSes = 0; iSes < istage_n_ses; iSes++) {
+        var visible_pas_coords2 = jatos.studySessionData.inputData.condition_to_arrangements[iCond].filter(item => item.pa_type == 'visible')
+
+        // Landmark visible PA indices
+        var visible_pas_near_idxs = visible_pas_coords2.map(item => item.subtype == 'near').flatMap(
+            (bool, index) => bool ? index : []
+            )
+
+        var hidden_pas_coords = jatos.studySessionData.inputData.condition_to_arrangements[iCond].filter(item => item.pa_type == 'hidden')
+
+        for (iBlock = 0; iBlock < istage_n_ses; iBlock++) {
+            
+            console.log('session: ',iBlock)
 
             var block_trials = []
 
             for (iPA = 0; iPA < iCondStages.hidden_pas.length; iPA++) {
 
+                console.log('PA: ',iPA)
+
                 for (iRep = 0; iRep < n_trials_per_pa; iRep++) {
                     // debugger
                     
+                    console.log('Repetition: ',iRep)
+
                     // Which rows and cols are allowed?
                     let allowed_rows = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     let allowed_cols = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     let allowed_rc = cartesian(allowed_rows, allowed_cols)
 
-                    // From the allowed_rc, remove the row/col that are the new PA locations
-                    for (iRem = 0; iRem < jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas.length; iRem++) {
-
-                        let i_pa_coord = jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas[iRem]
-
-                        allowed_rc = allowed_rc.filter(item => !_.isEqual(item, i_pa_coord))
-                    }
+                    // From the allowed_rc, remove the row/col that are the hidden PA locations
+                    
+                    // The code below loops through each of hidden PAs, and for each it finds a matching 
+                    // row-column in the allowed_rc and removes them from the allowed_rc 
+                    hidden_pas_coords.forEach(
+                        function(item,index,arr){
+                            allowed_rc = allowed_rc.filter(e => !_.isEqual(e, [item.row,item.column]))
+                        }
+                    )
 
                     // Shuffle the coordinates of the schema PAs if its IC condition
                     if (iCond == 'schema_ic') {
+                        
                         visible_pas_coords = jsPsych.randomization.shuffle(visible_pas_coords)
-                    } else if (iCond == 'random_loc') {
-                        // debugger
-                        // Then, create a random location of 6 PAs
+                        visible_pas_coords2 = jsPsych.randomization.shuffle(visible_pas_coords2)
+                   
+                    } else if (iCond == 'practice2' | iCond == 'schema_l' | iCond == 'random_loc') {
 
-                        // Reset to repopulate
-                        visible_pas_coords = []
+                        let landmark_rcs = visible_pas_coords2.filter(item => item.subtype == 'near')
 
-                        for (iLoc = 0; iLoc <= 5; iLoc++) {
-
-                            // Randomly choose one of those
-                            let rand_rc = jsPsych.randomization.sampleWithoutReplacement(allowed_rc, 1)[0]
-
-                            if (iLoc != 0) {
-                                // debugger
-                                // If its not the first one, then do a while loop till all conditions are satisfied
-                                let cond_sat = false
-
-                                while (cond_sat == false) {
-
-                                    // Temporarily set to true, change if any distance is less than X
-                                    cond_sat = true
-
-                                    // If all the distances are ok
-                                    for (iCheck = 0; iCheck < visible_pas_coords.length; iCheck++) {
-
-                                        var iDist = math.distance(visible_pas_coords[iCheck], rand_rc)
-
-                                        if (iDist < 1.9) {
-                                            cond_sat = false
-                                            break
-                                        }
-                                    }
-
-                                    if (cond_sat == true) {
-                                        // console.log(iDist)
-                                        // debugger
-                                    }
-
-                                    if (cond_sat == false) {
-
-                                        // generate another row
-                                        rand_rc = jsPsych.randomization.sampleWithoutReplacement(allowed_rc, 1)[0]
-
-                                    }
-                                } // while
-                            } // iLoc != 0
-
-                            // Remove from the choice options
-                            const idx = allowed_rc.indexOf(rand_rc)
-                            allowed_rc.splice(idx, 1)
-
-                            // Add this to the visible_pas_coords vector
-                            visible_pas_coords[iLoc] = [...rand_rc]
-
-                        } // iLoc
-
-                    } else if (iCond == 'schema_l' | iCond == 'practice2') {
-
-                        // debugger
-                        // Take the two locations that have new PAs as near-PAs, and fix those
-                        if (iCond == 'schema_l') {
-                            
-                            var idx_of_landmarks = [0, 2] // this is hand coded, 2nd and 6th rows in the coordinates of visible_pas PAs, have hidden_pas PAs as near-PAs
-
-                        } else if (iCond == 'practice2') {
-
-                            var idx_of_landmarks = [3, 5]
-
+                        // If its random locations, then we don't have any landmark visible PAs. So, clear these variables
+                        // such that they are not checked against when creating new locations
+                        if (iCond == 'random_loc'){
+                            // debugger
+                            landmark_rcs = []
+                            visible_pas_near_idxs = []
                         }
 
-                        let landmark_rcs = [
-                            visible_pas_coords[idx_of_landmarks[0]],
-                            visible_pas_coords[idx_of_landmarks[1]],
-                        ]
-
                         // Reset, to repopulate
-                        visible_pas_coords = []
+                        visible_pas_coords  = []
+                        visible_pas_coords2 = []
 
                         // Create a variable against which to check new locations
                         var check_against = [...landmark_rcs]
 
                         // Then, create a random location of 6 landmarks
-                        // debugger
-                        // From the allowed_rc Remove the row/cols that are the landmaks 
-                        // allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[0]), 1)
-                        // allowed_rc.splice(allowed_rc.indexOf(landmark_rcs[1]), 1)
-                        // Code above didn't work!!!!!! Lets redo this correctly
-                        allowed_rc = allowed_rc.filter(item => !_.isEqual(item, landmark_rcs[0]))
-                        allowed_rc = allowed_rc.filter(item => !_.isEqual(item, landmark_rcs[1]))
 
-
+                        // The code below loops through each of landmark visible PAs, and for each it finds a matching 
+                        // row-column in the allowed_rc and removes them from the allowed_rc 
+                        landmark_rcs.forEach(
+                            function(item,index,arr){
+                                allowed_rc = allowed_rc.filter(e => !_.isEqual(e, [item.row,item.column]))
+                            }
+                        )
 
                         for (iLoc = 0; iLoc <= 5; iLoc++) {
 
-                            if (iLoc == idx_of_landmarks[0]) {
-                                visible_pas_coords[idx_of_landmarks[0]] = landmark_rcs[0]
-                                continue
-                            } else if (iLoc == idx_of_landmarks[1]) {
-                                visible_pas_coords[idx_of_landmarks[1]] = landmark_rcs[1]
-                                continue
+                            // If its practice2 or schema_l, then, once you get to the PA which is a landmark-PA, don't 
+                            // generate a random location, but instead just record the existing landmark PA characteristics.
+                            if (visible_pas_near_idxs.includes(iLoc)){
+
+                                let which_visible_near = visible_pas_near_idxs.indexOf(iLoc)
+
+                                    visible_pas_coords2[visible_pas_near_idxs[which_visible_near]] = landmark_rcs[which_visible_near]
+                                    continue
                             }
 
                             // Randomly choose one of those
                             let rand_rc = jsPsych.randomization.sampleWithoutReplacement(allowed_rc, 1)[0]
 
-                            // debugger
-                            // If its not the first one, then do a while loop till all conditions are satisfied
+                            // Do a while loop till all conditions are satisfied
                             let cond_sat = false
 
                             while (cond_sat == false) {
@@ -159,7 +118,9 @@ function trial_creator(all_conditions) {
                                 // If all the distances are ok
                                 for (iCheck = 0; iCheck < check_against.length; iCheck++) {
 
-                                    let iDist = math.distance(check_against[iCheck], rand_rc)
+                                    var iDist = math.distance(
+                                        [check_against[iCheck].row,check_against[iCheck].column],rand_rc
+                                    )
 
                                     if (iDist < 1.9) {
                                         cond_sat = false
@@ -181,31 +142,49 @@ function trial_creator(all_conditions) {
 
                             // Add this to the visible_pas_coords vector
                             visible_pas_coords[iLoc] = [...rand_rc]
-                            check_against[check_against.length] = [...rand_rc]
+
+                            check_against[check_against.length] = {
+                                arrangement: jatos.studySessionData.inputData.condition_to_arrangements[iCond][0].arrangement,
+                                pa_type: 'visible',
+                                hidden_type: '',
+                                row: rand_rc[0],
+                                column: rand_rc[1]
+                            } 
+
+                            visible_pas_coords2[iLoc] = {
+                                arrangement: jatos.studySessionData.inputData.condition_to_arrangements[iCond][0].arrangement,
+                                pa_type: 'visible',
+                                hidden_type: '',
+                                row: rand_rc[0],
+                                column: rand_rc[1]
+                            }                            
 
                         } // iLoc
 
                     } else if (iCond == 'no_schema') {
 
                         // Delete this
-                        var visible_pas_coords = []
-                        // debugger
+                        var visible_pas_coords  = []
+                        var visible_pas_coords2 = []
 
                     } // which condition
-                    // debugger
+                    debugger
 
                     var trial = {
-                        new_pa_img: iCondStages.hidden_pas[iPA],
-                        new_pa_img_idx: iPA,
-                        new_pa_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas[iPA],
-                        new_pa_all_imgs: iCondStages.hidden_pas,
-                        new_pa_all_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas,
-                        schema_pa_imgs: iCondStages.visible_pas,
-                        schema_pa_img_coords: visible_pas_coords,
+                        hidden_pa_img: iCondStages.hidden_pas[iPA],
+                        hidden_pa_img_idx: iPA,
+                        hidden_pa_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas[iPA],
+                        hidden_pa_img_coods2: hidden_pas_coords[iPA],
+                        hidden_pa_all_imgs: iCondStages.hidden_pas,
+                        hidden_pa_all_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas,
+                        hidden_pa_all_img_coords: hidden_pas_coords,
+                        visible_pa_imgs: iCondStages.visible_pas,
+                        visible_pa_img_coords: visible_pas_coords,
+                        visible_pa_img_coords2: visible_pas_coords2,
                         condition: iCond,
                         color: jatos.studySessionData.inputData.condition_colors[iCond],
                         color_name: jatos.studySessionData.inputData.condition_color_names[iCond],
-                        block: iSes,
+                        block: iBlock,
                     }
 
                     block_trials.push(trial)
@@ -217,7 +196,7 @@ function trial_creator(all_conditions) {
             if (iCond == 'practice' | iCond == 'practice2') {
                 block_trials = jsPsych.randomization.shuffle(block_trials)
             } else {
-                block_trials = jsPsych.randomization.shuffleNoRepeats(block_trials, function (a, b) { return a.new_pa_img === b.new_pa_img })
+                block_trials = jsPsych.randomization.shuffleNoRepeats(block_trials, function (a, b) { return a.hidden_pa_img === b.hidden_pa_img })
             }
             // Add a key about the trial counter and random offset 
             for (iT = 0; iT < block_trials.length; iT++) {

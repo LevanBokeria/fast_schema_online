@@ -76,7 +76,7 @@ function board_creator(board_size_px,n_rows,n_cols,current_condition_color,curre
     }
 
     // If its new-pa learning, also add the old PA items and hide them
-    if (stage == 'new_pa_learning'){
+    if (stage == 'hidden_pa_learning'){
       // debugger
       // Add the old PAs and make them visible
       var schema_img_array = jatos.studySessionData.inputData.stimuli[condition]['schema_learning']

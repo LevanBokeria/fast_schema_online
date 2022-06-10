@@ -37,8 +37,8 @@
                 condition: jsPsych.timelineVariable('condition'),
                 top_offset: jsPsych.timelineVariable('top_offset-schema-display'),
                 left_offset: jsPsych.timelineVariable('left_offset-schema-display'),
-                show_schema_pas: jatos.studySessionData.inputData.run_schema_display,
-                show_new_pas: false,
+                show_visible_pas: jatos.studySessionData.inputData.run_schema_display,
+                show_hidden_pas: false,
                 allow_response: false,
                 show_feedback: false,
                 trial_duration: jatos.studySessionData.inputData.schema_display_duration,
@@ -49,7 +49,7 @@
 
             var image_display = {
                 type: 'image-keyboard-response',
-                stimulus: jsPsych.timelineVariable('new_pa_img'),
+                stimulus: jsPsych.timelineVariable('hidden_pa_img'),
                 stimulus_width: 100,
                 choices: jsPsych.NO_KEYS,
                 trial_duration: jatos.studySessionData.inputData.image_pres_duration,
@@ -57,21 +57,21 @@
                 data: { trial_stage: 'image_display' }
             }
 
-            var new_pa_learning = {
+            var hidden_pa_learning = {
                 type: 'playground2',
                 condition: jsPsych.timelineVariable('condition'),
                 top_offset: jsPsych.timelineVariable('top_offset-new-pa-learning'),
                 left_offset: jsPsych.timelineVariable('left_offset-new-pa-learning'),
-                show_schema_pas: jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response,
-                show_new_pas: false,
+                show_visible_pas: jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response,
+                show_hidden_pas: false,
                 allow_response: true,
                 show_feedback: true,
                 trial_duration: jatos.studySessionData.inputData.response_window_duration,
                 trial_counter: jsPsych.timelineVariable('trial_counter'),
-                show_schema_pas_at_feedback: jatos.studySessionData.inputData.show_schema_pa_at_feedback_page,
-                // show_schema_pas_at_feedback: true,
+                show_visible_pas_at_feedback: jatos.studySessionData.inputData.show_visible_pa_at_feedback_page,
+                // show_visible_pas_at_feedback: true,
                 hide_cursor: false,
-                data: { trial_stage: 'new_pa_learning' },
+                data: { trial_stage: 'hidden_pa_learning' },
                 post_trial_gap: 500
             }
 
@@ -105,7 +105,7 @@
             }
 
             subtimeline.push(image_display)
-            subtimeline.push(new_pa_learning)
+            subtimeline.push(hidden_pa_learning)
 
              var block_procedure = {
                 timeline: subtimeline,
@@ -134,7 +134,7 @@
                         jatos.studySessionData.outputData.block_results_schema_display.push(...block_results.filter(el => el.trial_stage == 'schema_display'))
                     }
 
-                    jatos.studySessionData.outputData.block_results_new_pa_learning.push(...block_results.filter(el => el.trial_stage == 'new_pa_learning'))
+                    jatos.studySessionData.outputData.block_results_hidden_pa_learning.push(...block_results.filter(el => el.trial_stage == 'hidden_pa_learning'))
 
 					// Make JATOS remember that this block was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;

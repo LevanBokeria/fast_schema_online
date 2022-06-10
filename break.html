@@ -77,11 +77,11 @@
 
 					flex_visible_pics_el.display = 'flex'
 
-					for (iPA = 0; iPA < curr_trial.schema_pa_imgs.length; iPA++) {
+					for (iPA = 0; iPA < curr_trial.visible_pa_imgs.length; iPA++) {
 
 						let nPA = document.createElement('img')
 
-						nPA.src = curr_trial.schema_pa_imgs[iPA]
+						nPA.src = curr_trial.visible_pa_imgs[iPA]
 						nPA.className = 'breakPA'
 
 						// nPA.style.height = '60px'
@@ -96,11 +96,11 @@
 
 					flex_hidden_pics_el.display = 'flex'
 
-					for (iPA = 0; iPA < curr_trial.new_pa_all_imgs.length; iPA++) {
+					for (iPA = 0; iPA < curr_trial.hidden_pa_all_imgs.length; iPA++) {
 
 						let nPA = document.createElement('img')
 
-						nPA.src = curr_trial.new_pa_all_imgs[iPA]
+						nPA.src = curr_trial.hidden_pa_all_imgs[iPA]
 						nPA.className = 'breakPA'
 
 						// nPA.style.height = '50px'

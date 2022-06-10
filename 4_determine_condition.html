@@ -18,6 +18,7 @@
     <link href='./jspsych-6.3.1/css/jspsych.css' rel='stylesheet' type='text/css'>
     </link>
     <link href='./extra_files/schema_online.css' rel='stylesheet' type='text/css'>
+    <script src='./extra_files/pa_arrangements.js'></script>
     </link>
 </head>
 
@@ -25,18 +26,18 @@
 <script>
 
     jatos.onLoad(function () {
-
+        
         // Define all the conditions here ///////////////////////////////////////////////////////////
         var timeline = []
 
         jatos.studySessionData.batchSessionUpdated = []
         var condition_chosen = []
         var order_of_conditions = []
-        var cond_to_run = {}
+        var condition_to_images = {}
 
         jatos.studySessionData.outputData = {
             block_results_schema_display: [],
-            block_results_new_pa_learning: [],
+            block_results_hidden_pa_learning: [],
             block_results_image_screen: [],
             break_results: [],
             instructions_results: []
@@ -85,6 +86,9 @@
                 no_schema: 0
             },
         }
+
+        // Record all the arrangements
+        jatos.studySessionData.inputData.pa_arrangements = pa_arrangements
 
         jatos.studySessionData.inputData.arrangement_coords = {
             arr_pair_1: {
@@ -304,11 +308,11 @@
 
             // jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
-            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true
+            jatos.studySessionData.inputData.show_visible_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
             jatos.studySessionData.inputData.run_schema_display = true
             jatos.studySessionData.inputData.move_board_within_trial = false
-            jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
+            jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response = false
 
 
             // Also manually choose counterbalancing
@@ -340,11 +344,11 @@
             jatos.studySessionData.inputData.feedback_duration = 2000
             jatos.studySessionData.inputData.iti_duration = 0
 
-            jatos.studySessionData.inputData.show_schema_pa_at_feedback_page = true
+            jatos.studySessionData.inputData.show_visible_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
             jatos.studySessionData.inputData.run_schema_display = true
             jatos.studySessionData.inputData.move_board_within_trial = false
-            jatos.studySessionData.inputData.show_schema_pa_during_new_pa_response = false
+            jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response = false
 
         }
 
@@ -369,16 +373,18 @@
             createConditions();
 
             // Create the trials
-            jatos.studySessionData.inputData.all_blocks = trial_creator(cond_to_run)
+            jatos.studySessionData.inputData.all_blocks = trial_creator(condition_to_images)
 
             // Make JATOS remember that this block was run
-            jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
-            jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+            jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+            jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
             jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
             jatos.submitResultData("[conditions_start---" +
                 JSON.stringify(jatos.studySessionData) + "---conditions_end]", 
-                function () {jatos.startComponentByPos(jatos.studySessionData.inputData.component_positions.instructions)});
+                function () {jatos.startComponentByPos(
+                    jatos.studySessionData.inputData.component_positions.instructions
+                    )});
 
 
         } else {
@@ -397,7 +403,7 @@
                     createConditions();
 
                     // Create the trials
-                    jatos.studySessionData.inputData.all_blocks = trial_creator(cond_to_run)
+                    jatos.studySessionData.inputData.all_blocks = trial_creator(condition_to_images)
 
                     // Make JATOS remember that this block was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
@@ -406,7 +412,9 @@
 
                     jatos.submitResultData("[conditions_start---" +
                         JSON.stringify(jatos.studySessionData) + "---conditions_end]",
-                        function (){ jatos.startComponentByPos(jatos.studySessionData.inputData.component_positions.instructions) });
+                        function (){ jatos.startComponentByPos(
+                            jatos.studySessionData.inputData.component_positions.instructions
+                            )});
 
                 } // on finish
             });     // jsPsych.init 
@@ -431,7 +439,7 @@
             }
 
             // Create the stimuli for each condition
-            jatos.studySessionData.inputData.stimuli = {
+            jatos.studySessionData.inputData.condition_to_images = {
                 practice: {
                     visible_pas: jatos.studySessionData.inputData.all_images.practice.slice(0, 6),
                     hidden_pas: jatos.studySessionData.inputData.all_images.practice.slice(6, 9)
@@ -443,26 +451,39 @@
             }
 
             for (iCond = 0; iCond <= 4; iCond++) {
-                jatos.studySessionData.inputData.stimuli[order_of_conditions[iCond]] = {
+                jatos.studySessionData.inputData.condition_to_images[order_of_conditions[iCond]] = {
                     visible_pas: jatos.studySessionData.inputData.all_images['cond'+(iCond+1)].slice(0, 6),
                     hidden_pas: jatos.studySessionData.inputData.all_images['cond'+(iCond+1)].slice(6, 12)
                 }
             }
 
             // For the no_schema condition, juts remove the visible_pas PAs
-            jatos.studySessionData.inputData.stimuli.no_schema.visible_pas = []
+            jatos.studySessionData.inputData.condition_to_images.no_schema.visible_pas = []
 
             // debugger
-            cond_to_run.practice  = jatos.studySessionData.inputData.stimuli.practice
-            cond_to_run.practice2 = jatos.studySessionData.inputData.stimuli.practice2
-            cond_to_run[order_of_conditions[0]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[0]]
-            cond_to_run[order_of_conditions[1]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[1]]
-            cond_to_run[order_of_conditions[2]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[2]]
-            cond_to_run[order_of_conditions[3]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[3]]
-            cond_to_run[order_of_conditions[4]] = jatos.studySessionData.inputData.stimuli[order_of_conditions[4]]
+            condition_to_images.practice  = jatos.studySessionData.inputData.condition_to_images.practice
+            condition_to_images.practice2 = jatos.studySessionData.inputData.condition_to_images.practice2
+            condition_to_images[order_of_conditions[0]] = jatos.studySessionData.inputData.condition_to_images[order_of_conditions[0]]
+            condition_to_images[order_of_conditions[1]] = jatos.studySessionData.inputData.condition_to_images[order_of_conditions[1]]
+            condition_to_images[order_of_conditions[2]] = jatos.studySessionData.inputData.condition_to_images[order_of_conditions[2]]
+            condition_to_images[order_of_conditions[3]] = jatos.studySessionData.inputData.condition_to_images[order_of_conditions[3]]
+            condition_to_images[order_of_conditions[4]] = jatos.studySessionData.inputData.condition_to_images[order_of_conditions[4]]
 
 
             ////////////////////////////////////////////////////////////////////////////////
+            // debugger
+            // A new way to assign arrangements to conditions
+            jatos.studySessionData.inputData.condition_to_arrangements = {
+                practice:   pa_arrangements.filter(item => item.arrangement == 6),
+                practice2:  pa_arrangements.filter(item => item.arrangement == 7),
+                schema_c:   pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('schema_c')+1),
+                schema_ic:  pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('schema_ic')+1),
+                schema_l:   pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('schema_l')+1),
+                random_loc: pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('random_loc')+1),
+                no_schema:  pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('no_schema')+1),
+            }
+
+            // The old way to assign arrangements to conditions
             jatos.studySessionData.inputData.condition_coords = {
                 practice: {
                     visible_pas: [

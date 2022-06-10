@@ -53,11 +53,11 @@
 
 			flex_hidden_pics_el.display = 'flex'
 
-			for (iPA = 0; iPA < curr_trial.new_pa_all_imgs.length; iPA++) {
+			for (iPA = 0; iPA < curr_trial.hidden_pa_all_imgs.length; iPA++) {
 
 				let nPA = document.createElement('img')
 
-				nPA.src = curr_trial.new_pa_all_imgs[iPA]
+				nPA.src = curr_trial.hidden_pa_all_imgs[iPA]
 
 				nPA.style.height = '50px'
 				nPA.style.border = '1px solid black'
@@ -134,7 +134,7 @@
 			grid_trial_1_stages_el.innerHTML += '<div>Make your response</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Feedback</div>'
 			grid_trial_1_stages_el.innerHTML += grid_border_small.innerHTML
-			grid_trial_1_stages_el.innerHTML += '<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
+			grid_trial_1_stages_el.innerHTML += '<img src="' + curr_trial.hidden_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
 			grid_trial_1_stages_el.innerHTML += grid_border_empty.innerHTML
 			grid_trial_1_stages_el.innerHTML += grid_border_fb.innerHTML
 
@@ -205,7 +205,7 @@
 			grid_trial_2_stages_el.innerHTML += '<div>Make your response</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Feedback</div>'
 			grid_trial_2_stages_el.innerHTML += grid_border_small_moved_items.innerHTML
-			grid_trial_2_stages_el.innerHTML += '<img src="' + next_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
+			grid_trial_2_stages_el.innerHTML += '<img src="' + next_trial.hidden_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
 			grid_trial_2_stages_el.innerHTML += grid_border_empty.innerHTML
 			grid_trial_2_stages_el.innerHTML += grid_border_fb_moved_items.innerHTML
 

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-	<title>Break</title>
+	<title>Transition</title>
 	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-survey-text.js'></script>
@@ -48,7 +48,7 @@
 			} else {
 
 				var previous_condition = jatos.studySessionData.inputData.all_blocks[curr_block - 1][0].condition
-				var next_condition = jatos.studySessionData.inputData.all_blocks[curr_block][0].condition
+				var next_condition     = jatos.studySessionData.inputData.all_blocks[curr_block][0].condition
 
 				if (previous_condition != next_condition) {
 					// So we're changing the board
@@ -221,8 +221,8 @@
 					jatos.studySessionData.outputData.break_results.push(results)
 
 					// Make JATOS remember that this block was run
-					jatos.studySessionData.latestFinishedComponentId = jatos.componentId;
-					jatos.studySessionData.latestFinishedComponentPos = jatos.componentPos;
+					jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
+					jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
 					jatos.submitResultData('[break_start_' + '---' +

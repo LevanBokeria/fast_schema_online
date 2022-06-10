@@ -6,7 +6,7 @@ function board_creator(board_size_px,
     curr_trial){ 
 
 
-    debugger
+    // debugger
     
     // Create the grid 
     grid_border = document.createElement('div')
@@ -19,7 +19,7 @@ function board_creator(board_size_px,
       
     // Create the grid box element
     let grid_box = document.createElement('div')
-    grid_box.id = 'grid-box'
+    grid_box.id = 'grid_box'
     grid_box.style = 
         'height:' + board_size_px + 'px;' + 
         'width:' + board_size_px + 'px;' + 
@@ -80,7 +80,7 @@ function board_creator(board_size_px,
       iEl = document.createElement('img')
 
       iEl.className = 'PA'
-      iEl.id = 'schemaPA_' + (iImg+1)
+      iEl.id = 'visiblePA_' + (iImg+1)
       iEl.src = curr_trial.visible_pa_imgs[iImg]
       iEl.style = 
       'visibility: ' + visible_pa_visibility_status + ';'
@@ -105,7 +105,7 @@ function board_creator(board_size_px,
       iEl = document.createElement('img')
 
       iEl.className = 'PA'
-      iEl.id = 'newPA_' + (iImg+1)
+      iEl.id = 'hiddenPA_' + (iImg+1)
       iEl.src = curr_trial.hidden_pa_all_imgs[iImg]
       iEl.style = 
       'visibility: ' + hidden_pa_visibility_status + ';'

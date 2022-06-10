@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
-	<title>Instructions</title>
+	<title>Instructions2</title>
 	<script src="jspsych-6.3.1/jspsych.js"></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src='./jspsych-6.3.1/plugins/jspsych-html-slider-response.js'></script>
@@ -85,7 +85,7 @@
 			grid_border_small.children[0].style.height = small_grid_size
 			grid_border_small.children[0].style.width = small_grid_size
 
-			// Create the empty purple board
+			// Create the empty board
 			var grid_border_empty = board_creator(
 				small_grid_size,
 				jatos.studySessionData.inputData.n_rows,
@@ -123,7 +123,7 @@
 			grid_border_fb.children[0].style.height = small_grid_size
 			grid_border_fb.children[0].style.width = small_grid_size
 
-			grid_border_fb.children[0].querySelector('#newPA_1').style.visibility = 'visible'
+			grid_border_fb.children[0].querySelector('#hiddenPA_1').style.visibility = 'visible'
 
 			grid_trial_1_stages_el.innerHTML += '<div>Step 1:</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Step 2:</div>'
@@ -194,7 +194,7 @@
 			grid_border_fb_moved_items.children[0].style.height = small_grid_size
 			grid_border_fb_moved_items.children[0].style.width = small_grid_size
 
-			grid_border_fb_moved_items.children[0].querySelector('#newPA_1').style.visibility = 'visible'
+			grid_border_fb_moved_items.children[0].querySelector('#hiddenPA_1').style.visibility = 'visible'
 
 			grid_trial_2_stages_el.innerHTML += '<div>Step 1:</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Step 2:</div>'
@@ -218,8 +218,8 @@
 				'<div class="instruct">' +
 				'<p>In the real experiment, you will have to find hidden pictures on 5 differently colored boards.</p>' +
                 '<br>' +
-                '<p>On some of these boards, the visible items will always stay fixed inside the board, like you saw for the purple board.</p>' +
-                '<p><b>However, for some other boards, the visible items might change their locations!</b></p>' +
+                '<p>On some of these boards, the visible items will always stay fixed inside the board, like you saw for the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board.</p>' +
+                '<p><b>However, for some of the other boards, the visible items might change their locations!</b></p>' +
                 '<p>Some of the visible items might stay fixed, while others might move. Some might swap places with another visible items.</p>' +
 				'<p>Click "Next" to see an example!</p>',
 
@@ -293,7 +293,7 @@
 					jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
 					jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-					debugger
+					// debugger
 					// Record results
 					jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
 

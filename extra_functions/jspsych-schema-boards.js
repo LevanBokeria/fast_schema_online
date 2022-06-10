@@ -8,12 +8,12 @@
  *
  **/
 
-jsPsych.plugins["playground2"] = (function() {
+jsPsych.plugins["schema_boards"] = (function() {
 
   var plugin = {};
 
   plugin.info = {
-    name: 'playground2',
+    name: 'schema_boards',
     description: '',
     parameters: {
       condition: {
@@ -21,14 +21,7 @@ jsPsych.plugins["playground2"] = (function() {
         pretty_name: 'Experimental Condition',
         default: null,
         description: 'Name of the schema condition for this trial'
-      },       
-      coords: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Coordinates',
-        array: true,
-        default: null,
-        description: 'This array contains row column coordinates for the image.'
-      },   
+      }, 
       top_offset: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Board top offset',
@@ -179,17 +172,12 @@ jsPsych.plugins["playground2"] = (function() {
       info.mouse_clientX = e.clientX
       info.mouse_clientY = e.clientY
 
-      // Get the dimensions and location of the target item
-      var pa_dim_loc = document.querySelector('#newPA_'+(curr_trial.hidden_pa_img_idx+1)).getBoundingClientRect()
-      info.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
-      info.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2
-
       // Get row/col of the cell clicked
       let curr_row_col = e.currentTarget.id.split('_')
       info.row = parseInt(curr_row_col[2],10)
       info.col = parseInt(curr_row_col[4],10)
 
-      if (info.row == curr_trial.hidden_pa_img_coords[0] & info.col == curr_trial.hidden_pa_img_coords[1]){
+      if (info.row == curr_trial.hidden_pa_img_coords2.row & info.col == curr_trial.hidden_pa_img_coords2.column){
         info.correct = true
       } else {
         info.correct = false
@@ -231,14 +219,14 @@ jsPsych.plugins["playground2"] = (function() {
       }
 
       // Show the true feedback!
-      document.querySelector('#newPA_'+(curr_trial.hidden_pa_img_idx+1)).style.visibility = 'visible'
-      document.querySelector('#newPA_'+(curr_trial.hidden_pa_img_idx+1)).parentElement.style.opacity = 1
+      document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).style.visibility = 'visible'
+      document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).parentElement.style.opacity = 1
 
       // If wanted, also show the schema PAs
       if (trial.show_visible_pas_at_feedback){
         
-        document.querySelectorAll("[id^='schemaPA']").forEach(item => item.style.visibility = 'visible')
-        document.querySelectorAll("[id^='schemaPA']").forEach(item => item.parentElement.style.opacity = 1)
+        document.querySelectorAll("[id^='visiblePA']").forEach(item => item.style.visibility = 'visible')
+        document.querySelectorAll("[id^='visiblePA']").forEach(item => item.parentElement.style.opacity = 1)
 
       }
 
@@ -263,16 +251,35 @@ jsPsych.plugins["playground2"] = (function() {
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
-      // debugger
+      debugger
+ 
+      // Record information about the screen size, viewport size, element positions, etc.
+      trial_data.display_information = {
+        wrapper_arena_position: document.querySelector('#wrapper_arena').getBoundingClientRect(),
+        grid_border_position: document.querySelector('#grid_border').getBoundingClientRect(),
+        grid_box_position: document.querySelector('#grid_box').getBoundingClientRect(),
+        window_scroll_x: window.scrollX,
+        window_scroll_y: window.scrollY,        
+        window_innerHeight: window.innerHeight,
+        window_innerWidth: window.innerWidth,
+        window_outerHeight: window.outerHeight,
+        window_outerWidth: window.outerWidth,        
+      }
+
       // gather the data to store for the trial
       var trial_data = response;
+
+      // Get the dimensions and location of the target item
+      var pa_dim_loc = document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).getBoundingClientRect()
+      trial_data.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
+      trial_data.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2   
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
       trial_data.block = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
       trial_data.hidden_pa_img = curr_trial.hidden_pa_img
-      trial_data.corr_row = curr_trial.hidden_pa_img_coords[0]
-      trial_data.corr_col = curr_trial.hidden_pa_img_coords[1]
+      trial_data.corr_row = curr_trial.hidden_pa_img_coords2.row
+      trial_data.corr_col = curr_trial.hidden_pa_img_coords2.column
       trial_data.top_offset = trial.top_offset
       trial_data.left_offset = trial.left_offset
       trial_data.trial_stage = trial.data.trial_stage

@@ -31,9 +31,17 @@
 			if (jatos.studySessionData.inputData.condition_ses_counters.practice2 == 0){
 
 				// So first part of practice is done
-				instructions_text = '<p>Great! Those were the practice trials with the purple board. If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the purple board.</p>' +
-				'<p>Otherwise, please continue to <b>another practice round with a pink board.</b></p>' +
-				'<p>On this pink board, the visible pictures will move from trial-to-trial!</p>'
+				instructions_text = '<p>Great! Those were the practice trials with the ' + 
+					jatos.studySessionData.inputData.condition_color_names.practice + 
+					' board. If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the ' + 
+					jatos.studySessionData.inputData.condition_color_names.practice + 
+					' board.</p>' +
+					'<p>Otherwise, please continue to <b>another practice round with a ' + 
+					jatos.studySessionData.inputData.condition_color_names.practice2 + 
+					' board, which will be a little different.</b></p>' +
+					'<p>On this ' + 
+					jatos.studySessionData.inputData.condition_color_names.practice2 + 
+					' board, the visible pictures will move from trial-to-trial!</p>'
 
 				second_button_text = 'Practice round #2'
 
@@ -69,13 +77,13 @@
 					if (jatos.studySessionData.inputData.curr_block == 1){
 						
 						if (results[0].response == 0){
-							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions 
+							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions_1 
 
 							// Reset the block counter
 							jatos.studySessionData.inputData.curr_block = 0
 
 						} else {
-							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions2
+							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions_2
 						}
 
 					}
@@ -84,13 +92,13 @@
 					if (jatos.studySessionData.inputData.curr_block == 2){
 						
 						if (results[0].response == 0){
-							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions2 
+							comp_to_start = jatos.studySessionData.inputData.component_positions.instructions_2 
 
 							// Reset the block counter
 							jatos.studySessionData.inputData.curr_block = 1
 
 						} else {
-							comp_to_start = jatos.studySessionData.inputData.component_positions.break2
+							comp_to_start = jatos.studySessionData.inputData.component_positions.break
 						}
 
 					}					

@@ -30,7 +30,7 @@
 			// Create the board element for instructions
 			// Create the board
 
-			var curr_trial = jatos.studySessionData.inputData.all_sessions[0][0]
+			var curr_trial = jatos.studySessionData.inputData.all_blocks[0][0]
 
 			var grid_border = board_creator(
 				grid_size,
@@ -54,11 +54,11 @@
 
 			flex_hidden_pics_el.display = 'flex'
 
-			for (iPA = 0; iPA < curr_trial.new_pa_all_imgs.length; iPA++) {
+			for (iPA = 0; iPA < curr_trial.hidden_pa_all_imgs.length; iPA++) {
 
 				let nPA = document.createElement('img')
 
-				nPA.src = curr_trial.new_pa_all_imgs[iPA]
+				nPA.src = curr_trial.hidden_pa_all_imgs[iPA]
 
 				nPA.style.height = '50px'
 				nPA.style.border = '1px solid black'
@@ -67,7 +67,7 @@
 				flex_hidden_pics_el.appendChild(nPA)
 			}
 
-			// Create the exmpty purple board
+			// Create the exmpty board
 			var grid_border_empty = board_creator(
 				grid_size,
 				jatos.studySessionData.inputData.n_rows,
@@ -101,7 +101,7 @@
 			grid_border_fb.children[0].style.position = 'relative'
 			grid_border_fb.children[0].style.margin = 'auto'
 
-			grid_border_fb.children[0].querySelector('#newPA_1').style.visibility = 'visible'
+			grid_border_fb.children[0].querySelector('#hiddenPA_1').style.visibility = 'visible'
 
 
 			// Create a flexbox to put the stages of the trial
@@ -136,7 +136,7 @@
 			grid_trial_stages_el.innerHTML += '<div>Make your response</div>'
 			grid_trial_stages_el.innerHTML += '<div>Feedback</div>'
 			grid_trial_stages_el.innerHTML += grid_border_small.innerHTML
-			grid_trial_stages_el.innerHTML += '<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
+			grid_trial_stages_el.innerHTML += '<img src="' + curr_trial.hidden_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; margin-left:auto; margin-right:auto;"></img>'
 			grid_trial_stages_el.innerHTML += grid_border_empty_small.innerHTML
 			grid_trial_stages_el.innerHTML += grid_border_fb_small.innerHTML
 
@@ -148,7 +148,7 @@
 				'<div class="instruct">' +
 				'<p>Welcome to the experiment!</p>' +
 				'<p>In this experiment, you will learn locations of pictures that are hidden on virtual boards.</p>' +
-				'<p>For example, the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board you see below contains 6 visible pictures</p>' + grid_border.innerHTML +
+				'<p>For example, the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board you see below contains 6 visible pictures.</p>' + grid_border.innerHTML +
 				'<p><br>Your task will be to find additional 3 hidden pictures that are located somewhere on this board!</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
@@ -161,7 +161,7 @@
 				'<div class="instruct">' +
 
 				'<p>At the beginning of each trial, you will see the board on the screen with all the visible pictures.</p>' +
-				'<p>The board will stay on the screen for ' + (jatos.studySessionData.inputData.schema_display_duration / 1000) + ' seconds.</p>' +
+				'<p>The board will stay on the screen for ' + (jatos.studySessionData.inputData.visible_pa_display_duration / 1000) + ' seconds.</p>' +
 				grid_border.innerHTML,
 
 				'<div class= "header">' +
@@ -171,13 +171,13 @@
 				'<div class="instruct">' +
 				'<p>Then, the board will disappear and you will be told which of the 3 hidden pictures you must locate on the board.</p>' +
 				'<p>For example:</p>' +
-				'<img src="' + curr_trial.new_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; display:inline-block;"></img>',
+				'<img src="' + curr_trial.hidden_pa_all_imgs[0] + '" alt="example_prompt" style="height:100px; display:inline-block;"></img>',
 				'<div class= "header">' +
 				'<h1> Instructions </h1>' +
 				'<h2> Trial structure. Step 3:<h2>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>Following this, you will see the purple board empty, without visible pictures, and you will have to indicate with your mouse click where you think the hidden picture is located.</p>' +
+				'<p>Following this, you will see the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board empty, without visible pictures, and you will have to indicate with your mouse click where you think the hidden picture is located.</p>' +
 				'<p>You will have ' + (jatos.studySessionData.inputData.response_window_duration / 1000) + ' seconds to make your choice.</p>' +
 				grid_border_empty.innerHTML,
 				'<div class= "header">' +
@@ -185,15 +185,15 @@
 				'<h2> Trial structure. Step 4:<h2>' +
 				'</div>' +
 				'<p>After you make your response, you will get feedback.</p>' +
-				'<p>All the visible pictures will reappear</p>' +
+				'<p>All the visible pictures will reappear.</p>' +
 				'<p>The hidden picture will appear at its correct location.</p>' +
 				grid_border_fb.innerHTML,
 				'<div class= "header">' +
 				'<h1> Instructions </h1>' +
 				'</div>' +
-				'<p>Below you can see all four stages of the trial one after another:</p>' +
+				'<p>Below you can see all four stages of a trial one after another:</p>' +
 				grid_trial_stages_el.outerHTML +
-				'<p><br>Click next to do a few practice trials with this purple board!</p>' +
+				'<p><br>Click next to do a few practice trials with this '+ jatos.studySessionData.inputData.condition_color_names.practice +' board!</p>' +
 				'</div>'
 			];
 

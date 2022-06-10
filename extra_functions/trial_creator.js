@@ -174,7 +174,7 @@ function trial_creator(all_conditions) {
                         hidden_pa_img: iCondStages.hidden_pas[iPA],
                         hidden_pa_img_idx: iPA,
                         hidden_pa_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas[iPA],
-                        hidden_pa_img_coods2: hidden_pas_coords[iPA],
+                        hidden_pa_img_coords2: hidden_pas_coords[iPA],
                         hidden_pa_all_imgs: iCondStages.hidden_pas,
                         hidden_pa_all_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas,
                         hidden_pa_all_img_coords2: hidden_pas_coords,

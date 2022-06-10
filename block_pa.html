@@ -5,7 +5,7 @@
         <script src='jatos.js'></script>
         <script src='./jspsych-6.3.1/jspsych.js'></script>        
         <script src='./extra_functions/lodash.js'></script>
-        <script src='./extra_functions/jspsych-playground.js'></script>
+        <script src='./extra_functions/jspsych-schema-boards.js'></script>
         <script src='./extra_functions/trial_creator.js'></script>
         <script src='./extra_functions/math.js'></script>
         <script src = './extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
@@ -33,7 +33,7 @@
             jatos.studySessionData.inputData.condition_ses_counters[curr_condition] ++
 
             var visible_pa_display = {
-                type: 'playground2',
+                type: 'schema_boards',
                 condition: jsPsych.timelineVariable('condition'),
                 top_offset: jsPsych.timelineVariable('top_offset_visible_pa_display'),
                 left_offset: jsPsych.timelineVariable('left_offset_visible_pa_display'),
@@ -58,7 +58,7 @@
             }
 
             var hidden_pa_learning = {
-                type: 'playground2',
+                type: 'schema_boards',
                 condition: jsPsych.timelineVariable('condition'),
                 top_offset: jsPsych.timelineVariable('top_offset_hidden_pa_learning'),
                 left_offset: jsPsych.timelineVariable('left_offset_hidden_pa_learning'),
@@ -85,12 +85,6 @@
 					...jatos.studySessionData.inputData.all_images.cond4,
 					...jatos.studySessionData.inputData.all_images.cond5,
 				]
-            imgs_to_preload.push('img/border_images/circles.png')
-            imgs_to_preload.push('img/border_images/diamonds.png')
-            imgs_to_preload.push('img/border_images/triangles.png')
-            imgs_to_preload.push('img/border_images/bullseye_larger.png')
-            imgs_to_preload.push('img/border_images/bullsdiamond_larger.png')
-            imgs_to_preload.push('img/border_images/stars_larger.png')
 
             // Create the preload trial
             var preload_trial = {
@@ -107,7 +101,7 @@
             subtimeline.push(image_display)
             subtimeline.push(hidden_pa_learning)
 
-             var block_procedure = {
+            var block_procedure = {
                 timeline: subtimeline,
                 timeline_variables: trials_for_this_block,
             }
@@ -128,13 +122,19 @@
 
                     // Separate out image presentation from responding
                     
-                    jatos.studySessionData.outputData.block_results_image_screen.push(...block_results.filter(el => el.trial_stage == 'image_display'))
+                    jatos.studySessionData.outputData.block_results_image_screen.push(
+                        ...block_results.filter(el => el.trial_stage == 'image_display')
+                        )
 
                     if (jatos.studySessionData.inputData.run_visible_pa_display){
-                        jatos.studySessionData.outputData.block_results_visible_pa_display.push(...block_results.filter(el => el.trial_stage == 'visible_pa_display'))
+                        jatos.studySessionData.outputData.block_results_visible_pa_display.push(
+                            ...block_results.filter(el => el.trial_stage == 'visible_pa_display')
+                            )
                     }
 
-                    jatos.studySessionData.outputData.block_results_hidden_pa_learning.push(...block_results.filter(el => el.trial_stage == 'hidden_pa_learning'))
+                    jatos.studySessionData.outputData.block_results_hidden_pa_learning.push(
+                        ...block_results.filter(el => el.trial_stage == 'hidden_pa_learning')
+                        )
 
 					// Make JATOS remember that this block was run
                     jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
@@ -148,7 +148,7 @@
                         // Start post practice component
                         comp_to_start = jatos.studySessionData.inputData.component_positions.post_practice
                     } else {
-                        comp_to_start = jatos.studySessionData.inputData.component_positions.break2
+                        comp_to_start = jatos.studySessionData.inputData.component_positions.break
                     }
 
 					jatos.submitResultData('[block_pa_start_' + '---' + 

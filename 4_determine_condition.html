@@ -370,7 +370,7 @@
 
             condition_chosen = 'cb' + (minCond + 1)
 
-            debugger
+            // debugger
             createConditions();
 
             // Create the trials
@@ -384,7 +384,7 @@
             jatos.submitResultData("[conditions_start---" +
                 JSON.stringify(jatos.studySessionData) + "---conditions_end]", 
                 function () {jatos.startComponentByPos(
-                    jatos.studySessionData.inputData.component_positions.instructions
+                    jatos.studySessionData.inputData.component_positions.instructions_1
                     )});
 
 
@@ -414,7 +414,7 @@
                     jatos.submitResultData("[conditions_start---" +
                         JSON.stringify(jatos.studySessionData) + "---conditions_end]",
                         function (){ jatos.startComponentByPos(
-                            jatos.studySessionData.inputData.component_positions.instructions
+                            jatos.studySessionData.inputData.component_positions.instructions_1
                             )});
 
                 } // on finish

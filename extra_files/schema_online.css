@@ -41,7 +41,7 @@ ul {
 }
 
 /* For the text inside the score box, font size must be smaller, to fit within the scorebox. */
-#grid-box {
+#grid_box {
     display: grid;
 }
 

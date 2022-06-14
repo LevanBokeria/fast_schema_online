@@ -6,7 +6,6 @@
     <script src='jatos.js'></script>
     <script src='./jspsych-6.3.1/jspsych.js'></script>
     <script src='./extra_functions/lodash.js'></script>
-    <script src='./extra_functions/jspsych-playground.js'></script>
     <script src='./extra_functions/trial_creator.js'></script>
     <script src='./extra_functions/math.js'></script>
     <script src='./extra_functions/jquery-3.4.1.js' type='text/javascript'></script>
@@ -90,100 +89,6 @@
 
         // Record all the arrangements
         jatos.studySessionData.inputData.pa_arrangements = pa_arrangements
-
-        jatos.studySessionData.inputData.arrangement_coords = {
-            arr_pair_1: {
-                arr_pair_1_1: [
-                    [6, 3],
-                    [9, 4],
-                    [2, 5],
-                    [7, 7],
-                    [10, 10],
-                    [5, 11],
-                ],
-                arr_pair_1_2: [
-                    [6, 4],
-                    [4, 6],
-                    [10, 7],
-                    [8, 8],
-                    [3, 9],
-                    [7, 11]
-                ],
-            },
-            arr_pair_2: {
-                arr_pair_2_1: [
-                    [7, 2],
-                    [10, 3],
-                    [2, 4],
-                    [6, 6],
-                    [4, 9],
-                    [9, 10],
-                ],
-                arr_pair_2_2: [
-                    [8, 4],
-                    [5, 5],
-                    [10, 6],
-                    [2, 7],
-                    [9, 9],
-                    [6, 10],
-                ],
-            },
-            arr_pair_3: {
-                arr_pair_3_1: [
-                    [3, 3],
-                    [9, 4],
-                    [5, 6],
-                    [2, 8],
-                    [11, 8],
-                    [7, 10],
-                ],
-                arr_pair_3_2: [
-                    [5, 2],
-                    [6, 5],
-                    [3, 6],
-                    [8, 7],
-                    [7, 9],
-                    [4, 10],
-                ],
-            },
-            arr_pair_4: {
-                arr_pair_4_1: [
-                    [9, 2],
-                    [4, 3],
-                    [7, 5],
-                    [2, 6],
-                    [5, 9],
-                    [10, 10],
-                ],
-                arr_pair_4_2: [
-                    [4, 4],
-                    [10, 5],
-                    [6, 6],
-                    [8, 7],
-                    [2, 9],
-                    [7, 10],
-                ],
-            },
-            arr_pair_5: {
-                arr_pair_5_1: [
-                    [5, 3],
-                    [2, 4],
-                    [8, 5],
-                    [11, 8],
-                    [6, 9],
-                    [3, 10],
-                ],
-                arr_pair_5_2: [
-                    [9, 3],
-                    [5, 4],
-                    [11, 5],
-                    [7, 6],
-                    [4, 7],
-                    [9, 10],
-                ],
-            },
-        }
-        // debugger
 
         jatos.studySessionData.inputData.all_images = {
             practice: ['img/targets/BOSS/high_familiarity_downsized/practice/002_frenchfries.jpg',
@@ -282,8 +187,6 @@
         // Auto respons? So the program will automatically respond on each trial 
         jatos.studySessionData.inputData.autoRespond = jatos.componentJsonInput.autoRespond
 
-        // debugger
-
         if (debugMode) {
             jatos.studySessionData.inputData.n_ses_per_condition = {
                 practice: 1,
@@ -361,7 +264,6 @@
 
         }
 
-        // debugger
         if (autoConditions) {
 
             // So get the batch info, find the smallest group, and choose that
@@ -378,7 +280,6 @@
 
             condition_chosen = 'cb' + (minCond + 1)
 
-            // debugger
             createConditions();
 
             // Create the trials
@@ -406,7 +307,7 @@
 
                 on_finish: function (data) {
                     var results = jsPsych.data.get().values();
-                    // debugger
+
                     condition_chosen = results[0].response.condition
 
                     createConditions();
@@ -430,7 +331,7 @@
         }
 
         function createConditions() {
-            // debugger
+
             // Which counterbalancing was chosen?
             if (condition_chosen == 'cb1') {
                 order_of_conditions = ['schema_c', 'schema_ic', 'schema_l', 'random_loc', 'no_schema']
@@ -466,7 +367,6 @@
             // For the no_schema condition, juts remove the visible_pas PAs
             jatos.studySessionData.inputData.condition_to_images.no_schema.visible_pas = []
 
-            // debugger
             condition_to_images.practice  = jatos.studySessionData.inputData.condition_to_images.practice
             condition_to_images.practice2 = jatos.studySessionData.inputData.condition_to_images.practice2
             condition_to_images[order_of_conditions[0]] = jatos.studySessionData.inputData.condition_to_images[order_of_conditions[0]]
@@ -477,7 +377,6 @@
 
 
             ////////////////////////////////////////////////////////////////////////////////
-            // debugger
             // A new way to assign arrangements to conditions
             jatos.studySessionData.inputData.condition_to_arrangements = {
                 practice:   pa_arrangements.filter(item => item.arrangement == 6),
@@ -487,64 +386,6 @@
                 schema_l:   pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('schema_l')+1),
                 random_loc: pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('random_loc')+1),
                 no_schema:  pa_arrangements.filter(item => item.arrangement == order_of_conditions.indexOf('no_schema')+1),
-            }
-
-            // The old way to assign arrangements to conditions
-            jatos.studySessionData.inputData.condition_coords = {
-                practice: {
-                    visible_pas: [
-                        [5, 2],
-                        [10, 5],
-                        [7, 6],
-                        [3, 8],
-                        [11, 10],
-                        [4, 11]
-                    ],
-                    hidden_pas: [
-                        [9, 3],
-                        [2, 5],
-                        [4, 10],
-                    ]
-                },
-                practice2: {
-                    visible_pas: [
-                        [4, 2],
-                        [11, 3],
-                        [9, 6],
-                        [6, 7],
-                        [3, 8],
-                        [10, 9]
-                    ],
-                    hidden_pas: [
-                        [8, 3],
-                        [5, 6],
-                        [9, 10],
-                    ]
-                },
-                schema_c: {
-                    visible_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_1,
-                    hidden_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_3.arr_pair_3_2,
-                },
-
-                schema_ic: {
-                    visible_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_1,
-                    hidden_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_4.arr_pair_4_2,
-                },
-
-                random_loc: {
-                    visible_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_1,
-                    hidden_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_1.arr_pair_1_2,
-                },
-
-                schema_l: {
-                    visible_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_1,
-                    hidden_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_5.arr_pair_5_2,
-                },
-
-                no_schema: {
-                    visible_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_1,
-                    hidden_pas: jatos.studySessionData.inputData.arrangement_coords.arr_pair_2.arr_pair_2_2,
-                },
             }
 
         } // function createConditions

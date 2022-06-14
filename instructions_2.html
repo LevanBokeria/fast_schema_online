@@ -129,7 +129,7 @@
 			grid_trial_1_stages_el.innerHTML += '<div>Step 2:</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Step 3:</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Step 4:</div>'
-			grid_trial_1_stages_el.innerHTML += '<div>Board + visible items</div>'
+			grid_trial_1_stages_el.innerHTML += '<div>Board + visible pictures</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Hidden item to find</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Make your response</div>'
 			grid_trial_1_stages_el.innerHTML += '<div>Feedback</div>'
@@ -200,7 +200,7 @@
 			grid_trial_2_stages_el.innerHTML += '<div>Step 2:</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Step 3:</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Step 4:</div>'
-			grid_trial_2_stages_el.innerHTML += '<div>Board + visible items</div>'
+			grid_trial_2_stages_el.innerHTML += '<div>Board + visible pictures</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Hidden item to find</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Make your response</div>'
 			grid_trial_2_stages_el.innerHTML += '<div>Feedback</div>'
@@ -218,16 +218,16 @@
 				'<div class="instruct">' +
 				'<p>In the real experiment, you will have to find hidden pictures on 5 differently colored boards.</p>' +
                 '<br>' +
-                '<p>On some of these boards, the visible items will always stay fixed inside the board, like you saw for the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board.</p>' +
-                '<p><b>However, for some of the other boards, the visible items might change their locations!</b></p>' +
-                '<p>Some of the visible items might stay fixed, while others might move. Some might swap places with another visible items.</p>' +
+                '<p>On some of these boards, the visible pictures will always stay fixed inside the board, like you saw for the '+ jatos.studySessionData.inputData.condition_color_names.practice +' board.</p>' +
+                '<p><b>However, for some of the other boards, the visible pictures might change their locations!</b></p>' +
+                '<p>Some of the visible pictures might stay fixed, while others might move. Some might swap places with another visible picture.</p>' +
 				'<p>Click "Next" to see an example!</p>',
 
 				'<h1> Practice part 2 </h1>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>For example, on one trial, this pink board will be shown with its visible items like this: </p>' + grid_border.innerHTML +
-				'<p><br>Your task is still to find the hidden items on the board.</p>' +
+				'<p>For example, on one trial, this pink board will be shown with its visible pictures like this: </p>' + grid_border.innerHTML +
+				'<p><br>Your task is still to find the hidden pictures on the board.</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
 				'<p><br><b>Example trial 1:</b></p>' +
@@ -239,9 +239,9 @@
 				'</div>' +
 				'<div class="instruct">' +
 
-				'<p>But on the next trial, the visible items might have moved, like this:</p>' + grid_border_moved_items.innerHTML +
-				'<p><br>You can see that <b>two</b> of the visible items stayed in the same location, while all the others moved.</p>' +
-				'<p>Your task is still to find the same hidden items on the board. These will never change their locations.</p>' +
+				'<p>But on the next trial, the visible pictures might have moved, like this:</p>' + grid_border_moved_items.innerHTML +
+				'<p><br>You can see that <b>two</b> of the visible pictures stayed in the same location, while all the others moved.</p>' +
+				'<p>Your task is still to find the same hidden pictures on the board. These will never change their locations.</p>' +
 				'<p><b>Hidden pictures:</b></p>' +
 				flex_hidden_pics_el.innerHTML +
 				'<p><br><b>Example trial 2:</b></p>' +
@@ -252,10 +252,10 @@
 				'<h1> Practice part 2 </h1>' +
 				'</div>' +
 				'<div class="instruct">' +
-				'<p>Remember, during the real experiment, you might get a board where some or all the visible items switch locations, or where the visible items swap places with each other!</p>' +
-				'<p><br>And remember, your task is always just to find the hidden items, which will never change locations!</p>' +
+				'<p>Remember, during the real experiment, you might get a board where some or all the visible pictures switch locations, or where the visible pictures swap places with each other!</p>' +
+				'<p><br>And remember, your task is always just to find the hidden pictures, which will never change locations!</p>' +
                 '<br>' +
-				'<p>Click next to do a few practice trials with this pink board where 2 of the visible items stay fixed while others move!</p>' +
+				'<p>Click next to do a few practice trials with this pink board where 2 of the visible pictures stay fixed while others move!</p>' +
 				'</div>'
 			];
 

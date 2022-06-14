@@ -307,7 +307,7 @@ jsPsych.plugins["schema_boards"] = (function () {
 
       // Is it a correct response or not? 
       if (Math.random() > 0.6){
-        debugger
+        
         info.correct = true
 
         // Get coords of the correct PA.
@@ -320,7 +320,7 @@ jsPsych.plugins["schema_boards"] = (function () {
         info.col = curr_trial.hidden_pa_img_coords.column
 
       } else {
-        debugger
+        
         info.correct = false
 
         // Randomly choose a visible PA coordinate

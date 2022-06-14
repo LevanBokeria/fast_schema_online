@@ -8,7 +8,7 @@
  *
  **/
 
-jsPsych.plugins["schema_boards"] = (function() {
+jsPsych.plugins["schema_boards"] = (function () {
 
   var plugin = {};
 
@@ -21,49 +21,49 @@ jsPsych.plugins["schema_boards"] = (function() {
         pretty_name: 'Experimental Condition',
         default: null,
         description: 'Name of the schema condition for this trial'
-      }, 
+      },
       top_offset: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Board top offset',
         default: null,
         description: 'Y offset of the board to randomize its position'
-      },            
+      },
       left_offset: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Board left offset',
         default: null,
         description: 'X offset of the board to randomize its position'
-      },                  
+      },
       show_visible_pas: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show schema PAs',
         default: false,
         description: 'This will decide whether all the schema PAs are shown from the beginning.'
-      },      
+      },
       show_hidden_pas: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show new PAs',
         default: false,
         description: 'This will decide whether all the new PAs are shown from the beginning.'
-      },            
+      },
       allow_response: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Allow participant to respond',
         default: true,
         description: 'Record mouse click or not. If only showing the schema-PAs then dont record'
-      },   
+      },
       show_feedback: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show feedback or not',
         default: true,
         description: 'Show feedback or not'
-      },  
+      },
       show_visible_pas_at_feedback: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Show schema PAs at feedback',
         default: false,
         description: 'This will decide whether all the schema PAs are shown at the feedback stage.'
-      },                     
+      },
       trial_duration: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Trial duration',
@@ -81,11 +81,11 @@ jsPsych.plugins["schema_boards"] = (function() {
         pretty_name: 'hide cursor?',
         default: false,
         description: 'If its schema-PA display stage, hide the cursor.'
-      },           
+      },
     }
   }
 
-  plugin.trial = function(display_element, trial) {
+  plugin.trial = function (display_element, trial) {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     var timeout = true
@@ -96,17 +96,17 @@ jsPsych.plugins["schema_boards"] = (function() {
       col: null,
       correct: null, //null if missed, else true/false
     }
-    // debugger
+    debugger
 
     // Hide the cursos?
-    if (trial.hide_cursor){
+    if (trial.hide_cursor) {
       document.querySelector('.jspsych-content-wrapper').classList.add('noCursor')
     } else {
       document.querySelector('.jspsych-content-wrapper').classList.remove('noCursor')
     }
-    
+
     // Get all the info from this trial here as a local variable
-    var curr_trial = jatos.studySessionData.inputData.all_blocks[jatos.studySessionData.inputData.curr_block-1][trial.trial_counter]
+    var curr_trial = jatos.studySessionData.inputData.all_blocks[jatos.studySessionData.inputData.curr_block - 1][trial.trial_counter]
 
     // Create the wrapper arena for box to move in
     wrapper_arena = document.createElement('div')
@@ -114,7 +114,7 @@ jsPsych.plugins["schema_boards"] = (function() {
     wrapper_arena.style.height = '700px'
     wrapper_arena.style.width = '700px'
     wrapper_arena.style.border = '1px solid black'
-    
+
     // Create the board
     grid_border = board_creator(500,
       jatos.studySessionData.inputData.n_rows,
@@ -123,18 +123,17 @@ jsPsych.plugins["schema_boards"] = (function() {
       trial.show_hidden_pas,
       curr_trial)
 
-    // Randomly modify grid position
+    // Randomly modify the grid position
     grid_border.style.position = 'relative'
     grid_border.style.top = trial.top_offset + 'px'
     grid_border.style.left = trial.left_offset + 'px'
 
     var all_cells = grid_border.querySelectorAll('.cells')
 
-    
-    if (trial.allow_response){
-      for (iC=0; iC<all_cells.length; iC++){
+    if (trial.allow_response) {
+      for (iC = 0; iC < all_cells.length; iC++) {
         // console.log(iC)
-        all_cells[iC].addEventListener('click',getResponse)
+        all_cells[iC].addEventListener('click', getResponse)
       }
     }
 
@@ -147,7 +146,7 @@ jsPsych.plugins["schema_boards"] = (function() {
     feedback_el.id = 'feedback_text'
     feedback_el.style.visibility = 'hidden'
     feedback_el.style['font-size'] = '125%'
-    feedback_el.style['font-weight'] = 'bold' 
+    feedback_el.style['font-weight'] = 'bold'
 
     display_element.appendChild(feedback_el)
 
@@ -155,17 +154,24 @@ jsPsych.plugins["schema_boards"] = (function() {
 
     if (trial.allow_response) {
 
-      jsPsych.pluginAPI.setTimeout(function(){doFeedback(null,timeout)}, trial.trial_duration);
+      jsPsych.pluginAPI.setTimeout(function () { doFeedback(null, timeout) }, trial.trial_duration);
+      
+      // If autoresponding is on
+      if (jatos.studySessionData.inputData.autoRespond) {
+        
+        // Set a timer and afterwards, call a function that will stop event listeners, and create a manual response
+        jsPsych.pluginAPI.setTimeout(function () { autoRespondFunction() }, 1000)
+      }
 
     } else {
-    
-      jsPsych.pluginAPI.setTimeout(function(){endTrial()}, trial.trial_duration);
+
+      jsPsych.pluginAPI.setTimeout(function () { endTrial() }, trial.trial_duration);
 
     }
 
-    function getResponse(e){
+    function getResponse(e) {
       info = {}
-      
+
       info.rt = performance.now() - startTime
 
       // Get the exact mouse coordinates relative to the page
@@ -174,10 +180,10 @@ jsPsych.plugins["schema_boards"] = (function() {
 
       // Get row/col of the cell clicked
       let curr_row_col = e.currentTarget.id.split('_')
-      info.row = parseInt(curr_row_col[2],10)
-      info.col = parseInt(curr_row_col[4],10)
+      info.row = parseInt(curr_row_col[2], 10)
+      info.col = parseInt(curr_row_col[4], 10)
 
-      if (info.row == curr_trial.hidden_pa_img_coords2.row & info.col == curr_trial.hidden_pa_img_coords2.column){
+      if (info.row == curr_trial.hidden_pa_img_coords2.row & info.col == curr_trial.hidden_pa_img_coords2.column) {
         info.correct = true
       } else {
         info.correct = false
@@ -185,18 +191,18 @@ jsPsych.plugins["schema_boards"] = (function() {
 
       // only record first response
       response = response.rt == null ? info : response;
-      
+
       timeout = false
 
-      doFeedback(info.correct,timeout);
+      doFeedback(info.correct, timeout);
 
     }
 
     function doFeedback(correct, timeout) {
 
       // Remove all the event listeners from all the cells.
-      document.querySelectorAll('.cells').forEach(function(el){
-        el.removeEventListener('click',getResponse,false)
+      document.querySelectorAll('.cells').forEach(function (el) {
+        el.removeEventListener('click', getResponse, false)
       })
 
       if (timeout) {
@@ -205,26 +211,26 @@ jsPsych.plugins["schema_boards"] = (function() {
         document.querySelector('#feedback_text').style.visibility = 'visible'
       } else {
 
-        if (correct == true){
+        if (correct == true) {
           feedback_text = 'Correct!'
           document.querySelector('#feedback_text').style.color = 'green'
         } else {
           feedback_text = 'Incorrect...!'
           document.querySelector('#feedback_text').style.color = 'red'
         }
-        
+
         // show the feedback
         document.querySelector('#feedback_text').innerText = feedback_text
         document.querySelector('#feedback_text').style.visibility = 'visible'
       }
 
       // Show the true feedback!
-      document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).style.visibility = 'visible'
-      document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).parentElement.style.opacity = 1
+      document.querySelector('#hiddenPA_' + (curr_trial.hidden_pa_img_idx + 1)).style.visibility = 'visible'
+      document.querySelector('#hiddenPA_' + (curr_trial.hidden_pa_img_idx + 1)).parentElement.style.opacity = 1
 
       // If wanted, also show the schema PAs
-      if (trial.show_visible_pas_at_feedback){
-        
+      if (trial.show_visible_pas_at_feedback) {
+
         document.querySelectorAll("[id^='visiblePA']").forEach(item => item.style.visibility = 'visible')
         document.querySelectorAll("[id^='visiblePA']").forEach(item => item.parentElement.style.opacity = 1)
 
@@ -234,11 +240,11 @@ jsPsych.plugins["schema_boards"] = (function() {
       jsPsych.pluginAPI.clearAllTimeouts();
 
       // If we're showing feedback, then make a timeout function
-      if (trial.show_feedback){
-        jsPsych.pluginAPI.setTimeout(function() {
+      if (trial.show_feedback) {
+        jsPsych.pluginAPI.setTimeout(function () {
           endTrial();
-        }, 
-        jatos.studySessionData.inputData.feedback_duration);
+        },
+          jatos.studySessionData.inputData.feedback_duration);
       } else {
         endTrial();
       }
@@ -247,12 +253,12 @@ jsPsych.plugins["schema_boards"] = (function() {
 
     function endTrial() {
       // console.log('Another trial');
-      
+
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
       // debugger
- 
+
       // Save the response parameters
       var trial_data = response;
 
@@ -262,17 +268,17 @@ jsPsych.plugins["schema_boards"] = (function() {
         grid_border_position: document.querySelector('#grid_border').getBoundingClientRect(),
         grid_box_position: document.querySelector('#grid_box').getBoundingClientRect(),
         window_scroll_x: window.scrollX,
-        window_scroll_y: window.scrollY,        
+        window_scroll_y: window.scrollY,
         window_innerHeight: window.innerHeight,
         window_innerWidth: window.innerWidth,
         window_outerHeight: window.outerHeight,
-        window_outerWidth: window.outerWidth,        
+        window_outerWidth: window.outerWidth,
       }
 
       // Get the dimensions and location of the target item
-      var pa_dim_loc = document.querySelector('#hiddenPA_'+(curr_trial.hidden_pa_img_idx+1)).getBoundingClientRect()
-      trial_data.pa_center_x = pa_dim_loc.left + pa_dim_loc.width/2
-      trial_data.pa_center_y = pa_dim_loc.top + pa_dim_loc.height/2   
+      var pa_dim_loc = document.querySelector('#hiddenPA_' + (curr_trial.hidden_pa_img_idx + 1)).getBoundingClientRect()
+      trial_data.pa_center_x = pa_dim_loc.left + pa_dim_loc.width / 2
+      trial_data.pa_center_y = pa_dim_loc.top + pa_dim_loc.height / 2
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
@@ -293,6 +299,46 @@ jsPsych.plugins["schema_boards"] = (function() {
       jsPsych.finishTrial(trial_data);
 
     };
+
+    function autoRespondFunction() {
+      debugger
+      info = {}
+
+      info.rt = 1000
+
+      // Is it a correct response or not? 
+      if (Math.random() > 0.6){
+
+        info.correct = true
+
+        // Get coords of the correct PA.
+        let correct_pa_info = document.querySelector('#hiddenPA_' + (curr_trial.hidden_pa_img_idx + 1)).getBoundingClientRect()
+
+        info.mouse_clientX = correct_pa_info.x + correct_pa_info.width/2
+        info.mouse_clientY = correct_pa_info.y + correct_pa_info.width/2
+
+        info.row = curr_trial.curr_trial.hidden_pa_img_coords2.row
+        info.col = curr_trial.curr_trial.hidden_pa_img_coords2.column
+
+      } else {
+        info.correct = false
+
+        // Randomly choose a visible PA coordinate
+        let visible_pa_chosen = Math.floor(Math.random()*6) + 1
+        let pa_info = document.querySelector('#visiblePA_' + visible_pa_chosen.getBoundingClientRect())
+
+
+      }
+
+      // only record first response
+      response = response.rt == null ? info : response;
+
+      timeout = false
+
+      doFeedback(info.correct, timeout);
+
+
+    }
 
   };
 

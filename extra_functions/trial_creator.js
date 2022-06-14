@@ -16,12 +16,10 @@ function trial_creator(all_conditions) {
 
         let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[iCond]
         
-        var visible_pas_coords = jatos.studySessionData.inputData.condition_coords[iCond].visible_pas
-
-        var visible_pas_coords2 = jatos.studySessionData.inputData.condition_to_arrangements[iCond].filter(item => item.pa_type == 'visible')
+        var visible_pas_coords = jatos.studySessionData.inputData.condition_to_arrangements[iCond].filter(item => item.pa_type == 'visible')
 
         // Landmark visible PA indices
-        var visible_pas_near_idxs = visible_pas_coords2.map(item => item.subtype == 'near').flatMap(
+        var visible_pas_near_idxs = visible_pas_coords.map(item => item.subtype == 'near').flatMap(
             (bool, index) => bool ? index : []
             )
 
@@ -61,11 +59,10 @@ function trial_creator(all_conditions) {
                     if (iCond == 'schema_ic') {
                         
                         visible_pas_coords = jsPsych.randomization.shuffle(visible_pas_coords)
-                        visible_pas_coords2 = jsPsych.randomization.shuffle(visible_pas_coords2)
                    
                     } else if (iCond == 'practice2' | iCond == 'schema_l' | iCond == 'random_loc') {
 
-                        let landmark_rcs = visible_pas_coords2.filter(item => item.subtype == 'near')
+                        let landmark_rcs = visible_pas_coords.filter(item => item.subtype == 'near')
 
                         // If its random locations, then we don't have any landmark visible PAs. So, clear these variables
                         // such that they are not checked against when creating new locations
@@ -76,8 +73,7 @@ function trial_creator(all_conditions) {
                         }
 
                         // Reset, to repopulate
-                        visible_pas_coords  = []
-                        visible_pas_coords2 = []
+                        visible_pas_coords = []
 
                         // Create a variable against which to check new locations
                         var check_against = [...landmark_rcs]
@@ -100,7 +96,7 @@ function trial_creator(all_conditions) {
 
                                 let which_visible_near = visible_pas_near_idxs.indexOf(iLoc)
 
-                                    visible_pas_coords2[visible_pas_near_idxs[which_visible_near]] = landmark_rcs[which_visible_near]
+                                    visible_pas_coords[visible_pas_near_idxs[which_visible_near]] = landmark_rcs[which_visible_near]
                                     continue
                             }
 
@@ -140,9 +136,6 @@ function trial_creator(all_conditions) {
                             const idx = allowed_rc.indexOf(rand_rc)
                             allowed_rc.splice(idx, 1)
 
-                            // Add this to the visible_pas_coords vector
-                            visible_pas_coords[iLoc] = [...rand_rc]
-
                             check_against[check_against.length] = {
                                 arrangement: jatos.studySessionData.inputData.condition_to_arrangements[iCond][0].arrangement,
                                 pa_type: 'visible',
@@ -151,7 +144,7 @@ function trial_creator(all_conditions) {
                                 column: rand_rc[1]
                             } 
 
-                            visible_pas_coords2[iLoc] = {
+                            visible_pas_coords[iLoc] = {
                                 arrangement: jatos.studySessionData.inputData.condition_to_arrangements[iCond][0].arrangement,
                                 pa_type: 'visible',
                                 hidden_type: '',
@@ -164,8 +157,7 @@ function trial_creator(all_conditions) {
                     } else if (iCond == 'no_schema') {
 
                         // Delete this
-                        var visible_pas_coords  = []
-                        var visible_pas_coords2 = []
+                        var visible_pas_coords = []
 
                     } // which condition
                     // debugger
@@ -173,14 +165,11 @@ function trial_creator(all_conditions) {
                     var trial = {
                         hidden_pa_img: iCondStages.hidden_pas[iPA],
                         hidden_pa_img_idx: iPA,
-                        hidden_pa_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas[iPA],
-                        hidden_pa_img_coords2: hidden_pas_coords[iPA],
+                        hidden_pa_img_coords: hidden_pas_coords[iPA],
                         hidden_pa_all_imgs: iCondStages.hidden_pas,
-                        hidden_pa_all_img_coords: jatos.studySessionData.inputData.condition_coords[iCond].hidden_pas,
-                        hidden_pa_all_img_coords2: hidden_pas_coords,
+                        hidden_pa_all_img_coords: hidden_pas_coords,
                         visible_pa_imgs: iCondStages.visible_pas,
                         visible_pa_img_coords: visible_pas_coords,
-                        visible_pa_img_coords2: visible_pas_coords2,
                         condition: iCond,
                         color: jatos.studySessionData.inputData.condition_colors[iCond],
                         color_name: jatos.studySessionData.inputData.condition_color_names[iCond],

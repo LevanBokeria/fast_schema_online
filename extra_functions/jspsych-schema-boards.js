@@ -182,7 +182,7 @@ jsPsych.plugins["schema_boards"] = (function () {
       info.row = parseInt(curr_row_col[2], 10)
       info.col = parseInt(curr_row_col[4], 10)
 
-      if (info.row == curr_trial.hidden_pa_img_coords2.row & info.col == curr_trial.hidden_pa_img_coords2.column) {
+      if (info.row == curr_trial.hidden_pa_img_coords.row & info.col == curr_trial.hidden_pa_img_coords.column) {
         info.correct = true
       } else {
         info.correct = false
@@ -281,12 +281,12 @@ jsPsych.plugins["schema_boards"] = (function () {
 
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
-      trial_data.arrangement = curr_trial.hidden_pa_img_coords2.arrangement
+      trial_data.arrangement = curr_trial.hidden_pa_img_coords.arrangement
       trial_data.block = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
       trial_data.hidden_pa_img = curr_trial.hidden_pa_img
-      trial_data.hidden_pa_img_type = curr_trial.hidden_pa_img_coords2.subtype
-      trial_data.corr_row = curr_trial.hidden_pa_img_coords2.row
-      trial_data.corr_col = curr_trial.hidden_pa_img_coords2.column
+      trial_data.hidden_pa_img_type = curr_trial.hidden_pa_img_coords.subtype
+      trial_data.corr_row = curr_trial.hidden_pa_img_coords.row
+      trial_data.corr_col = curr_trial.hidden_pa_img_coords.column
       trial_data.top_offset = trial.top_offset
       trial_data.left_offset = trial.left_offset
       trial_data.trial_stage = trial.data.trial_stage
@@ -316,8 +316,8 @@ jsPsych.plugins["schema_boards"] = (function () {
         info.mouse_clientX = Math.floor(correct_pa_info.x + correct_pa_info.width/2)
         info.mouse_clientY = Math.floor(correct_pa_info.y + correct_pa_info.width/2)
 
-        info.row = curr_trial.hidden_pa_img_coords2.row
-        info.col = curr_trial.hidden_pa_img_coords2.column
+        info.row = curr_trial.hidden_pa_img_coords.row
+        info.col = curr_trial.hidden_pa_img_coords.column
 
       } else {
         debugger
@@ -330,8 +330,8 @@ jsPsych.plugins["schema_boards"] = (function () {
         info.mouse_clientX = Math.floor(pa_info.x + pa_info.width/2)
         info.mouse_clientY = Math.floor(pa_info.y + pa_info.width/2)
 
-        info.row = curr_trial.visible_pa_img_coords2[visible_pa_chosen-1].row
-        info.col = curr_trial.visible_pa_img_coords2[visible_pa_chosen-1].column
+        info.row = curr_trial.visible_pa_img_coords[visible_pa_chosen-1].row
+        info.col = curr_trial.visible_pa_img_coords[visible_pa_chosen-1].column
 
       }
 

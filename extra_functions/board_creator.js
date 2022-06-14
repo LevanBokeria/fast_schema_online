@@ -74,8 +74,8 @@ function board_creator(board_size_px,
     for (iImg = 0; iImg < curr_trial.visible_pa_imgs.length; iImg++){
 
       // Which row and col?
-      let i_row = curr_trial.visible_pa_img_coords2[iImg].row
-      let i_col = curr_trial.visible_pa_img_coords2[iImg].column
+      let i_row = curr_trial.visible_pa_img_coords[iImg].row
+      let i_col = curr_trial.visible_pa_img_coords[iImg].column
 
       iEl = document.createElement('img')
 
@@ -99,8 +99,8 @@ function board_creator(board_size_px,
     for (iImg = 0; iImg < curr_trial.hidden_pa_all_imgs.length; iImg++){
 
       // Which row and col?
-      let i_row = curr_trial.hidden_pa_all_img_coords2[iImg].row
-      let i_col = curr_trial.hidden_pa_all_img_coords2[iImg].column
+      let i_row = curr_trial.hidden_pa_all_img_coords[iImg].row
+      let i_col = curr_trial.hidden_pa_all_img_coords[iImg].column
 
       iEl = document.createElement('img')
 

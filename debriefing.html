@@ -5,7 +5,8 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0">
     <title>Debriefing</title>	
 	<script src="jspsych-6.3.1/jspsych.js" ></script>
-	<script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+  <script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+  <script src='./jspsych-6.3.1/plugins/jspsych-instructions.js'></script>
 	<script src="jatos.js"></script>
 	<link rel="stylesheet" href="jspsych-6.3.1/css/jspsych.css" type="text/css"></link>
 	<link rel="stylesheet" href="./extra_files/schema_online.css" type="text/css"></link>	
@@ -17,29 +18,52 @@
 		//start timeline
 		jatos.onLoad(function() {
 			
-            var timeline = []
+        var timeline = []
 
-            var comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
-            
-            // debugger
-            var general_questions_page = {
-                type: 'survey-text',
-                questions: [
-                    {prompt: 'Were the instructions clear for all stages of the experiment? If not, how could we clarify them?', rows: 3, columns: 100, required: true},                   
-                    {prompt: 'Did you notice that on the blue board, the visible pictures stayed at the same locations on every trial?', rows: 3, columns: 100, required: true}, 
-                    {prompt: 'Did you notice that on the green board, the visible pictures swapped locations with each other on every trial?', rows: 3, columns: 100, required: true}, 
-                    {prompt: 'Did you notice that on the red board, 2 of the 6 visible pictures stayed at the same locations, while 4 others moved randomly trial-to-trial?', rows: 3, columns: 100, required: true}, 
-                    {prompt: 'Did you notice that on the yellow board, the visible pictures all moved randomly trial-to-trial?', rows: 3, columns: 100, required: true}, 
-                    {prompt: 'When learning the location of hidden pictures, did you have any strategy? Did that differ for different boards?', rows: 3, columns: 100, required: true},
-                    {prompt: 'When learning locations of hidden pictures, did the visible pictures help or hinder you? Did that depend on which board you were learning on?', rows: 3, columns: 100, required: true},  
-                    {prompt: 'Any other feedback on how we could improve the experiment?', rows: 3, columns: 100, required: true}
-                    ],
-                button_label: 'Finish',
-                preamble: '<p style="font-size: 30px;"><b>Please answer the following questions:</b></p>',
-                data: {test_part: 'debriefing'},
-	    	};	
+        var comp_to_start = jatos.studySessionData.inputData.component_positions.data_submission
+        
+        // debugger
+        var general_questions_page = {
+            type: 'survey-text',
+            questions: [
+                {prompt: 'Were the instructions clear for all stages of the experiment? If not, how could we clarify them?', rows: 3, columns: 100, required: true},                   
+                {prompt: 'Did you notice that on the blue board, the visible pictures stayed at the same locations on every trial?', rows: 3, columns: 100, required: true}, 
+                {prompt: 'Did you notice that on the green board, the visible pictures swapped locations with each other on every trial?', rows: 3, columns: 100, required: true}, 
+                {prompt: 'Did you notice that on the red board, 2 of the 6 visible pictures stayed at the same locations, while 4 others moved randomly trial-to-trial?', rows: 3, columns: 100, required: true}, 
+                {prompt: 'Did you notice that on the yellow board, the visible pictures all moved randomly trial-to-trial?', rows: 3, columns: 100, required: true}, 
+                {prompt: 'When learning the location of hidden pictures, did you have any strategy? Did that differ for different boards?', rows: 3, columns: 100, required: true},
+                {prompt: 'When learning locations of hidden pictures, did the visible pictures help or hinder you? Did that depend on which board you were learning on?', rows: 3, columns: 100, required: true},  
+                {prompt: 'Any other feedback on how we could improve the experiment?', rows: 3, columns: 100, required: true}
+                ],
+            button_label: 'Continue to submit your data',
+            preamble: '<p style="font-size: 30px;"><b>Please answer the following questions:</b></p>',
+            data: {test_part: 'debriefing'},
+        };	
 
-			timeline.push(general_questions_page);
+        var debriefing_finished_generic_page = {
+        type: 'instructions',
+        pages: [
+          '<div class="instruct">' +
+          '<p> <strong> Click the "Finish Experiment" button at the bottom of this page, to submit your data and be redirected to Prolific! </strong></p> ' +
+
+          '<p><br>Below, you can briefly read what the experiment was about and find my contact information' +
+          ' in case you have further questions. </p>' +
+
+          '<p><br> On each of the 5 boards, you had to find the locations of the hidden pictures. We are studying what factors improve or worsen this learning process, in the hopes that we can get some general insights into how learning of new information happens in other contexts too.</p>' +
+          '<p><br>On some of these boards, you had stable visible pictures which would show up at the beginning and ends of each trial. We hypothesize that people can use these 6 visible pictures as "landmarks" or "anchors" in learning the locations of the hidden pictures. On other boards, sometimes these 6 visible pictures swapped locations with each other, sometimes only 2/6 remained stable while others moved randomly, sometimes all 6 of them moved randomly, and on one of the boards you didnt have any visible pictures at all, only the hidden ones. This way, we want to see whether your learning of locations of the hidden pictures is influenced by the amount and stability of visible pictures.</p>' +
+
+          '<p><br>Thank you once again for completing the experiment and contributing to science!</p>' +
+          '<p>If you have any questions about the experiment, please do not hesitate to contact me at levan.bokeria@mrc-cbu.cam.ac.uk </p>' +
+          '</div>'
+        ],
+        show_clickable_nav: true,
+        button_label_next: '<span style="color: black"d;> <strong> Finish Experiment </stong></span>',
+        data: { test_part: 'experiment_explanation' },
+      };
+
+
+      timeline.push(general_questions_page);
+      timeline.push(debriefing_finished_generic_page);
 
 			jsPsych.init({
 				

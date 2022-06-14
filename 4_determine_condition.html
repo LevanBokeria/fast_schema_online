@@ -302,9 +302,9 @@
                 no_schema: 1,
             }
 
-            jatos.studySessionData.inputData.visible_pa_display_duration = 200
-            jatos.studySessionData.inputData.response_window_duration = 200
-            jatos.studySessionData.inputData.feedback_duration = 200
+            jatos.studySessionData.inputData.visible_pa_display_duration = 10
+            jatos.studySessionData.inputData.response_window_duration = 10
+            jatos.studySessionData.inputData.feedback_duration = 10
             jatos.studySessionData.inputData.iti_duration = 0
 
             // jatos.studySessionData.inputData.condition_to_run = 'cb3'
@@ -315,6 +315,8 @@
             jatos.studySessionData.inputData.move_board_within_trial = false
             jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response = false
 
+            // How long to show the prompt image
+            jatos.studySessionData.inputData.image_pres_duration = 10
 
             // Also manually choose counterbalancing
             timeline.push(condition_choice_page)
@@ -350,6 +352,9 @@
             jatos.studySessionData.inputData.run_visible_pa_display = true
             jatos.studySessionData.inputData.move_board_within_trial = false
             jatos.studySessionData.inputData.show_visible_pa_during_hidden_pa_response = false
+
+            // How long to show the prompt image
+            jatos.studySessionData.inputData.image_pres_duration = 500
 
         }
 
@@ -398,7 +403,7 @@
 
                 on_finish: function (data) {
                     var results = jsPsych.data.get().values();
-                    debugger
+                    // debugger
                     condition_chosen = results[0].response.condition
 
                     createConditions();
@@ -420,9 +425,6 @@
                 } // on finish
             });     // jsPsych.init 
         }
-
-        // How long to show the prompt image
-        jatos.studySessionData.inputData.image_pres_duration = 500
 
         function createConditions() {
             // debugger

@@ -31,11 +31,15 @@
 			if (jatos.studySessionData.inputData.condition_ses_counters.practice2 == 0){
 
 				// So first part of practice is done
-				instructions_text = '<p>Great! Those were the practice trials with the ' + 
+				instructions_text =
+					'<p><b>Important: if you did not see the full board, including the feedback text which told you if you were correct or incorrect on each trial, please go fullscreen by pressing F11 (Windows) or Control+Command+F (Mac). If already in fullscreen, try zooming out your display by pressing Ctrl+minus on Windows, or Command+minus on Mac. <br> Then, please re-do the practice trials to make sure you now see everything. It is important that you see all the components of the experiment on your screen without having to scroll.</b></p>' +
+
+					'<p><br>Great! Those were the practice trials with the ' + 
 					jatos.studySessionData.inputData.condition_color_names.practice + 
 					' board. If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the ' + 
 					jatos.studySessionData.inputData.condition_color_names.practice + 
 					' board.</p>' +
+
 					'<p>Otherwise, please continue to <b>another practice round with a ' + 
 					jatos.studySessionData.inputData.condition_color_names.practice2 + 
 					' board, which will be a little different.</b></p>' +
@@ -48,7 +52,9 @@
 			} else if (jatos.studySessionData.inputData.condition_ses_counters.practice2 != 0){
 
 				// So we've finished practice part 2 
-				instructions_text = '<p>Great! If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the pink board.</p>' +
+				instructions_text = 
+				'<p><b>Important: if you did not see the full board, including the feedback text which told you if you were correct or incorrect on each trial, please go fullscreen by pressing F11 (Windows) or Control+Command+F (Mac). If already in fullscreen, try zooming out your display by pressing Ctrl+minus on Windows, or Command+minus on Mac. <br> Then, please re-do the practice trials to make sure you now see everything. It is important that you see all the components of the experiment on your screen without having to scroll.</b></p>' +
+				'<p><br>Great! If anything was unclear, you can choose to re-read the instructions and re-do the practice trials with the pink board.</p>' +
 				'<p>Otherwise, please continue to the main experiment!</p>' +
 				'<p><br>In the main experiment, you will learn locations of hidden pictures on 5 different boards, one after another.</p>' + 
 				'<p><b>Each board will have 6 visible pictures and 6 hidden pictures<b></p>'

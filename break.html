@@ -84,10 +84,6 @@
 						nPA.src = curr_trial.visible_pa_imgs[iPA]
 						nPA.className = 'breakPA'
 
-						// nPA.style.height = '60px'
-						// nPA.style.border = '1px solid black'
-						// nPA.style.margin = '0px 2px 0px'
-
 						flex_visible_pics_el.appendChild(nPA)
 					}
 
@@ -103,30 +99,11 @@
 						nPA.src = curr_trial.hidden_pa_all_imgs[iPA]
 						nPA.className = 'breakPA'
 
-						// nPA.style.height = '50px'
-						// nPA.style.border = '1px solid black'
-						// nPA.style.margin = '0px 2px 0px'
-
 						flex_hidden_pics_el.appendChild(nPA)
 					}
 
-					// let board_specific_instructions = ''
-
-					// if (next_condition == 'schema_c') {
-					// 	board_specific_instructions = 'On this board, all the visible pictures will stay at the same location from one trial to another!'
-					// } else if (next_condition == 'schema_ic') {
-					// 	board_specific_instructions = 'IMPORTANT: On this board, the 6 locations where the visible pictures will show up will stay the same. However, which of the visible pictures shows up at which of the 6 locations will change from trial-to-trial! In other words, the visible pictures will keep swapping locations with each other! <br> The hidden pictures that you have to find will always stay in the same locations.'
-					// } else if (next_condition == 'random_loc') {
-					// 	board_specific_instructions = 'IMPORTANT: On this board, all 6 of the visible pictures will show up at completely random locations from trial-to-trial! So the 6 locations will keep changing on every trial. However, the hidden pictures that you have to find will remain in the same locations from trial-to-trial.'
-					// } else if (next_condition == 'schema_l') {
-					// 	board_specific_instructions = 'IMPORTANT: On this board, 4 out of 6 visible pictures will show up at completely random locations from trial-to-trial. 2 out of the 6 visible pictures will always stay at the same location. <br>The hidden pictures that you have to find will remain in the same locations from trial-to-trial.'
-					// } else if (next_condition == 'no_schema') {
-					// 	board_specific_instructions = 'IMPORTANT: On this board, there are NO visible pictures. All you have to do is find the hidden pictures.'
-					// }
-
 					instructions_text = '<p>You will now learn locations of hidden items on a new ' + jatos.studySessionData.inputData.all_blocks[curr_block][0].color_name + ' board that you can see below</p>' +
 						grid_border.innerHTML
-					// '<p><b>' + board_specific_instructions + '</b></p>' +
 
 					if (next_condition != 'no_schema') {
 
@@ -158,12 +135,14 @@
 
 			// What questions to ask:
 			var questions_to_ask = []
+
 			if (next_condition != 'no_schema'){
 				questions_to_ask.push({ prompt: 'Write the names of the visible pictures:', rows: 6, columns: 50, required: true })
 			}
 			questions_to_ask.push({ prompt: 'Write the names of the hidden pictures:', rows: 6, columns: 50, required: true })
 
 			if (ask_questions) {
+
 				var instructions = {
 					type: 'survey-text',
 					questions: questions_to_ask,
@@ -178,6 +157,7 @@
 				};
 
 			} else {
+
 				var instructions = {
 					type: 'instructions',
 					pages: [
@@ -206,6 +186,27 @@
 					...jatos.studySessionData.inputData.all_images.cond5,
 				]
 			}
+
+
+			// Ask about any issues in between
+			any_issues_preamble = [
+							'<div class= "header">' +
+							'<h1>Any issues?</h1>' +
+							'</div>',
+						]
+
+			var any_issues_question = {
+				type: 'survey-text',
+				questions: [
+					{ prompt: 'In the previous session, did you see the full board? Did you see the feedback text below the board telling you whether you were correct or incorrect? Did you encounter any technical difficulties, such as cut off text or images, slow loading of images, or anything else? Leave blank if everything was ok. Thanks!', rows: 6, columns: 50, required: false }
+				],
+				preamble: any_issues_preamble,
+				button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+				data: { test_part: 'break' }
+			}
+
+			timeline.push(any_issues_question);
+
 			timeline.push(preload);
 
 			timeline.push(instructions);

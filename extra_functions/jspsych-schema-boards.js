@@ -251,7 +251,7 @@ jsPsych.plugins["schema_boards"] = (function() {
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
-      debugger
+      // debugger
  
       // Save the response parameters
       var trial_data = response;

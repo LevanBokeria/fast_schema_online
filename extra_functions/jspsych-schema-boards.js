@@ -96,8 +96,7 @@ jsPsych.plugins["schema_boards"] = (function () {
       col: null,
       correct: null, //null if missed, else true/false
     }
-    debugger
-
+    
     // Hide the cursos?
     if (trial.hide_cursor) {
       document.querySelector('.jspsych-content-wrapper').classList.add('noCursor')
@@ -301,32 +300,38 @@ jsPsych.plugins["schema_boards"] = (function () {
     };
 
     function autoRespondFunction() {
-      debugger
+      
       info = {}
 
       info.rt = 1000
 
       // Is it a correct response or not? 
       if (Math.random() > 0.6){
-
+        debugger
         info.correct = true
 
         // Get coords of the correct PA.
         let correct_pa_info = document.querySelector('#hiddenPA_' + (curr_trial.hidden_pa_img_idx + 1)).getBoundingClientRect()
 
-        info.mouse_clientX = correct_pa_info.x + correct_pa_info.width/2
-        info.mouse_clientY = correct_pa_info.y + correct_pa_info.width/2
+        info.mouse_clientX = Math.floor(correct_pa_info.x + correct_pa_info.width/2)
+        info.mouse_clientY = Math.floor(correct_pa_info.y + correct_pa_info.width/2)
 
-        info.row = curr_trial.curr_trial.hidden_pa_img_coords2.row
-        info.col = curr_trial.curr_trial.hidden_pa_img_coords2.column
+        info.row = curr_trial.hidden_pa_img_coords2.row
+        info.col = curr_trial.hidden_pa_img_coords2.column
 
       } else {
+        debugger
         info.correct = false
 
         // Randomly choose a visible PA coordinate
         let visible_pa_chosen = Math.floor(Math.random()*6) + 1
-        let pa_info = document.querySelector('#visiblePA_' + visible_pa_chosen.getBoundingClientRect())
+        let pa_info = document.querySelector('#visiblePA_' + visible_pa_chosen).getBoundingClientRect()
 
+        info.mouse_clientX = Math.floor(pa_info.x + pa_info.width/2)
+        info.mouse_clientY = Math.floor(pa_info.y + pa_info.width/2)
+
+        info.row = curr_trial.visible_pa_img_coords2[visible_pa_chosen-1].row
+        info.col = curr_trial.visible_pa_img_coords2[visible_pa_chosen-1].column
 
       }
 
@@ -336,7 +341,6 @@ jsPsych.plugins["schema_boards"] = (function () {
       timeout = false
 
       doFeedback(info.correct, timeout);
-
 
     }
 

@@ -14,7 +14,7 @@ function trial_creator(all_conditions) {
 
         let n_trials_per_pa = jatos.studySessionData.inputData.n_trials_per_pa[iCond]
 
-        let istage_n_ses = jatos.studySessionData.inputData.n_ses_per_condition[iCond]
+        let istage_n_ses = jatos.studySessionData.inputData.n_block_per_condition[iCond]
         
         var visible_pas_coords = jatos.studySessionData.inputData.condition_to_arrangements[iCond].filter(item => item.pa_type == 'visible')
 

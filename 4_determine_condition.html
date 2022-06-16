@@ -76,7 +76,7 @@
                 random_loc: 'yellow',
                 no_schema: 'purple',
             },
-            condition_ses_counters: {
+            condition_block_counters: {
                 practice: 0,
                 practice2: 0,
                 schema_c: 0,
@@ -188,7 +188,7 @@
         jatos.studySessionData.inputData.autoRespond = jatos.componentJsonInput.autoRespond
 
         if (debugMode) {
-            jatos.studySessionData.inputData.n_ses_per_condition = {
+            jatos.studySessionData.inputData.n_block_per_condition = {
                 practice: 1,
                 practice2: 1,
                 schema_c: 2,
@@ -228,7 +228,7 @@
             timeline.push(condition_choice_page)
         } else {
 
-            jatos.studySessionData.inputData.n_ses_per_condition = {
+            jatos.studySessionData.inputData.n_block_per_condition = {
                 practice: 1,
                 practice2: 1,
                 schema_c: 2,
@@ -331,7 +331,7 @@
         }
 
         function createConditions() {
-
+            // debugger
             // Which counterbalancing was chosen?
             if (condition_chosen == 'cb1') {
                 order_of_conditions = ['schema_c', 'schema_ic', 'schema_l', 'random_loc', 'no_schema']

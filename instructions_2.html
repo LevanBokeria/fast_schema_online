@@ -264,6 +264,7 @@
 				pages: instruction_pages,
 				show_clickable_nav: true,
 				button_label_next: '<span style="color: black"d;> <strong> Next </stong></span>',
+				data: { test_part: 'instructions2' }					
 			};
 
 			// Preload
@@ -293,9 +294,15 @@
 					jatos.studySessionData.latestFinishedComponentId    = jatos.componentId;
 					jatos.studySessionData.latestFinishedComponentPos   = jatos.componentPos;
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
-					// debugger
+					debugger
 					// Record results
-					jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
+					let results_var = jsPsych.data.get().values()[1]
+
+					results_var.view_history.forEach(item => item.test_part = results_var.test_part)
+
+					jatos.studySessionData.outputData.instructions_results.push(results_var.view_history);
+
+					// jatos.studySessionData.outputData.instructions_results = jsPsych.data.get().values()[0];
 
 					let comp_to_start = jatos.studySessionData.inputData.component_positions.block_pa
 

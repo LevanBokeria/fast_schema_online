@@ -282,7 +282,7 @@ jsPsych.plugins["schema_boards"] = (function () {
       // Add trial variables to the trial data
       trial_data.condition = trial.condition
       trial_data.arrangement = curr_trial.hidden_pa_img_coords.arrangement
-      trial_data.block = jatos.studySessionData.inputData.condition_ses_counters[trial.condition]
+      trial_data.block = jatos.studySessionData.inputData.condition_block_counters[trial.condition]
       trial_data.hidden_pa_img = curr_trial.hidden_pa_img
       trial_data.hidden_pa_img_type = curr_trial.hidden_pa_img_coords.subtype
       trial_data.corr_row = curr_trial.hidden_pa_img_coords.row

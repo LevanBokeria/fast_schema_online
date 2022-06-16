@@ -158,8 +158,20 @@ jsPsych.plugins["schema_boards"] = (function () {
       // If autoresponding is on
       if (jatos.studySessionData.inputData.autoRespond) {
         
+        var autoRespondTimerDuration;
+
+        if (jatos.studySessionData.inputData.debugMode){
+
+          autoRespondTimerDuration = 5
+
+        } else {
+
+          autoRespondTimerDuration = 500
+
+        }
+
         // Set a timer and afterwards, call a function that will stop event listeners, and create a manual response
-        jsPsych.pluginAPI.setTimeout(function () { autoRespondFunction() }, 1000)
+        jsPsych.pluginAPI.setTimeout(function () { autoRespondFunction() }, autoRespondTimerDuration)
       }
 
     } else {
@@ -303,7 +315,8 @@ jsPsych.plugins["schema_boards"] = (function () {
       
       info = {}
 
-      info.rt = 1000
+      // Randomly generate RTs
+      info.rt = Math.random() * autoRespondTimerDuration * 2
 
       // Is it a correct response or not? 
       if (Math.random() > 0.6){

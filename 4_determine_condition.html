@@ -43,6 +43,7 @@
         }
 
         jatos.studySessionData.inputData = {
+            post_trial_gap: 500,
             curr_block: 0,
             component_positions: {
                 consent: 2,
@@ -183,6 +184,7 @@
 
         let autoConditions = jatos.componentJsonInput.autoConditions
         let debugMode      = jatos.componentJsonInput.debugMode
+        jatos.studySessionData.inputData.debugMode = debugMode
         
         // Auto respons? So the program will automatically respond on each trial 
         jatos.studySessionData.inputData.autoRespond = jatos.componentJsonInput.autoRespond
@@ -201,19 +203,17 @@
             jatos.studySessionData.inputData.n_trials_per_pa = {
                 practice: 1,
                 practice2: 1,
-                schema_c: 1,
-                schema_ic: 1,
-                schema_l: 1,
-                random_loc: 1,
-                no_schema: 1,
+                schema_c: 4,
+                schema_ic: 4,
+                schema_l: 4,
+                random_loc: 4,
+                no_schema: 4,
             }
 
             jatos.studySessionData.inputData.visible_pa_display_duration = 10
             jatos.studySessionData.inputData.response_window_duration = 10
             jatos.studySessionData.inputData.feedback_duration = 10
             jatos.studySessionData.inputData.iti_duration = 0
-
-            // jatos.studySessionData.inputData.condition_to_run = 'cb3'
 
             jatos.studySessionData.inputData.show_visible_pa_at_feedback_page = true
             jatos.studySessionData.inputData.hide_mouse = true
@@ -226,6 +226,9 @@
 
             // Also manually choose counterbalancing
             timeline.push(condition_choice_page)
+
+            // Change the post trial gap
+            jatos.studySessionData.inputData.post_trial_gap = 10
         } else {
 
             jatos.studySessionData.inputData.n_block_per_condition = {

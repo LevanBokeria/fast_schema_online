@@ -79,7 +79,7 @@
           jatos.studySessionData.outputData.debriefing = jsPsych.data.get().values()
 
 					jatos.submitResultData('[debriefing_start_' + '---' + 
-					JSON.stringify(jatos.studySessionData) +
+					JSON.stringify(jatos.studySessionData.outputData.debriefing) +
 					'---' + '_debriefing_end]', 
 					function(){jatos.startComponentByPos(comp_to_start)});
 

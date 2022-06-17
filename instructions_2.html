@@ -307,7 +307,7 @@
 					let comp_to_start = jatos.studySessionData.inputData.component_positions.block_pa
 
 					jatos.submitResultData('[instructions_start---' +
-						JSON.stringify(jatos.studySessionData) +
+						JSON.stringify(jatos.studySessionData.outputData.instructions_results) +
 						'---instructions_end]',
 						function () { jatos.startComponentByPos(comp_to_start) });
 

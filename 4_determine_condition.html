@@ -294,7 +294,7 @@
             jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
             jatos.submitResultData("[conditions_start---" +
-                JSON.stringify(jatos.studySessionData) + "---conditions_end]", 
+                JSON.stringify(jatos.studySessionData.inputData) + "---conditions_end]", 
                 function () {jatos.startComponentByPos(
                     jatos.studySessionData.inputData.component_positions.instructions_1
                     )});
@@ -324,7 +324,7 @@
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
                     jatos.submitResultData("[conditions_start---" +
-                        JSON.stringify(jatos.studySessionData) + "---conditions_end]",
+                        JSON.stringify(jatos.studySessionData.inputData) + "---conditions_end]",
                         function (){ jatos.startComponentByPos(
                             jatos.studySessionData.inputData.component_positions.instructions_1
                             )});

@@ -67,6 +67,7 @@
 				type: 'html-button-response',
 				stimulus: instructions_text,
 				choices: ['Repeat instructions and practice trials', second_button_text],
+				data: { test_part: 'post_practice' }
 			};
 
 			timeline.push(instructions);
@@ -78,6 +79,8 @@
 				on_finish: function(data) {
 					// debugger
 					var results = jsPsych.data.get().values()
+
+					jatos.studySessionData.outputData.instructions_results.push(results)
 
 					// If it was post-practice, then see if they wanna redo practice
 					if (jatos.studySessionData.inputData.curr_block == 1){
@@ -115,7 +118,7 @@
                     jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
 					jatos.submitResultData('[post_practice_start_' + '---' + 
-					JSON.stringify(jatos.studySessionData) +
+					JSON.stringify(results) +
 					'---' + '_post_practice_end]', 
 					function(){jatos.startComponentByPos(comp_to_start)});
 

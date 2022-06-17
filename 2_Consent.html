@@ -150,7 +150,7 @@
 					jatos.studySessionData.outputData.consent_results = jsPsych.data.get().values();;
 
 					jatos.submitResultData("[consent_start---" +
-						JSON.stringify(jatos.studySessionData) +
+						JSON.stringify(jatos.studySessionData.outputData.consent_results) +
 						"---consent_end]", jatos.startNextComponent);
 				}
 			});

@@ -227,7 +227,7 @@
 					jatos.studySessionData.latestFinishedComponentTitle = jatos.componentProperties.title;
 
 					jatos.submitResultData('[break_start_' + '---' +
-						JSON.stringify(jatos.studySessionData) +
+						JSON.stringify(jatos.studySessionData.outputData.break_results) +
 						'---' + '_break_end]',
 						function () { jatos.startComponentByPos(comp_to_start) });
 

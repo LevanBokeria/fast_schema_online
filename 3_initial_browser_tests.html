@@ -54,7 +54,7 @@
       if ("prolific_ID" in jatos.studySessionData) {
         err_msg = err_msg + '_' + jatos.studySessionData.prolific_ID;
       }
-      jatos.submitResultData(JSON.stringify(jatos.studySessionData), function () { return jatos.endStudyAjax(false, err_msg); });
+      jatos.submitResultData(JSON.stringify(jatos.studySessionData.outputData.browser_device_test_results), function () { return jatos.endStudyAjax(false, err_msg); });
 
     } else if (curr_browser == 'IE' && docMode < 10) {
 
@@ -68,7 +68,7 @@
       if ("prolific_ID" in jatos.studySessionData) {
         err_msg = err_msg + '_' + jatos.studySessionData.prolific_ID;
       }
-      jatos.submitResultData(JSON.stringify(jatos.studySessionData), function () { return jatos.endStudyAjax(false, err_msg); });
+      jatos.submitResultData(JSON.stringify(jatos.studySessionData.outputData.browser_device_test_results), function () { return jatos.endStudyAjax(false, err_msg); });
 
     } else if (curr_browser == 'safari') {
 
@@ -82,12 +82,12 @@
       if ("prolific_ID" in jatos.studySessionData) {
         err_msg = err_msg + '_' + jatos.studySessionData.prolific_ID;
       }
-      jatos.submitResultData(JSON.stringify(jatos.studySessionData), function () { return jatos.endStudyAjax(false, err_msg); });
+      jatos.submitResultData(JSON.stringify(jatos.studySessionData.outputData.browser_device_test_results), function () { return jatos.endStudyAjax(false, err_msg); });
 
     } else {
       // $("#error_msg").html("<p> You've passed the test</p>");
 
-      jatos.submitResultData(JSON.stringify(jatos.studySessionData), jatos.startNextComponent);
+      jatos.submitResultData(JSON.stringify(jatos.studySessionData.outputData.browser_device_test_results), jatos.startNextComponent);
     }
   });
 

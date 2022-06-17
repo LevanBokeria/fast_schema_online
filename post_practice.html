@@ -80,7 +80,7 @@
 					// debugger
 					var results = jsPsych.data.get().values()
 
-					jatos.studySessionData.outputData.instructions_results.push(results)
+					jatos.studySessionData.outputData.instructions_results.post_practice.push(results)
 
 					// If it was post-practice, then see if they wanna redo practice
 					if (jatos.studySessionData.inputData.curr_block == 1){

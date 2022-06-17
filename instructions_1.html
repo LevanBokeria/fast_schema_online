@@ -245,12 +245,12 @@
 
 					results_var.view_history.forEach(item => item.test_part = results_var.test_part)
 
-					jatos.studySessionData.outputData.instructions_results.push(results_var.view_history);
+					jatos.studySessionData.outputData.instructions_results.instructions_1.push(results_var.view_history);
 
 					let comp_to_start = jatos.studySessionData.inputData.component_positions.block_pa
 
 					jatos.submitResultData('[instructions_start---' +
-						JSON.stringify(jatos.studySessionData.outputData.instructions_results) +
+						JSON.stringify(jatos.studySessionData.outputData.instructions_results.instructions_1) +
 						'---instructions_end]',
 						function () { jatos.startComponentByPos(comp_to_start) });
 

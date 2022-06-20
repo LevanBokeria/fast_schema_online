@@ -287,6 +287,9 @@
 
             condition_chosen = 'cb' + (minCond + 1)
 
+            // Record which counterbalancing condition was chosen
+            jatos.studySessionData.inputData.counterbalancing = condition_chosen
+
             createConditions();
 
             // Create the trials

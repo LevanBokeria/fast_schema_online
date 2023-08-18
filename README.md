@@ -1,4 +1,4 @@
-This repository contains code for running the online experiment for the schema boards project.
+This repository contains code for running the **pilot** online experiment for the schema boards project.
 
 # Folders:
 
